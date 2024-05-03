@@ -55,9 +55,9 @@ afterEvaluate {
             release(MavenPublication) {
                 from components.release
 
-                groupId = 'com.github.DANILOCAPIRO'
-                artifactId = 'test1library'
-                version = '1.4'
+                groupId = 'com.github.Capiro-Dev'
+                artifactId = 'composables'
+                version = '1.0.0'
             }
         }
     }
