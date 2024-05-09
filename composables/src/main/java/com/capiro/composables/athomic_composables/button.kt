@@ -284,7 +284,7 @@ fun ButtonSpinnerCapiro(
             OutlinedTextFieldDefaults.DecorationBox(
                 value = textInput,
                 innerTextField = innerTextField,
-                enabled = true,
+                enabled = false,
                 singleLine = true,
                 interactionSource = interactionSource,
                 visualTransformation = VisualTransformation.None,

@@ -1,4 +1,4 @@
-package com.capiro.capiroui.athomic_composables
+package com.capiro.composables.athomic_composables
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -34,6 +34,7 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.capiro.capiroui.athomic_composables.TextFieldOutlinedCapiro
 import com.capiro.composables.EMPTY
 import com.capiro.capiroui.theme.GrayClearCapiro
 import com.capiro.capiroui.theme.GrayDarkCapiro
