@@ -10,7 +10,7 @@ android {
     compileSdk 34
 
     defaultConfig {
-        minSdk 29
+        minSdk 26
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles "consumer-rules.pro"
@@ -66,7 +66,11 @@ afterEvaluate {
 
                 groupId = 'com.github.Capiro-Dev'
                 artifactId = 'composables'
+<<<<<<< HEAD
                 version = '1.0.3'
+=======
+                version = '1.0.4'
+>>>>>>> 42ee60bd344fadf8adf62d66d4d3a6b5d98cf9e4
             }
         }
     }
