@@ -26,9 +26,10 @@ import androidx.compose.ui.unit.dp
 import com.capiro.composables.athomic_composables.ButtonCapiro
 import com.capiro.composables.athomic_composables.ButtonIconCapiro
 import com.capiro.composables.athomic_composables.ImageCapiro
-import com.capiro.capiroui.athomic_composables.TextFieldAndTileRoundedBorderCapiro
-import com.capiro.capiroui.theme.BeigeCapiro
+
+import com.capiro.composables.theme.BeigeCapiro
 import com.capiro.composables.R
+import com.capiro.composables.athomic_composables.textfield.TextFieldAndTileRoundedBorderCapiro
 
 @Composable
 fun LoginScreenCapiro(

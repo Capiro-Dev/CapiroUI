@@ -14,9 +14,9 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.scale
 import androidx.compose.ui.tooling.preview.Preview
-import com.capiro.capiroui.theme.GrayDarkCapiro
-import com.capiro.capiroui.theme.GreenCapiro
-import com.capiro.capiroui.theme.WhiteCapiro
+import com.capiro.composables.theme.GrayDarkCapiro
+import com.capiro.composables.theme.GreenCapiro
+import com.capiro.composables.theme.WhiteCapiro
 
 @Composable
 fun CheckBoxCapiro(

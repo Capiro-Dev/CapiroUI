@@ -1,4 +1,4 @@
-package com.capiro.capiroui.theme
+package com.capiro.composables.theme
 
 import androidx.compose.ui.graphics.Color
 

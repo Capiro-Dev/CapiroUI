@@ -13,8 +13,8 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.tooling.preview.Preview
-import com.capiro.capiroui.theme.GrayDarkCapiro
-import com.capiro.capiroui.theme.GreenCapiro
+import com.capiro.composables.theme.GrayDarkCapiro
+import com.capiro.composables.theme.GreenCapiro
 
 @Composable
 fun RadioButtonCapiro(

@@ -29,8 +29,8 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
 import com.capiro.composables.athomic_composables.ButtonCapiro
-import com.capiro.capiroui.theme.GrayDarkCapiro
-import com.capiro.capiroui.theme.GreenCapiro
+import com.capiro.composables.theme.GrayDarkCapiro
+import com.capiro.composables.theme.GreenCapiro
 import com.capiro.capiroui.util_composables.DialogTitle
 import com.capiro.composables.R
 

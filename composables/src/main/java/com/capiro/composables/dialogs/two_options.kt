@@ -21,7 +21,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
 import com.capiro.composables.athomic_composables.ButtonCapiro
-import com.capiro.capiroui.theme.WhiteCapiro
+import com.capiro.composables.theme.WhiteCapiro
 import com.capiro.capiroui.util_composables.DialogTitle
 
 

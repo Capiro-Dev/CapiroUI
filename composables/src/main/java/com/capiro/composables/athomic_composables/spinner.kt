@@ -34,13 +34,13 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.capiro.capiroui.athomic_composables.TextFieldOutlinedCapiro
 import com.capiro.composables.EMPTY
-import com.capiro.capiroui.theme.GrayClearCapiro
-import com.capiro.capiroui.theme.GrayDarkCapiro
-import com.capiro.capiroui.theme.GreenCapiro
-import com.capiro.capiroui.theme.GreenSecondCapiro
-import com.capiro.capiroui.theme.WhiteCapiro
+import com.capiro.composables.theme.GrayClearCapiro
+import com.capiro.composables.theme.GrayDarkCapiro
+import com.capiro.composables.theme.GreenCapiro
+import com.capiro.composables.theme.GreenSecondCapiro
+import com.capiro.composables.theme.WhiteCapiro
+import com.capiro.composables.athomic_composables.textfield.TextFieldOutlinedCapiro
 import getTypography
 
 @Composable
