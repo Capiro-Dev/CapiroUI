@@ -12,6 +12,7 @@ import androidx.compose.ui.unit.dp
 import com.capiro.composables.theme.GreenCapiro
 import getTypography
 import androidx.compose.material3.Typography
+import androidx.compose.ui.text.input.ImeAction
 
 @Composable
 fun TextFieldAndTileRoundedBorderCapiro(
@@ -24,7 +25,9 @@ fun TextFieldAndTileRoundedBorderCapiro(
     typography: Typography = getTypography(),
     leadingIcon: ImageVector? = null,
     trailingIcon: ImageVector? = null,
-    isPassword: Boolean = false
+    isPassword: Boolean = false,
+    imeAction: ImeAction = ImeAction.Done,
+    lines: Int = 1
 
 ) {
     Column(
@@ -47,7 +50,9 @@ fun TextFieldAndTileRoundedBorderCapiro(
             leadingIcon = leadingIcon,
             trailingIcon = trailingIcon,
             isPassword = isPassword,
-            errorMessage = errorMessage
+            errorMessage = errorMessage,
+            imeAction = imeAction,
+            lines = lines
         )
     }
 

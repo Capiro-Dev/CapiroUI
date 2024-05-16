@@ -38,6 +38,7 @@ import com.capiro.composables.theme.GreenCapiro
 import com.capiro.composables.theme.GreenSecondCapiro
 import getTypography
 import androidx.compose.material3.Typography
+import androidx.compose.ui.text.input.ImeAction
 
 @Composable
 fun TextFieldRoundedBorderCapiro(
@@ -49,21 +50,23 @@ fun TextFieldRoundedBorderCapiro(
     typography: Typography = getTypography(),
     leadingIcon: ImageVector? = null,
     trailingIcon: ImageVector? = null,
-    isPassword: Boolean = false
+    isPassword: Boolean = false,
+    imeAction: ImeAction = ImeAction.Done,
+    lines: Int = 1
 ) {
 
     var isFocused by remember { mutableStateOf(false) }
-    var isVisible by remember { mutableStateOf(false) }
+    var isVisible by remember { mutableStateOf(isPassword) }
     val borderColor = if (errorMessage != null) ErrorCapiro else GreenCapiro
 
 
     val visualTransformation =
         if (isVisible) PasswordVisualTransformation() else VisualTransformation.None
     val keyboardOptions =
-        if (isNumeric) KeyboardOptions(keyboardType = KeyboardType.Number) else if (isPassword) KeyboardOptions(
-            keyboardType = KeyboardType.Password
-        ) else KeyboardOptions.Default
-
+        if (isNumeric) KeyboardOptions(keyboardType = KeyboardType.Number) else  KeyboardOptions(
+            keyboardType = KeyboardType.Password,
+            imeAction = imeAction
+        )
     Column {
 
         Row(
@@ -92,7 +95,7 @@ fun TextFieldRoundedBorderCapiro(
                 onValueChange = { onTextChangeEvent(it) },
                 visualTransformation = visualTransformation,
                 keyboardOptions = keyboardOptions,
-
+                maxLines = lines,
                 modifier = Modifier
                     .weight(1f)
                     .padding(vertical = 8.dp)

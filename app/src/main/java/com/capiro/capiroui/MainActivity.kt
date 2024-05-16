@@ -39,9 +39,8 @@ class MainActivity : ComponentActivity() {
                     color = MaterialTheme.colorScheme.background
                 ) {
                     CapiroUITheme {
-
-                   TextFields()
-
+                    //TextFields()
+                    Login()
                     }
                 }
             }

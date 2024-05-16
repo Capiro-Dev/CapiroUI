@@ -1,5 +1,6 @@
 package com.capiro.composables.athomic_composables
 
+import android.util.Log
 import android.view.MotionEvent
 import androidx.annotation.DrawableRes
 import androidx.compose.foundation.BorderStroke
@@ -95,7 +96,7 @@ fun ButtonCapiro(
     var borderState by remember { mutableStateOf(border) }
 
     // disable colors
-    if (isEnabled.not()) {
+    if (!isEnabled) {
         fontColorState = fontColorIsNotEnabled
         backgroundState = backgroundIsNotEnabled
         borderState = borderIsNotEnabled
@@ -103,7 +104,6 @@ fun ButtonCapiro(
 
     // typography
     val typography = getTypography()
-
     Button(
         modifier = modifier.pointerInteropFilter {
 
@@ -113,39 +113,45 @@ fun ButtonCapiro(
                     backgroundState = backgroundPressed
                     fontColorState = fontColorPressed
                     borderState = borderPressed
+                    return@pointerInteropFilter false
                 }
 
-                // when the button is released
-                MotionEvent.ACTION_UP -> {
+                else -> {
                     backgroundState = background
                     fontColorState = fontColor
                     borderState = border
+                    return@pointerInteropFilter true
                 }
             }
-            true
+
         },
+
+
         shape = RoundedCornerShape(30),
         colors = ButtonDefaults.buttonColors(containerColor = backgroundState),
         enabled = isEnabled,
         border = BorderStroke(2.dp, borderState),
-        onClick = { onClick() }
-    ) {
+        onClick = {
+            onClick()
+            //release Button
+            backgroundState = background
+            fontColorState = fontColor
+            borderState = border
+        }, content = {
+            Text(
+                text = text,
+                color = fontColorState,
+                fontWeight = FontWeight.Bold,
+                style = typography.bodyMedium,
+            )
+        })
 
-        // text
-        Text(
-            text = text,
-            color = fontColorState,
-            fontWeight = FontWeight.Bold,
-            style = typography.bodyMedium,
-        )
-
-    }
 }
 
 @Preview
 @Composable
 private fun ButtonCapiroPreview() {
-    Box (modifier=Modifier.padding(8.dp)){
+    Box(modifier = Modifier.padding(8.dp)) {
         ButtonCapiro(text = "Button", onClick = { /*TODO*/ })
     }
 }
@@ -199,21 +205,27 @@ fun ButtonIconCapiro(
                             iconColorState = iconColorPressed
                             backgroundColorState = backgroundColorPressed
                             lineBorderColorState = lineBorderColorPressed
+                            return@pointerInteropFilter false
                         }
 
-                        // when the button is released
-                        MotionEvent.ACTION_UP -> {
+                        else -> {
                             iconColorState = iconColor
                             backgroundColorState = backgroundColor
                             lineBorderColorState = lineBorderColor
+                            return@pointerInteropFilter false
                         }
+
                     }
-                    true
                 }
                 .clip(RoundedCornerShape(percentageCorner))
                 .background(backgroundColorState)
                 .border(2.dp, lineBorderColorState, RoundedCornerShape(percentageCorner)),
-            onClick = { onClick() },
+            onClick = {
+                onClick()
+                iconColorState = iconColor
+                backgroundColorState = backgroundColor
+                lineBorderColorState = lineBorderColor
+            },
         ) {
             // icon
             Icon(
