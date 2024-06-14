@@ -2,6 +2,21 @@
 <project version="4">
   <component name="deploymentTargetDropDown">
     <value>
+      <entry key="Login">
+        <State />
+      </entry>
+      <entry key="TestButtons">
+        <State />
+      </entry>
+      <entry key="TestSplashScreen">
+        <State />
+      </entry>
+      <entry key="TextFieldOutlinedCapiroPreview (1)">
+        <State />
+      </entry>
+      <entry key="TextFields">
+        <State />
+      </entry>
       <entry key="app">
         <State />
       </entry>

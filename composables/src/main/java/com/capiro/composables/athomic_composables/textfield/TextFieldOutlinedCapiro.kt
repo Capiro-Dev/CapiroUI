@@ -94,7 +94,7 @@ fun TextFieldOutlinedCapiro(
         modifier = Modifier.fillMaxWidth(),
         value = textInput,
         enabled = isEnabled,
-        visualTransformation = if(!isPassword) VisualTransformation.None else if (isPasswordVisible) VisualTransformation.None else PasswordVisualTransformation(),
+        visualTransformation = if (!isPassword) VisualTransformation.None else if (isPasswordVisible) VisualTransformation.None else PasswordVisualTransformation(),
         textStyle = typography.bodyMedium.copy(textAlign = TextAlign.Center),
         singleLine = true,
         keyboardOptions = keyBoardOptions,
@@ -125,45 +125,45 @@ fun TextFieldOutlinedCapiro(
             interactionSource = interactionSource,
             visualTransformation = if (isPasswordVisible) VisualTransformation.None else PasswordVisualTransformation(),
             contentPadding = TextFieldDefaults.contentPaddingWithLabel(0.dp, 0.dp, 0.dp, 0.dp),
-            leadingIcon = {
+            leadingIcon = if (iconStart != null) {
                 // arrow icon
-                if (iconStart != null)
+                {
                     Icon(
                         imageVector = iconStart,
                         contentDescription = null,
                         tint = GreenCapiro,
                         modifier = Modifier.scale(1.2f)
                     )
-
-            },
-            trailingIcon = {
+                }
+            } else null,
+            trailingIcon =
                 // arrow icon
                 if (!isEnabled && iconDisable != null)
-                    Icon(
+                {{Icon(
                         imageVector = Icons.Filled.Lock,
                         contentDescription = null,
                         tint = RedCapiro,
                         modifier = Modifier.scale(1.1f)
-                    )
+                    )}}
 
-                if (iconDisable == null)
-                    Icon(
+                else if (iconDisable == null)
+                {{Icon(
                         imageVector = Icons.Filled.ArrowDropDown,
                         contentDescription = null,
                         tint = GreenCapiro,
                         modifier = Modifier.scale(1.1f)
-                    )
+                    )}}
 
-                if (isPassword)
-                    Icon(
+                else if (isPassword)
+                {{Icon(
                         imageVector = if (isPasswordVisible) Icons.Filled.Visibility else Icons.Filled.VisibilityOff,
                         contentDescription = null,
                         tint = RedCapiro,
                         modifier = Modifier.clickable { isPasswordVisible = !isPasswordVisible }
-                    )
+                    )}}
+            else null
 
-
-            },
+            ,
             label = {
                 Text(
                     text = label,

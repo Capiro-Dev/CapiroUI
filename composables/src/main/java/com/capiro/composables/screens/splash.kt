@@ -1,5 +1,6 @@
 package com.capiro.capiroui.screens
 
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -18,12 +19,13 @@ import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.capiro.composables.athomic_composables.ImageCapiro
 import com.capiro.composables.theme.GreenCapiro
 
 
 @Composable
 fun SplashScreenCapiro(
-    appName: String,
+    iconAppResource: Int,
     version: String
 ) {
     Column(
@@ -43,11 +45,10 @@ fun SplashScreenCapiro(
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
 
-            Text(
-                text = appName,
-                style = MaterialTheme.typography.titleLarge,
-                color = Color.White,
-                fontWeight = FontWeight.ExtraBold
+            // ICON APP
+            ImageCapiro(
+                imageSourceId = iconAppResource,
+                modifier = Modifier.height(60.dp)
             )
 
             Column(
@@ -78,9 +79,4 @@ fun SplashScreenCapiro(
     }
 }
 
-@Preview
-@Composable
-private fun SplashScreenPreview() {
-    SplashScreenCapiro(appName = "Capiro", version = "v1.0.0")
-}
 
