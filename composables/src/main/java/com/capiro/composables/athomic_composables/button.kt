@@ -105,28 +105,6 @@ fun ButtonCapiro(
     // typography
     val typography = getTypography()
     Button(
-        modifier = modifier.pointerInteropFilter {
-
-            when (it.action) {
-                // when the button is pressed
-                MotionEvent.ACTION_DOWN -> {
-                    backgroundState = backgroundPressed
-                    fontColorState = fontColorPressed
-                    borderState = borderPressed
-                    return@pointerInteropFilter false
-                }
-
-                else -> {
-                    backgroundState = background
-                    fontColorState = fontColor
-                    borderState = border
-                    return@pointerInteropFilter true
-                }
-            }
-
-        },
-
-
         shape = RoundedCornerShape(30),
         colors = ButtonDefaults.buttonColors(containerColor = backgroundState),
         enabled = isEnabled,

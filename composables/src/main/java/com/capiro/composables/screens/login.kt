@@ -173,6 +173,11 @@ private fun ContentSection(
 @Preview
 @Composable
 private fun LoginScreenCapiroPreview() {
+    Box {
+        Text(text = "Select an item")
+
+    }
+
     LoginScreenCapiro(
         iconAppResource = R.drawable.test_app_logo,
         onBackUpClick = { },

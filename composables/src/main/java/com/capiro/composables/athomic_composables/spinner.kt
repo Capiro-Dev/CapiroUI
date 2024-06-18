@@ -13,9 +13,11 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowDropDown
+import androidx.compose.material.icons.filled.KeyboardArrowDown
 import androidx.compose.material.icons.filled.Lock
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.Card
 import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.Icon
@@ -41,6 +43,7 @@ import com.capiro.composables.theme.GreenCapiro
 import com.capiro.composables.theme.GreenSecondCapiro
 import com.capiro.composables.theme.WhiteCapiro
 import com.capiro.composables.athomic_composables.textfield.TextFieldOutlinedCapiro
+import com.capiro.composables.theme.RedCapiro
 import getTypography
 
 @Composable
@@ -83,8 +86,7 @@ fun SpinnerSimpleCapiro(
             modifier = modifier
                 .clip(RoundedCornerShape(20))
                 .border(2.dp, borderColorSelected, RoundedCornerShape(20))
-                .background(backgroundColorSelected)
-            ,
+                .background(backgroundColorSelected),
             shape = RoundedCornerShape(20),
 
             colors = ButtonDefaults.buttonColors(
@@ -93,7 +95,11 @@ fun SpinnerSimpleCapiro(
             onClick = { expanded = !expanded },
             enabled = isEnabled
         ) {
-            Row (Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween, verticalAlignment = Alignment.CenterVertically){
+            Row(
+                Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.SpaceBetween,
+                verticalAlignment = Alignment.CenterVertically
+            ) {
                 Text(
                     selectedItem,
                     style = typography.bodyMedium,
@@ -150,38 +156,46 @@ private fun SpinnerSimpleCapiroPreview() {
 }
 
 
-
-
-
 @Composable
 fun CustomDropdown(
-    text:String,
+    text: String,
     selectedItem: String,
     items: List<String>,
     onItemSelectedChange: (String) -> Unit,
     isActivated: Boolean = true
 ) {
     var expanded by remember { mutableStateOf(false) }
-    val icon : ImageVector? = if (isActivated) Icons.Filled.Lock else null
+    val icon: ImageVector = if (isActivated) Icons.Filled.KeyboardArrowDown else Icons.Filled.Lock
+    val color: Color = if (isActivated) GrayDarkCapiro else RedCapiro
 
-
-    Row(
-        modifier = Modifier.fillMaxWidth(),
-        verticalAlignment = Alignment.CenterVertically,
-        horizontalArrangement = Arrangement.SpaceBetween
+    Column(
+        modifier = Modifier
+            .fillMaxWidth()
+            .clickable { if (isActivated) expanded = !expanded },
     ) {
+        Text(
+            text = text,
+            style = MaterialTheme.typography.bodySmall,
+            color = GrayDarkCapiro,
+            modifier = Modifier.padding(16.dp)
+        )
 
-        Box (modifier = Modifier.clickable { if (isActivated) expanded = !expanded }) {
-            TextFieldOutlinedCapiro(
-                textInput = selectedItem,
-                label =text,
-                onTextChangeEvent = { },
-                isEnabled = false,
-                iconDisable = icon,
-                backgroundColorDisabled = WhiteCapiro,
-                borderColorDisabled = if(selectedItem.isNotEmpty() || selectedItem != EMPTY ) GreenCapiro else GrayDarkCapiro,
-                fontColorDisabled =  GreenCapiro
-            )
+        Card(modifier = Modifier.fillMaxWidth()) {
+            Row {
+                Text(
+                    text = selectedItem,
+                    style = MaterialTheme.typography.bodyMedium,
+                    color = GreenCapiro,
+                    maxLines = 1,
+                    overflow = TextOverflow.Ellipsis,
+                    modifier = Modifier.padding(16.dp)
+                )
+
+                Icon(imageVector = icon, contentDescription = null, tint = color)
+
+
+            }
+
         }
 
 
@@ -200,7 +214,7 @@ fun CustomDropdown(
                             overflow = TextOverflow.Ellipsis,
                             color = Color.Black
                         )
-                       // Divider(thickness = 2.dp, color = GrayCake)
+                        // Divider(thickness = 2.dp, color = GrayCake)
                     }
                 }, onClick = {
                     expanded = false
@@ -215,23 +229,13 @@ fun CustomDropdown(
 @Preview
 @Composable
 private fun CustomDropdownPreview() {
-    val suggestions = listOf("Item1", "Item2", "Item3")
-    var selectedItem by remember { mutableStateOf(EMPTY) }
-    Box(
-        modifier = Modifier
-            .width(180.dp)
-            .padding(16.dp)
-    ) {
-        Row (modifier= Modifier.fillMaxWidth()){
-            CustomDropdown(
-                text = "itetem",
-                selectedItem = selectedItem,
-                items = suggestions,
-                onItemSelectedChange = { selectedItem = it }
-            )
-        }
+//    val suggestions = listOf("Item1", "Item2", "Item3")
+//    var selectedItem by remember { mutableStateOf(EMPTY) }
+
+            Text(text = "Select an item")
+
 
     }
-}
+
 
 
