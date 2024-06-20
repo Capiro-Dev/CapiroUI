@@ -1,6 +1,6 @@
 package com.capiro.composables.athomic_composables
 
-import android.util.Log
+
 import android.view.MotionEvent
 import androidx.annotation.DrawableRes
 import androidx.compose.foundation.BorderStroke
@@ -103,7 +103,6 @@ fun ButtonCapiro(
     }
 
     // typography
-    val typography = getTypography()
     Button(
         shape = RoundedCornerShape(30),
         colors = ButtonDefaults.buttonColors(containerColor = backgroundState),
@@ -120,13 +119,12 @@ fun ButtonCapiro(
                 text = text,
                 color = fontColorState,
                 fontWeight = FontWeight.Bold,
-                style = typography.bodyMedium,
             )
         })
 
 }
 
-@Preview
+@Preview(showSystemUi = true, showBackground = true)
 @Composable
 private fun ButtonCapiroPreview() {
     Box(modifier = Modifier.padding(8.dp)) {

@@ -1,5 +1,6 @@
 [versions]
-agp = "8.3.1"
+agp = "8.4.1"
+appcompatVersion = "1.4.1"
 kotlin = "1.9.0"
 coreKtx = "1.13.1"
 junit = "4.13.2"
@@ -13,6 +14,7 @@ material = "1.11.0"
 materialIconsExtended = "1.6.6"
 
 [libraries]
+androidx-appcompat-v141 = { module = "androidx.appcompat:appcompat", version.ref = "appcompatVersion" }
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
 androidx-material-icons-extended = { module = "androidx.compose.material:material-icons-extended", version.ref = "materialIconsExtended" }
 junit = { group = "junit", name = "junit", version.ref = "junit" }

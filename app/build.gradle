@@ -48,8 +48,7 @@ android {
 
 dependencies {
 
-    debugImplementation("androidx.compose.ui:ui-tooling")
-
+    implementation(libs.androidx.appcompat.v141)
     implementation libs.androidx.core.ktx
     implementation libs.androidx.lifecycle.runtime.ktx
     implementation libs.androidx.activity.compose
