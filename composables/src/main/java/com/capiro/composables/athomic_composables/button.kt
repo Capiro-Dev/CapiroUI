@@ -11,10 +11,13 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.defaultMinSize
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.paddingFromBaseline
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.BasicTextField
@@ -29,9 +32,12 @@ import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.LocalMinimumTouchTargetEnforcement
+import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.OutlinedTextFieldDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -52,6 +58,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import com.capiro.composables.theme.GrayClearCapiro
 import com.capiro.composables.theme.GrayDarkCapiro
 import com.capiro.composables.theme.GreenCapiro
@@ -66,7 +73,7 @@ import getTypography
 //********************************************
 //                  BUTTON
 //********************************************
-@OptIn(ExperimentalComposeUiApi::class)
+@OptIn(ExperimentalComposeUiApi::class, ExperimentalMaterial3Api::class)
 @Composable
 fun ButtonCapiro(
     modifier: Modifier = Modifier,
@@ -76,17 +83,14 @@ fun ButtonCapiro(
 
     // colors border
     border: Color = GreenCapiro,
-    borderPressed: Color = GreenCapiro,
     borderIsNotEnabled: Color = GrayDarkCapiro,
 
     // colors button
     fontColor: Color = WhiteCapiro,
-    fontColorPressed: Color = GreenCapiro,
     fontColorIsNotEnabled: Color = GrayDarkCapiro,
 
     // colors background
     background: Color = GreenCapiro,
-    backgroundPressed: Color = WhiteCapiro,
     backgroundIsNotEnabled: Color = GrayClearCapiro,
 ) {
 
@@ -102,9 +106,24 @@ fun ButtonCapiro(
         borderState = borderIsNotEnabled
     }
 
-    // typography
-    Button(
-        shape = RoundedCornerShape(30),
+    val typo=getTypography()
+
+    Box(
+        modifier = Modifier
+            .background(color = GreenCapiro, shape = RoundedCornerShape(30))
+            .clickable { onClick() }
+    ) {
+        Text(
+            text = text,
+            color = Color.White,
+            modifier = Modifier.padding(vertical = 4.dp, horizontal = 16.dp),
+            style = typo.displayMedium
+        )
+    }
+   /* // typography
+    OutlinedButton(
+        modifier = modifier.defaultMinSize(1.dp),
+        shape = RoundedCornerShape(0),
         colors = ButtonDefaults.buttonColors(containerColor = backgroundState),
         enabled = isEnabled,
         border = BorderStroke(2.dp, borderState),
@@ -114,13 +133,18 @@ fun ButtonCapiro(
             backgroundState = background
             fontColorState = fontColor
             borderState = border
-        }, content = {
+        },
+        contentPadding = PaddingValues(0.dp),
+        content = {
             Text(
+                modifier = Modifier
+                    .padding(0.dp)
+                    .background(Color.Red),
                 text = text,
                 color = fontColorState,
-                fontWeight = FontWeight.Bold,
+                style = typo.displayMedium
             )
-        })
+        })*/
 
 }
 
@@ -346,7 +370,7 @@ fun ButtonImageCapiro(
     size: Dp,
     modifier: Modifier = Modifier,
     label: String? = null,
-    color: Color = WhiteCapiro,
+    color: Color = Color.Transparent,
     borderColor: Color = GreenCapiro,
     isEnabled: Boolean = true
 ) {
@@ -357,57 +381,54 @@ fun ButtonImageCapiro(
 
     Column(horizontalAlignment = Alignment.CenterHorizontally) {
 
-        Card(
-            modifier = Modifier.size(size),
-            border = BorderStroke(2.dp, borderColor),
-            elevation = CardDefaults.cardElevation(cardElevation)
-        ) {
 
-            Box(modifier = Modifier.size(size), contentAlignment = Alignment.TopEnd) {
+        Box(modifier = Modifier.size(size), contentAlignment = Alignment.TopEnd) {
 
-                IconButton(
-                    onClick = { if (isEnabled) onClick() },
-                    enabled = isEnabled,
-                    modifier = modifier.size(size)
-                ) {
-                    Image(
-                        painter = painterResource(imageRes),
-                        contentDescription = null,
-                        modifier = modifier
-                            .fillMaxSize()
-                            .border(width = 2.dp, shape = RoundedCornerShape(20), color = color)
-                            .clip(RoundedCornerShape(20))
-                            .scale(0.8F)
-                    )
-                }
-
-
-                if (isEnabled.not()) {
-                    Icon(
-                        imageVector = Icons.Filled.Lock,
-                        contentDescription = null,
-                        tint = RedCapiro,
-                        modifier = Modifier.scale(0.8f)
-                    )
-                    Spacer(
-                        modifier = Modifier
-                            .fillMaxSize()
-                            .background(color = GrayDarkCapiro.copy(alpha = 0.5F))
-                    )
-
-                }
+            IconButton(
+                onClick = { if (isEnabled) onClick() },
+                enabled = isEnabled,
+                modifier = modifier
+                    .size(size)
+                    .background(color = Color.Transparent)
+            ) {
+                Image(
+                    painter = painterResource(imageRes),
+                    contentDescription = null,
+                    modifier = modifier
+                        .fillMaxSize()
+                        .border(width = 2.dp, shape = RoundedCornerShape(20), color = color)
+                        .clip(RoundedCornerShape(20))
+                        .scale(0.8F)
+                )
             }
 
+
+            if (isEnabled.not()) {
+                Icon(
+                    imageVector = Icons.Filled.Lock,
+                    contentDescription = null,
+                    tint = RedCapiro,
+                    modifier = Modifier.scale(0.8f)
+                )
+                Spacer(
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .background(color = GrayDarkCapiro.copy(alpha = 0.5F))
+                )
+
+            }
         }
 
-        if (label != null) {
-            Text(
-                text = label,
-                color = textColor,
-                style = getTypography().bodySmall,
-            )
-        }
     }
+
+    if (label != null) {
+        Text(
+            text = label,
+            color = textColor,
+            style = getTypography().bodySmall,
+        )
+    }
+
 
 }
 

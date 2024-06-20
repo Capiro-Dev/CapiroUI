@@ -25,7 +25,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.capiro.composables.theme.GreenCapiro
 import com.capiro.composables.theme.WhiteCapiro
-import com.capiro.capiroui.util_composables.DialogTitle
+import com.capiro.composables.util_composables.DialogTitle
 
 
 @Composable

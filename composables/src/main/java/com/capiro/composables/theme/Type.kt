@@ -50,8 +50,8 @@ private val Typography = Typography(
     ),
     displayMedium = TextStyle(
         fontFamily = customFont,
-        fontWeight = FontWeight.Bold,
-        fontSize = 28.sp,
+        fontWeight = FontWeight.Normal,
+        fontSize = 20.sp,
         lineHeight = 32.sp,
         letterSpacing = 0.sp
     ),

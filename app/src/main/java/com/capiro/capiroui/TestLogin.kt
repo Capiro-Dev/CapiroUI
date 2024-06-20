@@ -10,6 +10,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import com.capiro.composables.athomic_composables.ToastCapiro
 import com.capiro.composables.screens.LoginScreenCapiro
 import com.capiro.composables.R.drawable.test_app_logo
+import com.capiro.composables.athomic_composables.ButtonCapiro
 
 @Preview(showBackground = true)
 @Composable

@@ -44,7 +44,7 @@ import com.capiro.composables.athomic_composables.ButtonCapiro
 import com.capiro.composables.theme.GrayClearCapiro
 import com.capiro.composables.theme.GrayDarkCapiro
 import com.capiro.composables.theme.GreenCapiro
-import com.capiro.capiroui.util_composables.DialogTitle
+import com.capiro.composables.util_composables.DialogTitle
 import com.capiro.composables.R
 
 
