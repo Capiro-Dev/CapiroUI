@@ -9,36 +9,30 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.text.substring
 import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
 import com.capiro.composables.athomic_composables.ButtonCapiro
-import com.capiro.composables.theme.WhiteCapiro
 import com.capiro.composables.theme.GreenCapiro
+import com.capiro.composables.theme.WhiteCapiro
 import com.capiro.composables.util_composables.DialogTitle2
 import getTypography
 
-
 @Composable
-fun TwoOptionsDialogCapiro(
+fun OneOptionDialogCapiro(
     @DrawableRes imaResource: Int,
     boldText: String?=null,
     message: String,
     positiveButtonText: String,
-    negativeButtonText: String,
     onPositiveButtonClickEvent: () -> Unit,
-    onNegativeButtonClickEvent: () -> Unit,
     isDialogOpenState: Boolean
 ) {
 
@@ -46,32 +40,28 @@ fun TwoOptionsDialogCapiro(
     if (isDialogOpenState) {
         Dialog(onDismissRequest = { },
             content = {
-                TwoButtonsDialogLayout(
+                OneOptionDialogLayout(
                     imaResource = imaResource,
                     boldText=boldText,
                     message = message,
                     positiveButtonText = positiveButtonText,
-                    negativeButtonText = negativeButtonText,
                     onPositiveButtonClickEvent = onPositiveButtonClickEvent,
-                    onNegativeButtonClickEvent = onNegativeButtonClickEvent
                 )
             })
     }
 }
 
 @Composable
-private fun TwoButtonsDialogLayout(
+private fun OneOptionDialogLayout(
     @DrawableRes imaResource: Int,
     boldText: String?,
     message:String,
     positiveButtonText: String,
-    negativeButtonText: String,
     onPositiveButtonClickEvent: () -> Unit,
-    onNegativeButtonClickEvent: () -> Unit
 ) {
 
     // find the boldtext in the message and make it bold by using anotates string
-    var messageAnnotated =buildAnnotatedString { append( message)}
+    var messageAnnotated = buildAnnotatedString { append( message)}
 
     if (boldText!=null && message.contains(boldText)){
 
@@ -98,18 +88,15 @@ private fun TwoButtonsDialogLayout(
         verticalArrangement = Arrangement.spacedBy(16.dp)
     ) {
         DialogTitle2(imaResource)
+
         Text(
             text = messageAnnotated,
             color = GreenCapiro,
             style = getTypography().bodyMedium,
             textAlign = TextAlign.Justify
         )
-        Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween) {
-            ButtonCapiro(text = positiveButtonText, onClick = { onPositiveButtonClickEvent() })
-            ButtonCapiro(text = negativeButtonText, onClick = { onNegativeButtonClickEvent() })
+        Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.Center) {
+            ButtonCapiro(modifier = Modifier.padding(horizontal = 8.dp).fillMaxWidth() ,text = positiveButtonText, onClick = { onPositiveButtonClickEvent() })
         }
     }
 }
-
-
-

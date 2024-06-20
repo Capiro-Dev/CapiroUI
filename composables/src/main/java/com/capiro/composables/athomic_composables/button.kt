@@ -109,9 +109,10 @@ fun ButtonCapiro(
     val typo=getTypography()
 
     Box(
-        modifier = Modifier
+        modifier = modifier
             .background(color = GreenCapiro, shape = RoundedCornerShape(30))
-            .clickable { onClick() }
+            .clickable { onClick() },
+        contentAlignment = Alignment.Center
     ) {
         Text(
             text = text,
