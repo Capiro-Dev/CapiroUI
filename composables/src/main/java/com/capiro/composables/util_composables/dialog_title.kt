@@ -3,6 +3,7 @@ package com.capiro.composables.util_composables
 import androidx.annotation.DrawableRes
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.border
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -15,6 +16,7 @@ import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Close
 import androidx.compose.material.icons.filled.VerifiedUser
 import androidx.compose.material3.Divider
 import androidx.compose.material3.Icon
@@ -33,10 +35,17 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.capiro.composables.theme.GreenCapiro
+import getTypography
 
 
 @Composable
-fun DialogTitle(text: String, iconHeader: ImageVector) {
+fun DialogTitle(
+    text: String,
+    iconHeader: ImageVector,
+    onCloseClick : (() -> Unit)? = null
+) {
+
+    val typo = getTypography()
 
     Column(
         modifier = Modifier
@@ -45,38 +54,38 @@ fun DialogTitle(text: String, iconHeader: ImageVector) {
     ) {
 
 
-        Column {
 
 
             Row(
                 modifier = Modifier
+                    .padding(16.dp)
                     .fillMaxWidth()
                     .wrapContentHeight()
-                    .padding(vertical = 4.dp),
-                horizontalArrangement = Arrangement.Start, verticalAlignment = Alignment.CenterVertically
+                    .padding(vertical = 4.dp, horizontal = 16.dp),
+                horizontalArrangement = Arrangement.SpaceBetween, verticalAlignment = Alignment.CenterVertically
             ) {
-
-                Icon(
-                    modifier = Modifier.size(28.dp),
-                    imageVector = iconHeader,
-                    contentDescription = null,
-                    tint = GreenCapiro
-                )
-
                 Text(
                     text = text,
                     fontWeight = FontWeight.Bold,
                     color = GreenCapiro,
-                    style = MaterialTheme.typography.titleMedium,
+                    style = typo.titleLarge,
                     maxLines = 1,
                     overflow = TextOverflow.Ellipsis
                 )
 
+
+                Icon(
+                    modifier = Modifier.size(28.dp).clickable { onCloseClick!!() },
+                    imageVector = Icons.Filled.Close,
+                    contentDescription = null,
+                    tint = GreenCapiro
+                )
+
             }
-            Divider( modifier = Modifier.width(240.dp), thickness = 1.dp, color = Color.DarkGray)
+            Divider( modifier = Modifier.fillMaxWidth(), thickness = 3.dp, color = Color.DarkGray)
         }
 
-    }
+
 
 }
 

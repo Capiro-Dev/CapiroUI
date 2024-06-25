@@ -1,4 +1,4 @@
-package com.capiro.capiroui.dialogs
+package com.capiro.composables.dialogs
 
 import androidx.annotation.StringRes
 import androidx.compose.foundation.background
@@ -13,80 +13,85 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Circle
 import androidx.compose.material3.Divider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextField
+import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color.Companion.White
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
-import androidx.compose.ui.window.DialogProperties
+import com.capiro.composables.R
 import com.capiro.composables.athomic_composables.ButtonCapiro
+import com.capiro.composables.theme.GrayClearCapiro
 import com.capiro.composables.theme.GrayDarkCapiro
 import com.capiro.composables.theme.GreenCapiro
 import com.capiro.composables.util_composables.DialogTitle
-import com.capiro.composables.R
-
+import getTypography
 
 @Composable
-fun ListDialogCapiro(
-    modifier: Modifier = Modifier,
-    @StringRes titleIdRes: Int,
+fun ListTextFieldDialogCapiro(
+    modifier: Modifier= Modifier,
+    titleIdRes: Int,
     headerIcon: ImageVector,
     rowIcon: ImageVector,
-    isTheDialogOpenState: Boolean,
-    allData: Array<String>,
-    onSearchItemSelectedChangeState: (String) -> Unit,
-    onCloseDialogEvent: () -> Unit,
+    isDialogOpenState: Boolean,
+    dataList: List<String>,
+    text: String,
+    onTextChanged: (String) -> Unit,
+    onItemSelected: (String) -> Unit,
+    onClose: () -> Unit,
+    onAccept: () -> Unit
+
+
 ) {
-    if (isTheDialogOpenState) {
-        Dialog(
-            onDismissRequest = { onCloseDialogEvent() },
+    if (isDialogOpenState) {
+        Dialog(onDismissRequest = { onClose()},
             content = {
-                ListDialogLayout(
+                ListTextFieldDialogLayout(
                     modifier = modifier,
-                    titleIdRes = titleIdRes,
+                    text = text,
+                    onTextChanged = onTextChanged,
+                    titleIdRes =titleIdRes,
                     headerIcon = headerIcon,
                     rowIcon = rowIcon,
-                    allData = allData,
-                    searchItemSelectedState = onSearchItemSelectedChangeState,
-                    closeDialog = onCloseDialogEvent,
+                    allData = dataList.toTypedArray(),
+                    searchItemSelectedState = onItemSelected,
+                    onAccept = onAccept
                 )
-            }
-        )
+            })
     }
 }
 
 @Composable
-private fun ListDialogLayout(
+private fun ListTextFieldDialogLayout(
     modifier: Modifier,
+    text: String,
+    onTextChanged: (String) -> Unit,
     @StringRes titleIdRes: Int,
     headerIcon: ImageVector,
     rowIcon: ImageVector,
     allData: Array<String>,
     searchItemSelectedState: (String) -> Unit,
-    closeDialog: () -> Unit,
+    onAccept: () -> Unit,
 
     ) {
 
 
-    Column(modifier=Modifier.background(color = White, RoundedCornerShape(5))) {
+    Column(modifier= modifier.background(color = Color.White, RoundedCornerShape(5))) {
 
         // TITLE
         DialogTitle(text = stringResource(id = titleIdRes), iconHeader = headerIcon)
 
         Column(
-            modifier = Modifier
-//                .padding(vertical = 40.dp)
-                .padding(horizontal = 24.dp),
+            modifier = Modifier.padding(horizontal = 24.dp),
             verticalArrangement = Arrangement.SpaceBetween
         ) {
 
@@ -102,16 +107,34 @@ private fun ListDialogLayout(
                 }
             }
 
+            TextField(
+                colors = TextFieldDefaults.colors(
+                    focusedContainerColor = GrayClearCapiro,
+                    unfocusedContainerColor = GrayClearCapiro,
+                    disabledContainerColor = GrayClearCapiro,
+                    focusedIndicatorColor = Color.Transparent,
+                    unfocusedIndicatorColor = Color.Transparent,
+                    disabledIndicatorColor = Color.Transparent
+                ),
+                modifier = Modifier.clip( RoundedCornerShape(40)),
+                value = text,
+                onValueChange = onTextChanged,
+                textStyle = getTypography().bodyMedium,
+            )
 
-            // ACCEPT
-//            Row(horizontalArrangement = Arrangement.End, modifier = Modifier.fillMaxWidth()) {
-//                ButtonCapiro(
-//                    modifier = Modifier
-//                        .padding(horizontal = 16.dp)
-//                        .fillMaxWidth(),
-//                    text = stringResource(id = R.string.general_bt_closeDialog),
-//                    onClick = { closeDialog() })
-//            }
+
+            Spacer(modifier = Modifier.size(16.dp))
+
+
+            Row(horizontalArrangement = Arrangement.End, modifier = Modifier.fillMaxWidth()) {
+                ButtonCapiro(
+                    modifier = Modifier
+                        .padding(horizontal = 16.dp)
+                        .fillMaxWidth(),
+                    text = stringResource(id = R.string.general_bt_accept),
+                    onClick = { onAccept() })
+            }
+            Spacer(modifier = Modifier.size(16.dp))
 
         }
 
@@ -150,19 +173,4 @@ private fun ItemsList(
         }
         Divider(color = GreenCapiro, thickness = 1.dp)
     }
-}
-
-
-@Preview
-@Composable
-private fun ListDialogPreview() {
-    ListDialogCapiro(
-        titleIdRes = R.string.general_bt_closeDialog,
-        headerIcon = Icons.Filled.Circle,
-        rowIcon = Icons.Filled.Circle,
-        isTheDialogOpenState = true,
-        allData = arrayOf("data1", "data2", "data3"),
-        onSearchItemSelectedChangeState = {},
-        onCloseDialogEvent = {}
-    )
 }

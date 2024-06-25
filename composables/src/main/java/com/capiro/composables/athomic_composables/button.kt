@@ -118,7 +118,8 @@ fun ButtonCapiro(
             text = text,
             color = Color.White,
             modifier = Modifier.padding(vertical = 4.dp, horizontal = 16.dp),
-            style = typo.displayMedium
+            style = typo.displayMedium,
+            textAlign = TextAlign.Center
         )
     }
    /* // typography
