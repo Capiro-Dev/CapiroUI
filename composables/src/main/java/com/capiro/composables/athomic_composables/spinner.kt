@@ -51,7 +51,7 @@ import com.capiro.composables.theme.GrayDarkCapiro
 import com.capiro.composables.theme.GreenCapiro
 import com.capiro.composables.theme.GreenSecondCapiro
 import com.capiro.composables.theme.WhiteCapiro
-import com.capiro.composables.athomic_composables.textfield.TextFieldOutlinedCapiro
+import com.capiro.composables.textfield.TextFieldOutlinedCapiro
 import com.capiro.composables.theme.RedCapiro
 import getTypography
 

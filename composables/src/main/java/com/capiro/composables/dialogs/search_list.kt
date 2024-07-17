@@ -28,7 +28,7 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
-import com.capiro.composables.athomic_composables.textfield.TextFieldCapiro
+import com.capiro.composables.textfield.TextFieldCapiro
 import com.capiro.composables.theme.GrayClearCapiro
 import com.capiro.composables.theme.GrayDarkCapiro
 import com.capiro.composables.theme.GreenCapiro

@@ -11,4 +11,8 @@
     <string name="login_tt_user_label">Usuario</string>
     <string name="login_bt_back_up">Back up</string>
     <string name="general_bt_accept">Aceptar</string>
+    <string name="cappiro_name">Flores El Capiro S.A.</string>
+    <string name="general_bt_closeSesion">Cerrar Sesión</string>
+    <string name="general_bt_backUp">Back up</string>
+    <string name="general_bt_printers">Impresoras</string>
 </resources>

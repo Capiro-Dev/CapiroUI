@@ -1,4 +1,4 @@
-package com.capiro.composables.athomic_composables.textfield
+package com.capiro.composables.textfield
 
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Box

@@ -33,7 +33,7 @@ import com.capiro.composables.athomic_composables.ImageCapiro
 
 import com.capiro.composables.theme.BeigeCapiro
 import com.capiro.composables.R
-import com.capiro.composables.athomic_composables.textfield.TextFieldAndTileRoundedBorderCapiro
+import com.capiro.composables.textfield.TextFieldAndTileRoundedBorderCapiro
 import com.capiro.composables.theme.ErrorCapiro
 
 @Composable
