@@ -4,7 +4,7 @@ import androidx.compose.ui.graphics.Color
 
 val GreenCapiro= Color(0xFF41695B)
 val GreeWithAlphaCapiro= Color(0xA841695B)
-val GreenSecondCapiro= Color(0xFF00BD7B)
+val GreenSecondCapiro= Color(0xFF00E192)
 
 val BeigeCapiro = Color(0xFFE4E1D9)
 val OrangeCapiro = Color(0xFFF18A00)

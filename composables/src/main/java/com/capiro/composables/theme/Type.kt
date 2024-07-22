@@ -67,7 +67,7 @@ private val Typography = Typography(
     headlineLarge = TextStyle(
         fontFamily = customFont,
         fontWeight = FontWeight.Bold,
-        fontSize = 20.sp,
+        fontSize = 22.sp,
         lineHeight = 24.sp,
         letterSpacing = 0.sp
     ),

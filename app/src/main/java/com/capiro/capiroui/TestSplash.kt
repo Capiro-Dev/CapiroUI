@@ -3,6 +3,7 @@ package com.capiro.capiroui
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.Preview
 import com.capiro.capiroui.screens.SplashScreenCapiro
+import com.capiro.composables.dialogs.CustomDatePicker
 
 @Preview(showBackground = true)
 @Composable
