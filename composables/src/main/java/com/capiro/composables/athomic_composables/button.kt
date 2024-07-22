@@ -3,6 +3,7 @@ package com.capiro.composables.athomic_composables
 
 import android.view.MotionEvent
 import androidx.annotation.DrawableRes
+import androidx.annotation.StringRes
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -19,6 +20,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.paddingFromBaseline
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.BasicTextField
 import androidx.compose.material.icons.Icons
@@ -70,6 +72,105 @@ import com.capiro.composables.R
 import getTypography
 
 
+// ******************************************
+//                 FAB
+// ******************************************
+
+@Composable
+fun FabCapiro(
+    @DrawableRes imageRes1: Int? = null,
+    @DrawableRes imageRes2: Int? = null,
+    @DrawableRes imageRes3: Int? = null,
+
+    onClick1: (() -> Unit)? = null,
+    onClick2: (() -> Unit)? = null,
+    onClick3: (() -> Unit)? = null,
+
+    ) {
+
+
+    val isExpanded = remember { mutableStateOf(false) }
+
+    Column (horizontalAlignment = Alignment.CenterHorizontally) {
+        FabButtonItems(
+            isExpanded = isExpanded.value,
+
+            imageRes1 = imageRes1,
+            imageRes2 = imageRes2,
+            imageRes3 = imageRes3,
+
+            onClick1 = onClick1,
+            onClick2 = onClick2,
+            onClick3 = onClick3,
+        )
+
+        Spacer(modifier = Modifier.size(16.dp))
+
+        val imageFabe = if (isExpanded.value) R.drawable.fab_x else R.drawable.fab
+        FabButton(
+            imageRes = imageFabe,
+            onClick = { isExpanded.value = !isExpanded.value }
+        )
+
+
+    }
+
+
+}
+
+@Composable
+private fun FabButtonItems(
+    isExpanded: Boolean,
+
+    @DrawableRes imageRes1: Int? = null,
+    @DrawableRes imageRes2: Int? = null,
+    @DrawableRes imageRes3: Int? = null,
+
+    onClick1: (() -> Unit)? = null,
+    onClick2: (() -> Unit)? = null,
+    onClick3: (() -> Unit)? = null,
+) {
+
+    val borderCorner = remember {16.dp}
+    Column(
+        modifier = Modifier
+            .background(color = GreenCapiro, RoundedCornerShape(
+                topStart = borderCorner,
+                topEnd = borderCorner,
+                bottomEnd = borderCorner,
+                bottomStart = borderCorner
+            )).width(50.dp),
+        horizontalAlignment = Alignment.CenterHorizontally
+    ) {
+        if (isExpanded) {
+
+            FabButton(imageRes = imageRes1, onClick = onClick1)
+            FabButton(imageRes = imageRes2, onClick = onClick2)
+            FabButton(imageRes = imageRes3, onClick = onClick3)
+
+        }
+    }
+
+}
+
+@Composable
+private fun FabButton(
+    @DrawableRes imageRes: Int?,
+    onClick: (() -> Unit)?
+) {
+    if (imageRes != null) {
+        Image(
+            painter = painterResource(id = imageRes),
+            contentDescription = null,
+            modifier = Modifier
+                .padding(4.dp)
+                .size(50.dp)
+                .clickable { onClick?.invoke() },
+        )
+    }
+}
+
+
 //********************************************
 //                  BUTTON
 //********************************************
@@ -106,7 +207,7 @@ fun ButtonCapiro(
         borderState = borderIsNotEnabled
     }
 
-    val typo=getTypography()
+    val typo = getTypography()
 
     Box(
         modifier = modifier
@@ -122,31 +223,31 @@ fun ButtonCapiro(
             textAlign = TextAlign.Center
         )
     }
-   /* // typography
-    OutlinedButton(
-        modifier = modifier.defaultMinSize(1.dp),
-        shape = RoundedCornerShape(0),
-        colors = ButtonDefaults.buttonColors(containerColor = backgroundState),
-        enabled = isEnabled,
-        border = BorderStroke(2.dp, borderState),
-        onClick = {
-            onClick()
-            //release Button
-            backgroundState = background
-            fontColorState = fontColor
-            borderState = border
-        },
-        contentPadding = PaddingValues(0.dp),
-        content = {
-            Text(
-                modifier = Modifier
-                    .padding(0.dp)
-                    .background(Color.Red),
-                text = text,
-                color = fontColorState,
-                style = typo.displayMedium
-            )
-        })*/
+    /* // typography
+     OutlinedButton(
+         modifier = modifier.defaultMinSize(1.dp),
+         shape = RoundedCornerShape(0),
+         colors = ButtonDefaults.buttonColors(containerColor = backgroundState),
+         enabled = isEnabled,
+         border = BorderStroke(2.dp, borderState),
+         onClick = {
+             onClick()
+             //release Button
+             backgroundState = background
+             fontColorState = fontColor
+             borderState = border
+         },
+         contentPadding = PaddingValues(0.dp),
+         content = {
+             Text(
+                 modifier = Modifier
+                     .padding(0.dp)
+                     .background(Color.Red),
+                 text = text,
+                 color = fontColorState,
+                 style = typo.displayMedium
+             )
+         })*/
 
 }
 
@@ -433,6 +534,7 @@ fun ButtonImageCapiro(
 
 
 }
+
 
 @Preview
 @Composable

@@ -14,13 +14,9 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.text.SpanStyle
-import androidx.compose.ui.text.buildAnnotatedString
-import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.capiro.capiroui.dialogs.ListDialogCapiro
+import com.capiro.composables.dialogs.ListDialogCapiro
 import com.capiro.composables.athomic_composables.ButtonCapiro
 import com.capiro.composables.dialogs.ListTextFieldDialogCapiro
 import com.capiro.composables.dialogs.OneOptionDialogCapiro

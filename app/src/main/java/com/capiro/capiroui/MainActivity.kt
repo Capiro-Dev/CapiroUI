@@ -39,7 +39,6 @@ import com.capiro.composables.textfield.TextFieldAndTileRoundedBorderCapiro
 import com.capiro.composables.textfield.TextFieldCapiro
 import com.capiro.composables.textfield.TextFieldOutlinedCapiro
 import com.capiro.composables.textfield.TextFieldRoundedBorderCapiro
-import com.capiro.composables.util_composables.CurrentAccountMenu
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -168,12 +167,7 @@ fun UserProfileCard(
 @Preview(showBackground = true)
 @Composable
 fun UserProfileCardPreview() {
-    CurrentAccountMenu(
-        user = "User",
-        onBackUpClick = { },
-        onLogoutClick = { },
-        onPrintersClick = {}
-    )
+
 }
 
 

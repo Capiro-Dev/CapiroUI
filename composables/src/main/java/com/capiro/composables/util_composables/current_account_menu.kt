@@ -1,12 +1,16 @@
 package com.capiro.composables.util_composables
 
+import android.util.Log
+import androidx.appcompat.widget.Toolbar
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
@@ -30,19 +34,60 @@ import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.compose.ui.window.Dialog
+import androidx.compose.ui.window.DialogProperties
 import com.capiro.composables.R
 import com.capiro.composables.theme.GreenCapiro
 import com.capiro.composables.theme.GreenSecondCapiro
 import getTypography
 
 @Composable
-fun CurrentAccountMenu(
+fun ToolbarMenuLayoutDialogCapiro(
     user: String,
     onLogoutClick: (() -> Unit)? = null,
     onBackUpClick: (() -> Unit)? = null,
-    onPrintersClick: (() -> Unit)? = null
+    onPrintersClick: (() -> Unit)? = null,
+    isOpenDialog: Boolean,
+    onCloseDialog: () -> Unit = {}
 ) {
 
+
+    if (isOpenDialog) {
+
+        Dialog(
+            onDismissRequest = onCloseDialog,
+            properties = DialogProperties(usePlatformDefaultWidth = false,)
+        ) {
+            Box(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .clickable { onCloseDialog()
+                    Log.wtf("ToolbarMenuLayoutDialogCapiro", "clickable")
+                    }
+                    .padding(top = 42.dp)
+                    .background(Color.Transparent),
+                contentAlignment = Alignment.TopEnd
+            ) {
+                ToolbarMenuLayout(
+                    user = user,
+                    onLogoutClick = onLogoutClick,
+                    onBackUpClick = onBackUpClick,
+                    onPrintersClick = onPrintersClick
+                )
+            }
+        }
+
+    }
+}
+
+
+@Composable
+private fun ToolbarMenuLayout(
+    user: String,
+    onLogoutClick: (() -> Unit)? = null,
+    onBackUpClick: (() -> Unit)? = null,
+    onPrintersClick: (() -> Unit)? = null,
+) {
     Card(
         shape = RoundedCornerShape(16.dp),
         elevation = CardDefaults.elevatedCardElevation(8.dp),
@@ -68,7 +113,7 @@ fun CurrentAccountMenu(
                 CurrentAccountMenuOptions(
                     user = user,
                     onBackUpClick = onBackUpClick,
-                    onPrintersClick= onPrintersClick
+                    onPrintersClick = onPrintersClick
                 )
 
             }
@@ -107,7 +152,10 @@ private fun CurrentAccountMenuOptions(
 
     val typo = getTypography()
 
-    Column(modifier=Modifier.heightIn(min = 60.dp), verticalArrangement = Arrangement.SpaceEvenly) {
+    Column(
+        modifier = Modifier.heightIn(min = 60.dp),
+        verticalArrangement = Arrangement.SpaceEvenly
+    ) {
 
         // user
         Text(
@@ -180,7 +228,9 @@ fun CurrentAccountMenuTopBar(
 
             // company name
             Text(
-                modifier = Modifier.clickable { onCloseSession() }.weight(0.95f),
+                modifier = Modifier
+                    .clickable { onCloseSession() }
+                    .weight(0.95f),
                 text = stringResource(R.string.general_bt_closeSesion),
                 style = typography.bodySmall,
                 color = GreenCapiro,

@@ -1,4 +1,4 @@
-package com.capiro.capiroui.dialogs
+package com.capiro.composables.dialogs
 
 import androidx.annotation.StringRes
 import androidx.compose.foundation.background
@@ -28,8 +28,6 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
-import androidx.compose.ui.window.DialogProperties
-import com.capiro.composables.athomic_composables.ButtonCapiro
 import com.capiro.composables.theme.GrayDarkCapiro
 import com.capiro.composables.theme.GreenCapiro
 import com.capiro.composables.util_composables.DialogTitle
