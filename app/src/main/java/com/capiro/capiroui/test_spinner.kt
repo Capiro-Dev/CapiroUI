@@ -1,65 +1,126 @@
 import android.widget.Toast
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Build
+import androidx.compose.material.icons.filled.CheckCircle
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.capiro.capiroui.R
-import com.capiro.composables.athomic_composables.SpinnerButtonCapiro
-import com.capiro.composables.athomic_composables.SpinnerSimpleCapiro
+import com.capiro.composables.athomic_composables.spinners.SpinnerButtonCapiro
+import com.capiro.composables.athomic_composables.spinners.SpinnerButtonUnderlined
+import com.capiro.composables.athomic_composables.spinners.SpinnerUnderlined
+import com.capiro.composables.dialogs.ListTextFieldDialogCapiro
+import com.capiro.composables.theme.BeigeCapiro
 
 @Preview(showBackground = true)
 @Composable
 fun TestSpinners() {
     val context = LocalContext.current
 
-    Column(modifier = Modifier.padding(16.dp), verticalArrangement = Arrangement.spacedBy(8.dp)) {
+    val selectedItemUnderlined1 = remember { mutableStateOf("Selecciona ...") }
+    val selectedItemUnderlined2 = remember { mutableStateOf("item 1") }
+    val isDialogOpenState = remember { mutableStateOf(false) }
+    val dataList = listOf(
+        "10",
+        "20",
+        "30",
+        "40",
+        "10",
+        "20",
+        "30",
+        "40",
+        "10",
+        "20",
+        "30",
+        "40",
+        "10",
+        "20",
+        "30",
+        "40"
+    )
+    val dialogText = remember { mutableStateOf("") }
+
+
+    ListTextFieldDialogCapiro(
+        modifier = Modifier.padding(vertical = 68.dp),
+        titleIdRes = R.string.longitude,
+        isDialogOpenState = isDialogOpenState.value,
+        dataList = dataList,
+        text = dialogText.value,
+        onSelectionChanged = { dialogText.value = it },
+        onClose = { isDialogOpenState.value = false },
+        onAccept = {
+            isDialogOpenState.value = false
+            },
+        units = "cm"
+    )
+
+
+    Column(
+        modifier = Modifier
+            .fillMaxSize()
+            .background(color = BeigeCapiro)
+            .padding(16.dp), verticalArrangement = Arrangement.spacedBy(8.dp)
+    ) {
         SpinnerButtonCapiro(
-            labelIdResource = R.string.app_name,
-            itemSelected = "item selected",
-            onClicked = { Toast.makeText(context, "clicked", Toast.LENGTH_SHORT).show() }
+            labelResourceId = R.string.block,
+            itemSelected = "00 A",
+            onClick = { Toast.makeText(context, "clicked", Toast.LENGTH_SHORT).show() }
         )
 
         SpinnerButtonCapiro(
-            labelIdResource = R.string.app_name,
-            itemSelected = "item selected",
-            onClicked = { Toast.makeText(context, "clicked", Toast.LENGTH_SHORT).show() }
+            labelResourceId = R.string.bed,
+            itemSelected = "",
+            onClick = { Toast.makeText(context, "clicked", Toast.LENGTH_SHORT).show() }
         )
 
         SpinnerButtonCapiro(
-            labelIdResource = R.string.app_name,
-            itemSelected = "item selected",
-            onClicked = { Toast.makeText(context, "clicked", Toast.LENGTH_SHORT).show() }
+            labelResourceId = R.string.variety,
+            itemSelected = "Alma",
+            onClick = { Toast.makeText(context, "clicked", Toast.LENGTH_SHORT).show() }
         )
+
+
+
+        Spacer(modifier = Modifier.padding(8.dp))
 
         Row(modifier = Modifier.fillMaxWidth()) {
 
             Box(modifier = Modifier.weight(1f)) {
-                SpinnerButtonCapiro(
-                    labelIdResource = R.string.app_name,
-                    itemSelected = "item selected",
-                    onClicked = { Toast.makeText(context, "clicked", Toast.LENGTH_SHORT).show() }
+                SpinnerUnderlined(
+                    items = listOf("21", "22", "13"),
+                    labelResourceId = R.string.type,
+                    selectedItem = selectedItemUnderlined1.value,
+                    onItemSelectedChange = { selectedItemUnderlined1.value = it },
+                    isErrorActive = true
                 )
 
             }
+
+            Spacer(modifier = Modifier.size(16.dp))
 
             Box(modifier = Modifier.weight(1f)) {
-                SpinnerButtonCapiro(
-                    labelIdResource = R.string.app_name,
-                    itemSelected = "item selected",
-                    onClicked = { Toast.makeText(context, "clicked", Toast.LENGTH_SHORT).show() }
+                SpinnerButtonUnderlined(
+                    labelResourceId = R.string.type,
+                    selectedItem = dialogText.value,
+                    onClick = { isDialogOpenState.value = true },
+                    isErrorActive = true
                 )
-
             }
-
-
         }
-
     }
 }

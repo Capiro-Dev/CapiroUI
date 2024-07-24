@@ -1,3 +1,9 @@
 <resources>
     <string name="app_name">CapiroUI</string>
+    <string name="block">Bloque</string>
+    <string name="bed">Cama</string>
+    <string name="variety">Variedad</string>
+    <string name="degree">Capiro</string>
+    <string name="type">Tipo</string>
+    <string name="longitude">Longitud</string>
 </resources>

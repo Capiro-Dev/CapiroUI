@@ -15,6 +15,8 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.tooling.preview.Preview
 import com.capiro.composables.theme.GrayDarkCapiro
 import com.capiro.composables.theme.GreenCapiro
+import com.capiro.composables.theme.GreenSecondCapiro
+import getTypography
 
 @Composable
 fun RadioButtonCapiro(
@@ -29,7 +31,7 @@ fun RadioButtonCapiro(
         onClick = { onClick(identifier) },
         enabled = isEnabled,
         colors = RadioButtonDefaults.colors(
-            selectedColor = GreenCapiro,
+            selectedColor = GreenSecondCapiro,
             unselectedColor = GrayDarkCapiro,
             disabledSelectedColor = GrayDarkCapiro,
             disabledUnselectedColor = GrayDarkCapiro,
@@ -54,7 +56,11 @@ fun RadioButtonTextCapiro(
             onClick = onClick,
             isEnabled = isEnabled
         )
-        Text(text = identifier, color = GrayDarkCapiro, style = MaterialTheme.typography.bodyMedium)
+        Text(
+            text = identifier,
+            color = GreenCapiro,
+            style = getTypography().bodyMedium
+        )
 
     }
 }

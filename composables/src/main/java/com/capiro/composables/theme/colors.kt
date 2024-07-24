@@ -10,9 +10,9 @@ val BeigeCapiro = Color(0xFFE4E1D9)
 val OrangeCapiro = Color(0xFFF18A00)
 val GrayClearCapiro = Color(0xFFF0EEEE)
 val GrayDarkCapiro = Color(0xFF999999)
-val BlackCapiro = Color(0xFF000000)
+val BlackCapiro = Color(0xFF505050)
 val WhiteCapiro = Color(0xFFFFFFFF)
-val RedCapiro = Color(0xFFD63036)
+val RedCapiro = Color(0xFFCC1111)
 val ErrorCapiro = Color(0xFFF72129)
 
 

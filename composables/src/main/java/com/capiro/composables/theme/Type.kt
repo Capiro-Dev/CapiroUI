@@ -28,7 +28,7 @@ private val Typography = Typography(
     bodyMedium = TextStyle(
         fontFamily = customFont,
         fontWeight = FontWeight.Normal,
-        fontSize = 16.sp,
+        fontSize = 20.sp,
         lineHeight = 20.sp,
         letterSpacing = 0.5.sp
     ),

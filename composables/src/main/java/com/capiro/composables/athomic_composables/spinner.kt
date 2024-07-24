@@ -9,6 +9,7 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
@@ -85,8 +86,6 @@ fun SpinnerSimpleCapiro(
         if (!isEnabled) backgroundColorDisabled else if (expanded) backgroundColorPressed else backgroundColor
     val borderColorSelected =
         if (!isEnabled) borderColorDisable else if (expanded) borderColorPressed else borderColor
-
-
 
 
     Column {
@@ -202,100 +201,9 @@ fun CustomDropdown(
 
                 Icon(imageVector = icon, contentDescription = null, tint = color)
 
-
             }
 
-        }
-
-
-        DropdownMenu(
-            modifier = Modifier.background(Color.White),
-            expanded = expanded,
-            onDismissRequest = { expanded = false },
-        ) {
-            items.forEach { label ->
-                DropdownMenuItem(text = {
-                    Column {
-                        Text(
-                            text = label,
-                            style = MaterialTheme.typography.bodyMedium,
-                            maxLines = 1,
-                            overflow = TextOverflow.Ellipsis,
-                            color = Color.Black
-                        )
-                        // Divider(thickness = 2.dp, color = GrayCake)
-                    }
-                }, onClick = {
-                    expanded = false
-                    onItemSelectedChange(label)
-                })
-            }
         }
     }
 }
-
-
-@Composable
-fun SpinnerButtonCapiro(itemSelected:String,  @StringRes labelIdResource: Int,onClicked: () -> Unit,) {
-
-    Column(modifier = Modifier.fillMaxWidth(), verticalArrangement = Arrangement.spacedBy(4.dp)) {
-
-        //label
-        Text(
-            modifier = Modifier.padding(start = 16.dp),
-            text =stringResource(id = labelIdResource),
-            style = getTypography().bodySmall,
-            color = GrayDarkCapiro,
-        )
-
-        Card(
-            modifier = Modifier
-                .fillMaxWidth()
-                .clickable { onClicked() },
-            shape = RoundedCornerShape(30),
-            colors = CardDefaults.cardColors(containerColor = Color.White),
-            elevation = CardDefaults.elevatedCardElevation(defaultElevation = 8.dp)
-        ) {
-            Row(
-                horizontalArrangement = Arrangement.SpaceBetween,
-                verticalAlignment = Alignment.CenterVertically,
-                modifier = Modifier
-                    .padding(horizontal = 24.dp, vertical = 8.dp)
-                    .fillMaxWidth()
-            ) {
-
-                // text
-                Text(
-                    text = itemSelected,
-                    style = getTypography().bodyMedium,
-                    color = GreenCapiro,
-                )
-
-                // arrow icon
-                Image(
-                    modifier = Modifier.size(16.dp),
-                    painter = painterResource(id = R.drawable.down_arrow),
-                    contentDescription = null
-                )
-
-            }
-        }
-    }
-
-
-}
-
-
-@Preview
-@Composable
-private fun CustomDropdownPreview() {
-//    val suggestions = listOf("Item1", "Item2", "Item3")
-//    var selectedItem by remember { mutableStateOf(EMPTY) }
-
-    Text(text = "Select an item")
-
-
-}
-
-
 
