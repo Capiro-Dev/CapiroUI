@@ -122,10 +122,8 @@ private fun ContentSection(
             TextFieldAndTileRoundedBorderCapiro(
                 onTextChangeEvent = { onUserTextEvent(it) },
                 textInput = userState,
-                leadingIcon = Icons.Filled.Person,
                 label = stringResource(id = R.string.login_tf_user_label),
                 title = stringResource(id = R.string.login_tt_user_label),
-                isNumeric = false,
                 errorMessage = null,
                 imeAction = ImeAction.Next,
                 lines = 1
@@ -135,10 +133,8 @@ private fun ContentSection(
             TextFieldAndTileRoundedBorderCapiro(
                 onTextChangeEvent = { onUserPasswordEvent(it) },
                 textInput = passwordState,
-                leadingIcon = Icons.Filled.Lock,
                 label = stringResource(id = R.string.login_tf_password_label),
                 title = stringResource(id = R.string.login_tt_password_label),
-                isNumeric = false,
                 isPassword = true,
                 errorMessage = null,
                 imeAction = ImeAction.Done,

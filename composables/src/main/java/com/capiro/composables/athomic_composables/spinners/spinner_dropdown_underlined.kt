@@ -43,7 +43,7 @@ import getTypography
  * @param isErrorActive Boolean indicating if there's an error (affects label color).
  */
 @Composable
-fun SpinnerUnderlined(
+fun SpinnerDropdownUnderlined(
     items: List<String>,
     selectedItem: String,
     @StringRes labelResourceId: Int,

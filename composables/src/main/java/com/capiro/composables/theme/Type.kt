@@ -1,5 +1,6 @@
 
 
+import android.content.res.Resources
 import androidx.compose.material3.Typography
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.platform.LocalConfiguration
@@ -31,6 +32,7 @@ private val Typography = Typography(
         fontSize = 20.sp,
         lineHeight = 20.sp,
         letterSpacing = 0.5.sp
+
     ),
     bodySmall = TextStyle(
         fontFamily = customFont,
@@ -44,7 +46,7 @@ private val Typography = Typography(
     displayLarge = TextStyle(
         fontFamily = customFont,
         fontWeight = FontWeight.Bold,
-        fontSize = 34.sp,
+        fontSize = 46.sp,
         lineHeight = 40.sp,
         letterSpacing = 0.sp
     ),
@@ -205,5 +207,18 @@ fun getTypography(): Typography {
         Typography
     } else {
         TypographyLarge
+    }
+}
+
+object TypographyProvider {
+    val typography: Typography
+
+    init {
+        val configuration = Resources.getSystem().configuration
+        typography = if (configuration.screenWidthDp <= 400) {
+            Typography
+        } else {
+            TypographyLarge
+        }
     }
 }

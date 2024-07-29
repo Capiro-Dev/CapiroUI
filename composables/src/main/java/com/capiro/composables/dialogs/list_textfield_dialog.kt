@@ -3,6 +3,7 @@ package com.capiro.composables.dialogs
 import androidx.annotation.StringRes
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -27,12 +28,30 @@ import androidx.compose.ui.window.Dialog
 import com.capiro.composables.R
 import com.capiro.composables.athomic_composables.ButtonCapiro
 import com.capiro.composables.athomic_composables.RadioButtonTextCapiro
+import com.capiro.composables.athomic_composables.textfield.TextFieldSolidBackground
 import com.capiro.composables.theme.GrayClearCapiro
 import com.capiro.composables.theme.GreenCapiro
 import com.capiro.composables.theme.OrangeCapiro
 import getTypography
 /**
  * A composable function that displays a dialog with a list and text field.
+ *
+ * Example usage:
+ * ```
+ *   ListTextFieldDialogCapiro(
+ *         modifier = Modifier.padding(vertical = 68.dp),
+ *         titleIdRes = R.string.longitude,
+ *         isDialogOpenState = isDialogOpenState.value,
+ *         dataList = dataList,
+ *         text = dialogText.value,
+ *         onSelectionChanged = { dialogText.value = it },
+ *         onClose = { isDialogOpenState.value = false },
+ *         onAccept = {
+ *             isDialogOpenState.value = false
+ *             },
+ *         units = "cm"
+ *     )
+ * ```
  *
  * @param modifier The modifier to be applied to the layout.
  * @param titleIdRes The resource ID for the dialog title.
@@ -138,24 +157,14 @@ private fun ListTextFieldDialogLayout(
                     .fillMaxWidth(),
                 verticalAlignment = Alignment.CenterVertically
             ) {
-                TextField(
-                    colors = TextFieldDefaults.colors(
-                        focusedContainerColor = GrayClearCapiro,
-                        unfocusedContainerColor = GrayClearCapiro,
-                        disabledContainerColor = GrayClearCapiro,
-                        focusedIndicatorColor = Color.Transparent,
-                        unfocusedIndicatorColor = Color.Transparent,
-                        disabledIndicatorColor = Color.Transparent
-                    ),
-                    modifier = Modifier
-                        .clip(RoundedCornerShape(20.dp))
-                        .weight(1f),
-                    value = text,
-                    onValueChange = onSelectionChanged,
-                    textStyle = getTypography().bodyMedium,
-                    maxLines = 1,
-                    singleLine = true
-                )
+
+                Box(modifier = Modifier.weight(1f)){
+                    TextFieldSolidBackground(
+                        text = text,
+                        onTextChanged = onSelectionChanged
+                    )
+                }
+
 
                 Text(
                     text = units,

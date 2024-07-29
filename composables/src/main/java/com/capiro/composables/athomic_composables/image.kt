@@ -15,7 +15,7 @@ fun ImageCapiro(@DrawableRes imageSourceId:Int, modifier: Modifier = Modifier) {
         modifier=modifier,
         painter=painterResource(imageSourceId),
         contentDescription = null,
-        contentScale = ContentScale.Crop,
+        contentScale = ContentScale.Fit,
     )
 }
 

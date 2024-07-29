@@ -1,4 +1,6 @@
 import android.widget.Toast
+import androidx.annotation.DrawableRes
+import androidx.annotation.StringRes
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -9,9 +11,6 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Build
-import androidx.compose.material.icons.filled.CheckCircle
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -22,7 +21,8 @@ import androidx.compose.ui.unit.dp
 import com.capiro.capiroui.R
 import com.capiro.composables.athomic_composables.spinners.SpinnerButtonCapiro
 import com.capiro.composables.athomic_composables.spinners.SpinnerButtonUnderlined
-import com.capiro.composables.athomic_composables.spinners.SpinnerUnderlined
+import com.capiro.composables.athomic_composables.spinners.SpinnerDropdownCapiro
+import com.capiro.composables.athomic_composables.spinners.SpinnerDropdownUnderlined
 import com.capiro.composables.dialogs.ListTextFieldDialogCapiro
 import com.capiro.composables.theme.BeigeCapiro
 
@@ -101,7 +101,7 @@ fun TestSpinners() {
         Row(modifier = Modifier.fillMaxWidth()) {
 
             Box(modifier = Modifier.weight(1f)) {
-                SpinnerUnderlined(
+                SpinnerDropdownUnderlined(
                     items = listOf("21", "22", "13"),
                     labelResourceId = R.string.type,
                     selectedItem = selectedItemUnderlined1.value,
@@ -122,5 +122,16 @@ fun TestSpinners() {
                 )
             }
         }
+
+        Box(modifier = Modifier.fillMaxWidth()) {
+            SpinnerDropdownCapiro(
+                items = listOf("Alhambra - AF", "Bochica - BC", "Capri - CC", "San Sebastían - SS", "Bouquetera - BQ", "Valley VF", "Plantas Madres - PM"),
+                selectedItem = selectedItemUnderlined2.value,
+                onItemSelect = { selectedItemUnderlined2.value = it },
+                imageResourceId = com.capiro.composables.R.drawable.farm_secondary
+
+            )
+        }
+
     }
 }

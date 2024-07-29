@@ -207,18 +207,47 @@ fun TestDialog() {
     )
 
     SearchListDialogCapiro(
+        modifier = Modifier.padding(vertical = 80.dp),
         searchText = searchText,
         onSearchTextChange = { searchText = it },
         titleIdRes = R.string.app_name,
-        headerIcon = Icons.Filled.Star,
-        rowIcon = Icons.Filled.Star,
         isTheDialogOpenState = isTheDialogOpenListSearch,
-        allData = arrayOf("item 1", "item 2", "item 3"),
+        allData = arrayOf("item 1",
+            "item 2",
+            "item 2",
+            "item 2",
+            "item 2",
+            "item 2",
+            "itefffffffffffffffffffffffffffffffffffffffffffffm 3",
+            "item 4",
+            "item 5",
+            "item 6",
+            "item 7",
+            "item 8",
+            "item 9",
+            "itefffffffffffffffffffffffffffffffffffffffffffffm 3",
+            "item 4",
+            "item 5",
+            "item 6",
+            "item 7",
+            "item 8",
+            "item 9",
+            "item 4",
+            "item 5",
+            "item 6",
+            "item 7",
+            "item 8",
+            "item 9",
+            ),
+        onCleanText = { searchText = "" },
         onSearchItemSelectedChangeState = {
             Toast.makeText(context, it, Toast.LENGTH_SHORT).show()
             isTheDialogOpenListSearch = false
         },
         onCloseDialogEvent = { isTheDialogOpenListSearch = false }
     )
+
+
+
 
 }

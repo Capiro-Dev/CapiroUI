@@ -18,7 +18,6 @@ import androidx.compose.ui.text.input.ImeAction
 fun TextFieldAndTileRoundedBorderCapiro(
     textInput: String,
     onTextChangeEvent: (String) -> Unit,
-    isNumeric: Boolean = true,
     label: String,
     title: String,
     errorMessage: String?=null,
@@ -44,7 +43,6 @@ fun TextFieldAndTileRoundedBorderCapiro(
         TextFieldRoundedBorderCapiro(
             textInput = textInput,
             onTextChangeEvent = onTextChangeEvent,
-            isNumeric = isNumeric,
             label = label,
             typography = typography,
             leadingIcon = leadingIcon,

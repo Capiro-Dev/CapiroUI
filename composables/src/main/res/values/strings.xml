@@ -15,4 +15,5 @@
     <string name="general_bt_closeSesion">Cerrar Sesión</string>
     <string name="general_bt_backUp">Back up</string>
     <string name="general_bt_printers">Impresoras</string>
+    <string name="general_bt_more">|   ver más</string>
 </resources>
