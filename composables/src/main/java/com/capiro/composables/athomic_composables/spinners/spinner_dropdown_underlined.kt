@@ -46,7 +46,7 @@ import getTypography
 fun SpinnerDropdownUnderlined(
     items: List<String>,
     selectedItem: String,
-    @StringRes labelResourceId: Int,
+    @StringRes labelResourceId: Int? = null,
     onItemSelectedChange: (String) -> Unit,
     isErrorActive: Boolean = false
 ) {
@@ -99,7 +99,7 @@ fun SpinnerDropdownUnderlined(
  */
 @Composable
 private fun SpinnerUnderLinedSelectedItem(
-    @StringRes labelResourceId: Int,
+    @StringRes labelResourceId: Int?,
     selectedItem: String,
     onClick: () -> Unit,
     labelColor: Color
@@ -111,14 +111,16 @@ private fun SpinnerUnderLinedSelectedItem(
             .clickable { onClick() }
     ) {
         // Display the label
-        Text(
-            modifier = Modifier.padding(horizontal = 8.dp),
-            text = stringResource(id = labelResourceId),
-            style = getTypography().bodyMedium,
-            color = labelColor,
-            maxLines = 1,
-            overflow = TextOverflow.Ellipsis
-        )
+        if(labelResourceId != null) {
+            Text(
+                modifier = Modifier.padding(horizontal = 8.dp),
+                text = stringResource(id = labelResourceId),
+                style = getTypography().bodyMedium,
+                color = labelColor,
+                maxLines = 1,
+                overflow = TextOverflow.Ellipsis
+            )
+        }
 
         Row(
             modifier = Modifier

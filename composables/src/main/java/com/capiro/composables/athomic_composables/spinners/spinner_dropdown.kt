@@ -43,15 +43,24 @@ import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextOverflow
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.window.PopupProperties
-import com.capiro.composables.EMPTY
 import com.capiro.composables.R
 import com.capiro.composables.theme.GrayDarkCapiro
 import com.capiro.composables.theme.GreenCapiro
 import com.capiro.composables.theme.RedCapiro
-import getTypography
 
+
+/**
+ * A composable function that displays a spinner dropdown with a list of items.
+ *
+ * @param modifier Modifier for styling and layout adjustments.
+ * @param imageResourceId Resource ID for the drawable to be displayed alongside the spinner.
+ * @param items List of items to display in the dropdown menu.
+ * @param selectedItem The currently selected item in the dropdown.
+ * @param onItemSelect Callback to be invoked when an item is selected.
+ * @param isEnabled Boolean to control if the dropdown is enabled or not.
+ */
 @Composable
 fun SpinnerDropdownCapiro(
     modifier: Modifier = Modifier,
@@ -61,7 +70,6 @@ fun SpinnerDropdownCapiro(
     onItemSelect: (String) -> Unit,
     isEnabled: Boolean = true,
 ) {
-
     val isExpanded = remember { mutableStateOf(false) }
 
     Column(modifier = modifier) {
@@ -76,7 +84,6 @@ fun SpinnerDropdownCapiro(
             imageResourceId = imageResourceId
         )
 
-
         Spacer(modifier = Modifier.size(4.dp))
 
         SpinnerDropdownMenu(
@@ -85,9 +92,15 @@ fun SpinnerDropdownCapiro(
             onItemSelectedChange = onItemSelect
         )
     }
-
 }
 
+/**
+ * A composable function for displaying the dropdown menu items.
+ *
+ * @param isExpanded State to control the visibility of the dropdown menu.
+ * @param items List of items to display in the menu.
+ * @param onItemSelectedChange Callback to be invoked when an item is selected.
+ */
 @OptIn(ExperimentalComposeUiApi::class)
 @Composable
 private fun SpinnerDropdownMenu(
@@ -95,9 +108,7 @@ private fun SpinnerDropdownMenu(
     items: List<String>,
     onItemSelectedChange: (String) -> Unit,
 ) {
-
     var dropDownWidth by remember { mutableStateOf(0) }
-
 
     Box(
         modifier = Modifier
@@ -107,13 +118,12 @@ private fun SpinnerDropdownMenu(
             .padding(top = 16.dp)
             .onSizeChanged { dropDownWidth = it.width }
     ) {
-        MaterialTheme(    shapes = MaterialTheme.shapes.copy(extraSmall = RoundedCornerShape(16.dp))){
-
-        DropdownMenu(
-                modifier = Modifier.height(300.dp)
+        MaterialTheme(shapes = MaterialTheme.shapes.copy(extraSmall = RoundedCornerShape(16.dp))) {
+            DropdownMenu(
+                modifier = Modifier
+                    .height(300.dp)
                     .background(Color.White)
                     .width(with(LocalDensity.current) { dropDownWidth.toDp() }),
-                // Set the height as needed
                 expanded = isExpanded.value,
                 onDismissRequest = { isExpanded.value = false }
             ) {
@@ -124,7 +134,7 @@ private fun SpinnerDropdownMenu(
                             Column(modifier = Modifier.fillMaxWidth()) {
                                 Text(
                                     text = label,
-                                    style = getTypography().bodyMedium,
+                                    style = TypographyProvider.typography.bodyMedium,
                                     maxLines = 1,
                                     overflow = TextOverflow.Ellipsis,
                                     color = GreenCapiro
@@ -138,12 +148,18 @@ private fun SpinnerDropdownMenu(
                     )
                 }
             }
-
         }
     }
 }
 
-
+/**
+ * A composable function that displays the layout for the spinner dropdown.
+ *
+ * @param itemSelected The currently selected item in the spinner.
+ * @param onClick Callback to be invoked when the spinner layout is clicked.
+ * @param imageResourceId Resource ID for the drawable to be displayed alongside the spinner.
+ * @param isEnabled Boolean to control if the dropdown is enabled or not.
+ */
 @Composable
 private fun SpinnerDropdownLayout(
     itemSelected: String,
@@ -172,26 +188,26 @@ private fun SpinnerDropdownLayout(
                     .padding(vertical = 4.dp, horizontal = 16.dp),
                 verticalArrangement = Arrangement.Center
             ) {
-
                 Row(
                     modifier = Modifier.fillMaxWidth(),
                     horizontalArrangement = Arrangement.SpaceBetween,
                     verticalAlignment = Alignment.CenterVertically
                 ) {
-
-                    if (imageResourceId != null) {
-                        Image(
-                            painter = painterResource(id = imageResourceId),
-                            contentDescription = null
+                    Row {
+                        if (imageResourceId != null) {
+                            Image(
+                                painter = painterResource(id = imageResourceId),
+                                contentDescription = null
+                            )
+                        }
+                        // Display Text
+                        Text(
+                            modifier = Modifier.padding(start = 8.dp),
+                            text = itemSelected,
+                            style = TypographyProvider.typography.bodyMedium,
+                            color = textColor
                         )
                     }
-                    // Display Text
-                    Text(
-                        text = itemSelected,
-                        style = getTypography().bodyMedium,
-                        color = textColor
-                    )
-
                     // Arrow Icon
                     if (isEnabled) {
                         Image(
@@ -200,7 +216,7 @@ private fun SpinnerDropdownLayout(
                             modifier = Modifier.size(16.dp)
                         )
                     } else {
-                        //lock icon
+                        // Lock icon
                         Image(
                             imageVector = Icons.Default.Lock,
                             contentDescription = null,
@@ -208,9 +224,18 @@ private fun SpinnerDropdownLayout(
                             colorFilter = androidx.compose.ui.graphics.ColorFilter.tint(RedCapiro)
                         )
                     }
-
                 }
             }
         }
     }
+}
+@Preview
+@Composable
+fun SpinnerDropdownPreview() {
+    SpinnerDropdownCapiro(
+        imageResourceId = R.drawable.farm_secondary,
+        items = listOf("Item 1", "Item 2", "Item 3"),
+        selectedItem = "Item 1",
+        onItemSelect = { }
+    )
 }

@@ -49,6 +49,7 @@ import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.scale
+import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.SolidColor
 import androidx.compose.ui.graphics.vector.ImageVector
@@ -211,13 +212,13 @@ fun ButtonCapiro(
 
     Box(
         modifier = modifier
-            .background(color = GreenCapiro, shape = RoundedCornerShape(30))
+            .background(color = background, shape = RoundedCornerShape(30))
             .clickable { onClick() },
         contentAlignment = Alignment.Center
     ) {
         Text(
             text = text,
-            color = Color.White,
+            color = fontColor,
             modifier = Modifier.padding(vertical = 4.dp, horizontal = 16.dp),
             style = typo.displayMedium,
             textAlign = TextAlign.Center
