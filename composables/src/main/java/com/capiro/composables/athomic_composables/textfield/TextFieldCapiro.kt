@@ -1,34 +1,42 @@
-package com.capiro.composables.textfield
+package com.capiro.composables.athomic_composables.textfield
 
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.text.BasicTextField
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Lock
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
-import androidx.compose.material3.OutlinedTextFieldDefaults
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextFieldDefaults
+import androidx.compose.material3.OutlinedTextFieldDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.scale
 import androidx.compose.ui.graphics.SolidColor
+import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.capiro.composables.EMPTY
-import com.capiro.composables.theme.GrayDarkCapiro
+import androidx.compose.ui.tooling.preview.Preview
 import com.capiro.composables.theme.GreenCapiro
 import com.capiro.composables.theme.GreenSecondCapiro
+import com.capiro.composables.theme.GrayDarkCapiro
 import com.capiro.composables.theme.RedCapiro
-import getTypography
 
+/**
+ * A custom text field with a label and optional trailing icon, designed with rounded borders.
+ *
+ * @param textInput The current text input value.
+ * @param label The label text displayed above the text field.
+ * @param onTextChangeEvent Callback triggered when the text input changes.
+ * @param isEnabled Whether the text field is enabled for interaction.
+ */
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun TextFieldCapiro(
@@ -36,34 +44,32 @@ fun TextFieldCapiro(
     label: String,
     onTextChangeEvent: (String) -> Unit,
     isEnabled: Boolean = true,
+    isNumeric: Boolean = true
 ) {
-
     val interactionSource = remember { MutableInteractionSource() }
-    val typography = getTypography()
-
-
-
+    val typography = TypographyProvider.typography
+    val keyType = if (isNumeric) KeyboardType.Number else KeyboardType.Text
 
     BasicTextField(
         modifier = Modifier.fillMaxWidth(),
         value = textInput,
-        enabled = true,
+        enabled = isEnabled,
         textStyle = typography.bodyMedium.copy(textAlign = TextAlign.Center),
         singleLine = true,
+        keyboardOptions = KeyboardOptions(keyboardType = keyType),
         interactionSource = interactionSource,
         cursorBrush = SolidColor(GreenCapiro),
-        onValueChange = { onTextChangeEvent(it) }
+        onValueChange = onTextChangeEvent
     ) { innerTextField ->
         TextFieldDefaults.DecorationBox(
             value = textInput,
             innerTextField = innerTextField,
-            enabled = true,
+            enabled = isEnabled,
             singleLine = true,
             interactionSource = interactionSource,
             contentPadding = TextFieldDefaults.contentPaddingWithLabel(0.dp, 0.dp, 0.dp, 0.dp),
             visualTransformation = VisualTransformation.None,
             trailingIcon = {
-                // arrow icon
                 if (!isEnabled)
                     Icon(
                         imageVector = Icons.Filled.Lock,
@@ -75,7 +81,7 @@ fun TextFieldCapiro(
             label = {
                 Text(
                     text = label,
-                    color = if (textInput.isEmpty() || textInput == EMPTY || !isEnabled) GrayDarkCapiro else GreenSecondCapiro,
+                    color = if (textInput.isEmpty() || !isEnabled) GrayDarkCapiro else GreenSecondCapiro,
                     style = typography.labelSmall,
                 )
             },
@@ -99,7 +105,6 @@ fun TextFieldCapiro(
 @Preview
 @Composable
 private fun TextFieldCapiroPreview() {
-
     val text = remember { mutableStateOf("Text") }
     Box(
         modifier = Modifier

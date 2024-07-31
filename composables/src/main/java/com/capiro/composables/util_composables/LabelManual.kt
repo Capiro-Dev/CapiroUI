@@ -1,4 +1,4 @@
-package com.capiro.composables
+package com.capiro.composables.util_composables
 
 import TypographyProvider
 import androidx.compose.foundation.background
@@ -30,7 +30,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.capiro.composables.athomic_composables.CardCapiro
+import com.capiro.composables.athomic_composables.card.CardCapiro
 import com.capiro.composables.theme.BeigeCapiro
 import com.capiro.composables.theme.GreenCapiro
 

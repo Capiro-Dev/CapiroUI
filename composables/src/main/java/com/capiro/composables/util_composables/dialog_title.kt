@@ -17,6 +17,7 @@ import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Close
+import androidx.compose.material.icons.filled.Info
 import androidx.compose.material.icons.filled.VerifiedUser
 import androidx.compose.material3.Divider
 import androidx.compose.material3.Icon
@@ -34,66 +35,80 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.capiro.composables.R
 import com.capiro.composables.theme.GreenCapiro
 import getTypography
 
 
+
+/**
+ * A composable function to display a dialog title with an optional close button.
+ *
+ * @param text The text to display in the dialog title.
+ * @param onCloseClick A lambda function invoked when the close button is clicked. If `null`, the close button will not be shown.
+ *
+ * This composable function renders a dialog title with a text and an optional close icon button.
+ */
 @Composable
 fun DialogTitle(
     text: String,
-    iconHeader: ImageVector,
-    onCloseClick : (() -> Unit)? = null
+    onCloseClick: (() -> Unit)? = null
 ) {
-
     val typo = getTypography()
 
     Column(
         modifier = Modifier
             .wrapContentSize()
-            .fillMaxWidth(), horizontalAlignment = Alignment.CenterHorizontally
+            .fillMaxWidth(),
+        horizontalAlignment = Alignment.CenterHorizontally
     ) {
+        Row(
+            modifier = Modifier
+                .padding(16.dp)
+                .fillMaxWidth()
+                .wrapContentHeight()
+                .padding(vertical = 4.dp, horizontal = 16.dp),
+            horizontalArrangement = Arrangement.SpaceBetween,
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            Text(
+                text = text,
+                fontWeight = FontWeight.Bold,
+                color = GreenCapiro,
+                style = typo.titleLarge,
+                maxLines = 1,
+                overflow = TextOverflow.Ellipsis
+            )
 
-
-
-
-            Row(
-                modifier = Modifier
-                    .padding(16.dp)
-                    .fillMaxWidth()
-                    .wrapContentHeight()
-                    .padding(vertical = 4.dp, horizontal = 16.dp),
-                horizontalArrangement = Arrangement.SpaceBetween, verticalAlignment = Alignment.CenterVertically
-            ) {
-                Text(
-                    text = text,
-                    fontWeight = FontWeight.Bold,
-                    color = GreenCapiro,
-                    style = typo.titleLarge,
-                    maxLines = 1,
-                    overflow = TextOverflow.Ellipsis
-                )
-
-
+            // Close button
+            if (onCloseClick != null) {
                 Icon(
-                    modifier = Modifier.size(28.dp).clickable { onCloseClick!!() },
+                    modifier = Modifier
+                        .size(28.dp)
+                        .clickable { onCloseClick() },
                     imageVector = Icons.Filled.Close,
                     contentDescription = null,
                     tint = GreenCapiro
                 )
-
             }
-            Divider( modifier = Modifier.fillMaxWidth(), thickness = 3.dp, color = Color.DarkGray)
         }
 
-
-
+    }
 }
 
-
-
+/**
+ * A composable function to display a centered image with rounded corners.
+ *
+ * @param imageResource The drawable resource ID for the image to display.
+ *
+ * This composable function renders an image with rounded corners and a fixed size.
+ */
 @Composable
-fun DialogTitle2( @DrawableRes imageResource: Int) {
-    Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.Center) {
+fun DialogTitle2(@DrawableRes imageResource: Int) {
+    Row(
+        modifier = Modifier.fillMaxWidth(),
+        horizontalArrangement = Arrangement.Center
+    ) {
         Image(
             painter = painterResource(imageResource),
             contentDescription = null,
@@ -107,5 +122,15 @@ fun DialogTitle2( @DrawableRes imageResource: Int) {
 @Preview
 @Composable
 private fun DialogTitlePreview() {
-    DialogTitle(text = "Title", iconHeader = Icons.Filled.VerifiedUser)
+    DialogTitle(
+        text = "Dialog Title",
+        onCloseClick = { /* Handle close click */ }
+    )
 }
+
+@Preview
+@Composable
+private fun DialogTitle2Preview() {
+    DialogTitle2(imageResource = R.drawable.flower)
+}
+

@@ -1,6 +1,5 @@
-package com.capiro.capiroui.screens
+package com.capiro.composables.screens
 
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -17,12 +16,18 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.capiro.composables.athomic_composables.ImageCapiro
+import com.capiro.composables.athomic_composables.image.ImageCapiro
 import com.capiro.composables.theme.GreenCapiro
 
 
+
+/**
+ * A splash screen layout that displays an app icon, a support message, and the app version.
+ *
+ * @param iconAppResource The drawable resource ID of the app icon to be displayed on the splash screen.
+ * @param version The version string to be displayed at the bottom of the splash screen.
+ */
 @Composable
 fun SplashScreenCapiro(
     iconAppResource: Int,

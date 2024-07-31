@@ -18,66 +18,78 @@ import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.withStyle
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
-import com.capiro.composables.athomic_composables.ButtonCapiro
+import com.capiro.composables.R
+import com.capiro.composables.athomic_composables.buttons.ButtonCapiro
 import com.capiro.composables.theme.GreenCapiro
 import com.capiro.composables.theme.WhiteCapiro
 import com.capiro.composables.util_composables.DialogTitle2
 import getTypography
 
+
+/**
+ * Displays a dialog with a single positive button and a message. The dialog is shown when [isDialogOpenState] is true.
+ *
+ * @param imaResource The drawable resource ID for the image to be displayed in the dialog.
+ * @param boldText Optional text within [message] that should be bolded.
+ * @param message The message text to be displayed in the dialog.
+ * @param positiveButtonText The text for the positive button.
+ * @param onPositiveButtonClickEvent Callback to be invoked when the positive button is clicked.
+ * @param isDialogOpenState Boolean flag to control the visibility of the dialog.
+ */
 @Composable
 fun OneOptionDialogCapiro(
     @DrawableRes imaResource: Int,
-    boldText: String?=null,
+    boldText: String? = null,
     message: String,
     positiveButtonText: String,
     onPositiveButtonClickEvent: () -> Unit,
     isDialogOpenState: Boolean
 ) {
-
-
     if (isDialogOpenState) {
-        Dialog(onDismissRequest = { },
-            content = {
-                OneOptionDialogLayout(
-                    imaResource = imaResource,
-                    boldText=boldText,
-                    message = message,
-                    positiveButtonText = positiveButtonText,
-                    onPositiveButtonClickEvent = onPositiveButtonClickEvent,
-                )
-            })
+        Dialog(onDismissRequest = { /* No action on dismiss */ }) {
+            OneOptionDialogLayout(
+                imaResource = imaResource,
+                boldText = boldText,
+                message = message,
+                positiveButtonText = positiveButtonText,
+                onPositiveButtonClickEvent = onPositiveButtonClickEvent
+            )
+        }
     }
 }
 
+/**
+ * Displays the layout of the dialog with a single positive button, an image, and a message. The [boldText] within the [message] will be bolded.
+ *
+ * @param imaResource The drawable resource ID for the image to be displayed in the dialog.
+ * @param boldText Optional text within [message] that should be bolded.
+ * @param message The message text to be displayed in the dialog.
+ * @param positiveButtonText The text for the positive button.
+ * @param onPositiveButtonClickEvent Callback to be invoked when the positive button is clicked.
+ */
 @Composable
 private fun OneOptionDialogLayout(
     @DrawableRes imaResource: Int,
     boldText: String?,
-    message:String,
+    message: String,
     positiveButtonText: String,
-    onPositiveButtonClickEvent: () -> Unit,
+    onPositiveButtonClickEvent: () -> Unit
 ) {
+    // Create annotated string for bold text
+    var messageAnnotated = buildAnnotatedString { append(message) }
 
-    // find the boldtext in the message and make it bold by using anotates string
-    var messageAnnotated = buildAnnotatedString { append( message)}
-
-    if (boldText!=null && message.contains(boldText)){
-
-        messageAnnotated= buildAnnotatedString {
+    if (boldText != null && message.contains(boldText)) {
+        messageAnnotated = buildAnnotatedString {
             append(message.substring(0, message.indexOf(boldText)))
-
             withStyle(style = SpanStyle(fontWeight = FontWeight.Bold)) {
                 append(boldText)
             }
-
-            append(message.substring(message.indexOf(boldText) + boldText.length, message.length))
+            append(message.substring(message.indexOf(boldText) + boldText.length))
         }
     }
-
-
-
 
     Column(
         modifier = Modifier
@@ -88,15 +100,36 @@ private fun OneOptionDialogLayout(
         verticalArrangement = Arrangement.spacedBy(16.dp)
     ) {
         DialogTitle2(imaResource)
-
         Text(
             text = messageAnnotated,
             color = GreenCapiro,
             style = getTypography().bodyMedium,
             textAlign = TextAlign.Justify
         )
-        Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.Center) {
-            ButtonCapiro(modifier = Modifier.padding(horizontal = 8.dp).fillMaxWidth() ,text = positiveButtonText, onClick = { onPositiveButtonClickEvent() })
+        Row(
+            modifier = Modifier.fillMaxWidth(),
+            horizontalArrangement = Arrangement.Center
+        ) {
+            ButtonCapiro(
+                modifier = Modifier
+                    .padding(horizontal = 8.dp)
+                    .fillMaxWidth(),
+                text = positiveButtonText,
+                onClick = { onPositiveButtonClickEvent() }
+            )
         }
     }
+}
+
+@Preview
+@Composable
+private fun OneOptionDialogCapiroPreview() {
+    OneOptionDialogCapiro(
+        imaResource = R.drawable.flower,
+        boldText = "Important",
+        message = "This is an important message with a bold text.",
+        positiveButtonText = "Ok",
+        onPositiveButtonClickEvent = { /* Handle positive button click */ },
+        isDialogOpenState = true
+    )
 }

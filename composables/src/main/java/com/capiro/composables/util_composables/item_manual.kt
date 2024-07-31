@@ -1,8 +1,10 @@
 package com.capiro.composables.util_composables
 
 import TypographyProvider
+import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.basicMarquee
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -17,24 +19,18 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.focus.focusModifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.capiro.composables.R
-import com.capiro.composables.athomic_composables.CardCapiro
-import com.capiro.composables.athomic_composables.ImageCapiro
+import com.capiro.composables.athomic_composables.card.CardCapiro
+import com.capiro.composables.athomic_composables.image.ImageCapiro
 import com.capiro.composables.theme.BeigeCapiro
 import com.capiro.composables.theme.GrayCapiro
-import com.capiro.composables.theme.GrayDarkCapiro
 import com.capiro.composables.theme.GreenCapiro
 import com.capiro.composables.theme.GreenSecondCapiro
 
@@ -149,7 +145,10 @@ private fun ItemManualLabel(
 private fun ItemManualMore(
     onClick: () -> Unit
 ) {
-    Row (Modifier.width(50.dp), horizontalArrangement = Arrangement.SpaceBetween, verticalAlignment = Alignment.CenterVertically){
+    Row (
+        Modifier
+            .padding(end = 20.dp)
+            .width(50.dp), horizontalArrangement = Arrangement.SpaceBetween, verticalAlignment = Alignment.CenterVertically){
         Spacer(modifier = Modifier
             .width(2.dp)
             .height(20.dp)
@@ -162,15 +161,46 @@ private fun ItemManualMore(
 }
 
 
+@OptIn(ExperimentalFoundationApi::class)
 @Preview
 @Composable
 private fun ItemManualPreview(){
-    Box(modifier = Modifier.fillMaxWidth().background(color = BeigeCapiro).padding(16.dp)) {
+    Box(modifier = Modifier
+        .fillMaxWidth()
+        .background(color = BeigeCapiro)
+        .padding(16.dp)) {
         ItemManual(
-            itemNumber = "2",
+            itemNumber = "23456",
             scannedLabel = "A22W33Y33-12345",
             date = "2002/23/07",
-            mainComposable = { Text(text = "Bonita") },
+            mainComposable = {
+                Column {
+                    Text(
+                        modifier = Modifier.basicMarquee(),
+                        text = "MAteo es muy sexy",
+                        color = GreenCapiro,
+                        style = TypographyProvider.typography.bodyMedium,
+
+                        )
+                    Text(
+                        modifier = Modifier.basicMarquee(),
+                        text = "Danilo es muy feo",
+                        color = GreenCapiro,
+                        style = TypographyProvider.typography.bodyMedium,
+
+                        )
+                    Text(
+                        modifier = Modifier.basicMarquee(),
+                        text = "Bonitaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                        color = GreenCapiro,
+                        style = TypographyProvider.typography.bodyMedium,
+
+                        )
+
+
+
+                }
+},
             onDeleteClick = {},
 
             )

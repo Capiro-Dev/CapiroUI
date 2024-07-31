@@ -15,8 +15,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.DownloadForOffline
-import androidx.compose.material.icons.filled.Lock
-import androidx.compose.material.icons.filled.Person
 import androidx.compose.material3.MaterialTheme.typography
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -27,18 +25,29 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.capiro.composables.athomic_composables.ButtonCapiro
-import com.capiro.composables.athomic_composables.ButtonIconCapiro
-import com.capiro.composables.athomic_composables.ImageCapiro
+import com.capiro.composables.athomic_composables.buttons.ButtonCapiro
+import com.capiro.composables.athomic_composables.buttons.ButtonIconCapiro
+import com.capiro.composables.athomic_composables.image.ImageCapiro
 
 import com.capiro.composables.theme.BeigeCapiro
 import com.capiro.composables.R
-import com.capiro.composables.textfield.TextFieldAndTileRoundedBorderCapiro
+import com.capiro.composables.athomic_composables.textfield.TextFieldAndTileRoundedBorderCapiro
 import com.capiro.composables.theme.ErrorCapiro
 
+/**
+ * Displays the login screen with an app icon, user and password fields, a backup button, and a login button.
+ *
+ * @param iconAppResource The drawable resource ID of the app icon to be displayed.
+ * @param onBackUpClick Callback to be invoked when the backup button is clicked.
+ * @param user The current state of the user text field.
+ * @param password The current state of the password text field.
+ * @param errorMessage Optional error message to be displayed.
+ * @param onUserTextChange Callback to be invoked when the user text changes.
+ * @param onPasswordTextChange Callback to be invoked when the password text changes.
+ * @param onLoginClick Callback to be invoked when the login button is clicked.
+ */
 @Composable
 fun LoginScreenCapiro(
-
     @DrawableRes iconAppResource: Int,
     onBackUpClick: (Context) -> Unit,
     user: String,
@@ -46,28 +55,33 @@ fun LoginScreenCapiro(
     errorMessage: String? = null,
     onUserTextChange: (String) -> Unit,
     onPasswordTextChange: (String) -> Unit,
-    onLoginClick: () -> Unit,
-
-    ) {
-
+    onLoginClick: () -> Unit
+) {
     ContentSection(
         userState = user,
         passwordState = password,
-        onStartBackUpProcessEvent = onBackUpClick,
-        errorMessage = errorMessage,
-        onUserTextEvent = onUserTextChange,
         iconAppResource = iconAppResource,
+        errorMessage = errorMessage,
+        onStartBackUpProcessEvent = onBackUpClick,
+        onUserTextEvent = onUserTextChange,
         onUserPasswordEvent = onPasswordTextChange,
-        onLoginButtonClicked = {
-            onLoginClick()
-        }
+        onLoginButtonClicked = onLoginClick
     )
-
 }
 
-
-// ********************************++*** CONTENT SECTION *******************************************
-
+/**
+ * Displays the content section of the login screen including user and password text fields,
+ * a backup button, and a login button.
+ *
+ * @param userState The current state of the user text field.
+ * @param passwordState The current state of the password text field.
+ * @param iconAppResource The drawable resource ID of the app icon to be displayed.
+ * @param errorMessage Optional error message to be displayed.
+ * @param onStartBackUpProcessEvent Callback to be invoked when the backup button is clicked.
+ * @param onUserTextEvent Callback to be invoked when the user text changes.
+ * @param onUserPasswordEvent Callback to be invoked when the password text changes.
+ * @param onLoginButtonClicked Callback to be invoked when the login button is clicked.
+ */
 @Composable
 private fun ContentSection(
     userState: String,
@@ -77,9 +91,8 @@ private fun ContentSection(
     onStartBackUpProcessEvent: (Context) -> Unit,
     onUserTextEvent: (String) -> Unit,
     onUserPasswordEvent: (String) -> Unit,
-    onLoginButtonClicked: () -> Unit,
+    onLoginButtonClicked: () -> Unit
 ) {
-
     val context = LocalContext.current
 
     Column(
@@ -95,16 +108,13 @@ private fun ContentSection(
                 .fillMaxWidth(),
             horizontalArrangement = Arrangement.End
         ) {
-
             ButtonIconCapiro(
                 image = Icons.Filled.DownloadForOffline,
                 onClick = { onStartBackUpProcessEvent(context) },
                 modifier = Modifier.size(32.dp),
                 label = stringResource(id = R.string.login_bt_back_up)
             )
-
         }
-
 
         Column(
             modifier = Modifier.fillMaxWidth(),
@@ -140,40 +150,36 @@ private fun ContentSection(
                 imeAction = ImeAction.Done,
                 lines = 1
             )
-            Box(Modifier.fillMaxWidth(), contentAlignment = Alignment.Center) {
-                Text(modifier=Modifier.height(16.dp), text = errorMessage ?: "", color = ErrorCapiro, style = typography.bodySmall)
+
+            Box(
+                modifier = Modifier.fillMaxWidth(),
+                contentAlignment = Alignment.Center
+            ) {
+                Text(
+                    modifier = Modifier.height(16.dp),
+                    text = errorMessage ?: "",
+                    color = ErrorCapiro,
+                    style = typography.bodySmall
+                )
             }
 
             // LOGIN BUTTON
             ButtonCapiro(
-                modifier= Modifier
+                modifier = Modifier
                     .padding(horizontal = 40.dp)
                     .fillMaxWidth(),
                 text = stringResource(id = R.string.login_bt_start_session),
-                onClick = {
-                    onLoginButtonClicked()
-                }
+                onClick = { onLoginButtonClicked() }
             )
 
             Spacer(modifier = Modifier.size(16.dp))
-
         }
-
-
     }
-
-
 }
-
 
 @Preview
 @Composable
 private fun LoginScreenCapiroPreview() {
-    Box {
-        Text(text = "Select an item")
-
-    }
-
     LoginScreenCapiro(
         iconAppResource = R.drawable.test_app_logo,
         onBackUpClick = { },

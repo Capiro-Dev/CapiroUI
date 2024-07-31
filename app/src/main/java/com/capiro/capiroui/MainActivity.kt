@@ -35,10 +35,10 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.capiro.capiroui.ui.theme.CapiroUITheme
-import com.capiro.composables.textfield.TextFieldAndTileRoundedBorderCapiro
-import com.capiro.composables.textfield.TextFieldCapiro
-import com.capiro.composables.textfield.TextFieldOutlinedCapiro
-import com.capiro.composables.textfield.TextFieldRoundedBorderCapiro
+import com.capiro.composables.athomic_composables.textfield.TextFieldAndTileRoundedBorderCapiro
+import com.capiro.composables.athomic_composables.textfield.TextFieldCapiro
+import com.capiro.composables.athomic_composables.textfield.TextFieldOutlinedCapiro
+import com.capiro.composables.athomic_composables.textfield.TextFieldRoundedBorderCapiro
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -82,7 +82,8 @@ fun TextFields() {
         TextFieldRoundedBorderCapiro(
             textInput = text.value,
             onTextChangeEvent = { text.value = it },
-            label = "TextFieldRoundedBorderCapiro"
+            label = "TextFieldRoundedBorderCapiro",
+            keyboardType = keyboardType
         )
         Spacer(modifier = Modifier.size(16.dp))
         TextFieldAndTileRoundedBorderCapiro(

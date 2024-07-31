@@ -5,6 +5,9 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Divider
 import androidx.compose.material3.Text
 import androidx.compose.runtime.*
@@ -17,7 +20,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
 import com.capiro.composables.R
-import com.capiro.composables.athomic_composables.CardCapiro
+import com.capiro.composables.athomic_composables.card.CardCapiro
 import com.capiro.composables.theme.GrayDarkCapiro
 import com.capiro.composables.theme.GreenCapiro
 import com.capiro.composables.theme.GreenSecondCapiro
@@ -27,15 +30,22 @@ import java.time.YearMonth
 import java.time.format.TextStyle
 import java.util.*
 
+/**
+ * Displays a custom date picker dialog. The dialog is shown when [isOpenDialog] is true.
+ *
+ * @param setLimit Optional parameter to limit selectable dates. Values can be "lower" for dates before today,
+ * "upper" for dates after today, or null for no limit.
+ * @param isOpenDialog Boolean flag to control the visibility of the dialog.
+ * @param onDateSelected Callback triggered when a date is selected.
+ * @param onCloseDialog Callback triggered when the dialog is closed.
+ */
 @Composable
 fun CustomDatePicker(
     setLimit: String? = null,
-    isOpenDialog : Boolean = false,
-    onDateSelected: (LocalDate) -> Unit ,
+    isOpenDialog: Boolean = false,
+    onDateSelected: (LocalDate) -> Unit,
     onCloseDialog: () -> Unit
 ) {
-
-
     if (isOpenDialog) {
         Dialog(onDismissRequest = { onCloseDialog() }) {
             CustomDatePickerLayout(
@@ -46,68 +56,77 @@ fun CustomDatePicker(
     }
 }
 
+/**
+ * Layout for the custom date picker dialog.
+ *
+ * @param setLimit Optional parameter to limit selectable dates. Values can be "lower" for dates before today,
+ * "upper" for dates after today, or null for no limit.
+ * @param onNewDateSelected Callback triggered when a new date is selected.
+ */
 @Composable
 fun CustomDatePickerLayout(
     setLimit: String? = null,
     onNewDateSelected: (LocalDate) -> Unit
-
 ) {
     var selectedDate by remember { mutableStateOf(LocalDate.now()) }
     var currentMonth by remember { mutableStateOf(YearMonth.now()) }
 
-    CardCapiro(paddingInner = 8.dp,
-        innerComposable = {
-
-            Column(
-                modifier = Modifier.padding(16.dp),
-                horizontalAlignment = Alignment.CenterHorizontally
-            ) {
-                MonthHeader(
-                    currentMonth = currentMonth,
-                    onPreviousMonth = { currentMonth = currentMonth.minusMonths(1) },
-                    onNextMonth = { currentMonth = currentMonth.plusMonths(1) }
-                )
-                Spacer(modifier = Modifier.height(16.dp))
-                DateGrid(
-                    setLimit = setLimit,
-                    currentMonth = currentMonth,
-                    selectedDate = selectedDate,
-                    onDateSelected = {
-                        onNewDateSelected(it)
-                        selectedDate = it }
-                )
-            }
+    Card(
+        modifier = Modifier.padding(8.dp),
+        elevation = CardDefaults.elevatedCardElevation(8.dp),
+        shape = RoundedCornerShape(8.dp)
+    ) {
+        Column(
+            modifier = Modifier.padding(16.dp),
+            horizontalAlignment = Alignment.CenterHorizontally
+        ) {
+            MonthHeader(
+                currentMonth = currentMonth,
+                onPreviousMonth = { currentMonth = currentMonth.minusMonths(1) },
+                onNextMonth = { currentMonth = currentMonth.plusMonths(1) }
+            )
+            Spacer(modifier = Modifier.height(16.dp))
+            DateGrid(
+                setLimit = setLimit,
+                currentMonth = currentMonth,
+                selectedDate = selectedDate,
+                onDateSelected = {
+                    onNewDateSelected(it)
+                    selectedDate = it
+                }
+            )
         }
-    )
+    }
 }
 
+/**
+ * Displays the month and year header with navigation arrows.
+ *
+ * @param currentMonth The currently displayed month and year.
+ * @param onPreviousMonth Callback triggered when the previous month arrow is clicked.
+ * @param onNextMonth Callback triggered when the next month arrow is clicked.
+ */
 @Composable
-fun MonthHeader(currentMonth: YearMonth, onPreviousMonth: () -> Unit, onNextMonth: () -> Unit) {
+fun MonthHeader(
+    currentMonth: YearMonth,
+    onPreviousMonth: () -> Unit,
+    onNextMonth: () -> Unit
+) {
     Row(
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.SpaceBetween,
         modifier = Modifier.fillMaxWidth()
     ) {
-
-        // TITLE
         Text(
-            modifier = Modifier.weight(1f),
-            text = "${
-                currentMonth.month.getDisplayName(
-                    TextStyle.FULL,
-                    Locale("es", "ES")
-                )
-            } ${currentMonth.year}".replaceFirstChar {
-                if (it.isLowerCase()) it.titlecase(
-                    Locale.ROOT
-                ) else it.toString()
+            text = "${currentMonth.month.getDisplayName(TextStyle.FULL, Locale("es", "ES"))} ${currentMonth.year}".replaceFirstChar {
+                if (it.isLowerCase()) it.titlecase(Locale.ROOT) else it.toString()
             },
             color = GreenCapiro,
             style = getTypography().headlineLarge,
-            fontWeight = FontWeight.Bold
+            fontWeight = FontWeight.Bold,
+            modifier = Modifier.weight(1f)
         )
 
-        // ARROW LEFT ARROW
         Image(
             modifier = Modifier
                 .size(32.dp)
@@ -117,7 +136,6 @@ fun MonthHeader(currentMonth: YearMonth, onPreviousMonth: () -> Unit, onNextMont
             contentDescription = null
         )
 
-        // ARROW RIGHT ARROW
         Image(
             modifier = Modifier
                 .size(32.dp)
@@ -126,23 +144,28 @@ fun MonthHeader(currentMonth: YearMonth, onPreviousMonth: () -> Unit, onNextMont
             painter = painterResource(id = R.drawable.flecha_dere),
             contentDescription = null
         )
-
-
     }
 }
 
+/**
+ * Displays a grid of dates for the selected month.
+ *
+ * @param currentMonth The currently displayed month and year.
+ * @param selectedDate The currently selected date.
+ * @param onDateSelected Callback triggered when a date is selected.
+ * @param setLimit Optional parameter to limit selectable dates. Values can be "lower" for dates before today,
+ * "upper" for dates after today, or null for no limit.
+ */
 @Composable
 fun DateGrid(
     currentMonth: YearMonth,
     selectedDate: LocalDate,
     onDateSelected: (LocalDate) -> Unit,
-    setLimit: String? = null,
+    setLimit: String? = null
 ) {
-
     val nowDate = LocalDate.now()
     val daysInMonth = currentMonth.lengthOfMonth()
     val firstDayOfWeek = currentMonth.atDay(1).dayOfWeek.value % 7 // Sunday as 0
-    val typo = getTypography()
 
     Column {
         Divider(modifier = Modifier.fillMaxWidth(), thickness = 2.dp, color = GreenCapiro)
@@ -153,7 +176,7 @@ fun DateGrid(
                     modifier = Modifier
                         .weight(1f)
                         .padding(4.dp),
-                    style = typo.bodySmall,
+                    style = getTypography().bodySmall,
                     color = GrayDarkCapiro
                 )
             }
@@ -165,23 +188,12 @@ fun DateGrid(
                     if (date in 1..daysInMonth) {
                         val currentDate = LocalDate.of(currentMonth.year, currentMonth.month, date)
                         val isSelected = currentDate == selectedDate
-                        val backgroundColor =
-                            if (isSelected) GreenSecondCapiro else Color.Transparent
-                        var textColor = if (isSelected) Color.White else GreenCapiro
-
-                        when(setLimit){
-                            "lower" -> {
-                                if (currentDate.isBefore(nowDate)) textColor = Color.Gray
-                            }
-                            "upper" -> {
-                                if (currentDate.isAfter(nowDate)) textColor = Color.Gray
-                            }
-                            else -> {textColor = GreenCapiro}
+                        val backgroundColor = if (isSelected) GreenSecondCapiro else Color.Transparent
+                        val textColor = when (setLimit) {
+                            "lower" -> if (currentDate.isBefore(nowDate)) Color.Gray else GreenCapiro
+                            "upper" -> if (currentDate.isAfter(nowDate)) Color.Gray else GreenCapiro
+                            else -> GreenCapiro
                         }
-                        //if (currentDate.isBefore(nowDate)) textColor = Color.Gray
-                       // if (lowerLimit != null && currentDate.isBefore(lowerDateLimit)) textColor = Color.Gray
-                        //if (upperLimit != null && currentDate.isAfter(upperDateLimit)) textColor = Color.Gray
-
                         Box(
                             contentAlignment = Alignment.Center,
                             modifier = Modifier
@@ -190,23 +202,15 @@ fun DateGrid(
                                 .padding(4.dp)
                                 .background(backgroundColor, CircleShape)
                                 .clickable {
-                                    when(setLimit){
-                                        "lower" -> {
-                                            if (currentDate.isBefore(nowDate)) return@clickable
-                                        }
-                                        "upper" -> {
-                                            if (currentDate.isAfter(nowDate)) return@clickable
-                                        }
+                                    if (textColor != Color.Gray) {
+                                        onDateSelected(currentDate)
                                     }
-                                   // if (lowerLimit != null && currentDate.isBefore(lowerDateLimit)) return@clickable
-                                   // if (upperLimit != null && currentDate.isAfter(upperDateLimit)) return@clickable
-                                    onDateSelected(currentDate)
                                 }
                         ) {
                             DateCell(
                                 date = currentDate,
-                                isSelected = currentDate == selectedDate,
-                                textColor
+                                isSelected = isSelected,
+                                textColor = textColor
                             )
                         }
                     } else {
@@ -218,17 +222,30 @@ fun DateGrid(
     }
 }
 
+/**
+ * Displays a single date cell in the date grid.
+ *
+ * @param date The date to be displayed.
+ * @param isSelected Boolean flag to indicate if the date is selected.
+ * @param textColor The color of the text to be displayed.
+ */
 @Composable
 fun DateCell(date: LocalDate, isSelected: Boolean, textColor: Color) {
-
-    val typo = getTypography()
-
     Text(
         text = date.dayOfMonth.toString(),
         color = textColor,
-        style = typo.bodySmall,
+        style = getTypography().bodySmall,
         fontWeight = if (isSelected) FontWeight.Bold else FontWeight.Normal
     )
-
 }
 
+@Preview
+@Composable
+private fun CustomDatePickerPreview() {
+    CustomDatePicker(
+        setLimit = "upper",
+        isOpenDialog = true,
+        onDateSelected = { },
+        onCloseDialog = { }
+    )
+}

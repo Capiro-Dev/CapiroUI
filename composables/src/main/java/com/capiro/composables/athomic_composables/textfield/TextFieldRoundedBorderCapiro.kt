@@ -1,4 +1,4 @@
-package com.capiro.composables.textfield
+package com.capiro.composables.athomic_composables.textfield
 
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
@@ -40,35 +40,38 @@ import getTypography
 import androidx.compose.material3.Typography
 import androidx.compose.ui.text.input.ImeAction
 
+
 @Composable
 fun TextFieldRoundedBorderCapiro(
     textInput: String,
     onTextChangeEvent: (String) -> Unit,
-    isNumeric: Boolean = true,
-    errorMessage: String? = null,
     label: String,
+    isNumeric: Boolean = true,
+    isPassword: Boolean = false,
+    errorMessage: String? = null,
     typography: Typography = getTypography(),
     leadingIcon: ImageVector? = null,
     trailingIcon: ImageVector? = null,
-    isPassword: Boolean = false,
     imeAction: ImeAction = ImeAction.Done,
-    lines: Int = 1
+    lines: Int = 1,
 ) {
-
     var isFocused by remember { mutableStateOf(false) }
     var isVisible by remember { mutableStateOf(isPassword) }
+
+    // Determine border color based on error state
     val borderColor = if (errorMessage != null) ErrorCapiro else GreenCapiro
 
+    // Set visual transformation based on whether it's a password field
+    val visualTransformation = if (isVisible) PasswordVisualTransformation() else VisualTransformation.None
 
-    val visualTransformation =
-        if (isVisible) PasswordVisualTransformation() else VisualTransformation.None
-    val keyboardOptions =
-        if (isNumeric) KeyboardOptions(keyboardType = KeyboardType.Number) else  KeyboardOptions(
-            keyboardType = KeyboardType.Password,
-            imeAction = imeAction
-        )
+    // Set keyboard options based on input type
+    val keyboardOptions = if (isNumeric) KeyboardOptions(keyboardType = KeyboardType.Number) else KeyboardOptions.Default.copy(
+        keyboardType = KeyboardType.Password,
+        imeAction = imeAction
+    )
+
     Column {
-
+        // Row for the input field and icons
         Row(
             modifier = Modifier
                 .border(
@@ -80,15 +83,16 @@ fun TextFieldRoundedBorderCapiro(
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.Start
         ) {
-
-            if (leadingIcon != null) {
+            // Leading icon (optional)
+            leadingIcon?.let {
                 Icon(
-                    imageVector = leadingIcon,
+                    imageVector = it,
                     contentDescription = null,
                     tint = GreenCapiro,
                 )
             }
 
+            // Input field
             BasicTextField(
                 value = textInput,
                 textStyle = typography.bodyMedium,
@@ -114,24 +118,35 @@ fun TextFieldRoundedBorderCapiro(
                 }
             )
 
-            if (trailingIcon != null)
+            // Trailing icon (optional)
+            trailingIcon?.let {
                 Icon(
-                    imageVector = trailingIcon,
+                    imageVector = it,
                     contentDescription = null,
                     tint = GreenCapiro,
                 )
+            }
 
-
-            if (isPassword)
+            // Password visibility toggle icon (for password fields)
+            if (isPassword) {
                 Icon(
                     modifier = Modifier.clickable { isVisible = !isVisible },
                     imageVector = if (isVisible) Icons.Filled.Visibility else Icons.Filled.VisibilityOff,
                     contentDescription = null,
                     tint = GreenSecondCapiro,
                 )
+            }
         }
-        Text(modifier=Modifier.height(16.dp).padding(start = 16.dp,top=4.dp), text = errorMessage ?: "", color = ErrorCapiro, style = typography.bodySmall)
 
+        // Error message (if any)
+        Text(
+            modifier = Modifier
+                .height(16.dp)
+                .padding(start = 16.dp, top = 4.dp),
+            text = errorMessage ?: "",
+            color = ErrorCapiro,
+            style = typography.bodySmall
+        )
     }
 }
 
@@ -139,7 +154,6 @@ fun TextFieldRoundedBorderCapiro(
 @Preview
 @Composable
 private fun TextFieldRoundedBorderPreview() {
-
     val text = remember { mutableStateOf("Text") }
     Box(
         modifier = Modifier
@@ -147,14 +161,13 @@ private fun TextFieldRoundedBorderPreview() {
             .padding(16.dp)
     ) {
         TextFieldRoundedBorderCapiro(
-            leadingIcon = Icons.Filled.VerifiedUser,
             textInput = text.value,
             onTextChangeEvent = { text.value = it },
-            typography = getTypography(),
-            isPassword = true,
+            label = "Label",
             isNumeric = false,
-            label = "Label"
+            isPassword = true,
+            typography = getTypography(),
+            leadingIcon = Icons.Filled.VerifiedUser
         )
     }
-
 }

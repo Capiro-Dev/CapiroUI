@@ -4,7 +4,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.tooling.preview.Preview
-import com.capiro.composables.switchcapiro.SwitchCapiro
+import com.capiro.composables.athomic_composables.switchcapiro.SwitchCapiro
 
 @Composable
 @Preview

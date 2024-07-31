@@ -1,4 +1,4 @@
-package com.capiro.composables.athomic_composables
+package com.capiro.composables.athomic_composables.toast
 
 import android.widget.Toast
 import androidx.compose.runtime.Composable

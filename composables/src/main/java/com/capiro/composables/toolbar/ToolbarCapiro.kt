@@ -23,15 +23,28 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.capiro.composables.R
-import com.capiro.composables.athomic_composables.TextCapiro
 import com.capiro.composables.theme.BeigeCapiro
 import com.capiro.composables.theme.GrayDarkCapiro
 import com.capiro.composables.theme.GreenCapiro
 import com.capiro.composables.util_composables.ToolbarMenuLayoutDialogCapiro
 import getTypography
 
+
+/**
+ * A toolbar component that displays farm information, section title, and a user menu button.
+ * The user menu button opens a dialog with options for backup, printers, and logout.
+ *
+ * @param user The username to be displayed in the user menu button.
+ * @param farm The name of the farm to be displayed on the toolbar.
+ * @param section The current section or area title to be displayed on the toolbar.
+ * @param userAbbreviation The abbreviated representation of the user's name, shown on the user menu button.
+ * @param onBackUpClick Optional lambda function to be invoked when the backup option is clicked in the user menu dialog.
+ * @param onPrintersClick Optional lambda function to be invoked when the printers option is clicked in the user menu dialog.
+ * @param onLogoutClick Optional lambda function to be invoked when the logout option is clicked in the user menu dialog.
+ */
 @Composable
 fun ToolbarCapiro(
     user: String,
@@ -42,8 +55,6 @@ fun ToolbarCapiro(
     onPrintersClick: (() -> Unit)? = null,
     onLogoutClick: (() -> Unit)? = null
 ) {
-
-
     val isMenuOpen = remember { mutableStateOf(false) }
 
     ToolbarMenuLayoutDialogCapiro(
@@ -70,7 +81,6 @@ fun ToolbarCapiro(
                 verticalAlignment = Alignment.CenterVertically,
                 horizontalArrangement = Arrangement.spacedBy(8.dp)
             ) {
-
                 Image(painter = painterResource(id = R.drawable.farm), contentDescription = null)
                 Text(
                     text = farm,
@@ -88,7 +98,8 @@ fun ToolbarCapiro(
             Box(
                 modifier = Modifier
                     .wrapContentSize()
-                    .clickable { isMenuOpen.value = true }, contentAlignment = Alignment.Center
+                    .clickable { isMenuOpen.value = true },
+                contentAlignment = Alignment.Center
             ) {
                 val backgroundResource =
                     if (isMenuOpen.value) R.drawable.perfil_hexagono_filled_orange else R.drawable.perfil_hexagono_filled
@@ -104,4 +115,15 @@ fun ToolbarCapiro(
         }
         Divider(thickness = 1.dp, color = GrayDarkCapiro)
     }
+}
+
+@Preview
+@Composable
+private fun ToolbarPreview() {
+    ToolbarCapiro(
+        user = "John Doe",
+        farm = "Farm Name",
+        section = "Section Title",
+        userAbbreviation = "JD"
+    )
 }

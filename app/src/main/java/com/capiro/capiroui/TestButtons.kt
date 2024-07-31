@@ -13,9 +13,10 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.capiro.composables.athomic_composables.ButtonCapiro
-import com.capiro.composables.athomic_composables.ButtonIconCapiro
-import com.capiro.composables.athomic_composables.ButtonImageCapiro
+import com.capiro.composables.R
+import com.capiro.composables.athomic_composables.buttons.ButtonCapiro
+import com.capiro.composables.athomic_composables.buttons.ButtonIconCapiro
+import com.capiro.composables.athomic_composables.buttons.ButtonImageCapiro
 
 @Preview(showBackground = true)
 @Composable
@@ -46,7 +47,7 @@ fun TestButtons() {
         })
 
         // IMAGE BUTTON
-        ButtonImageCapiro(imageRes = com.capiro.composables.R.drawable.plagas_transparent, onClick = {
+        ButtonImageCapiro(imageRes = R.drawable.plagas_transparent, onClick = {
             Log.d("ButtonImageCapiro", "ButtonImageCapiro clicked")
             toast.show()
         }, size = 70.dp)

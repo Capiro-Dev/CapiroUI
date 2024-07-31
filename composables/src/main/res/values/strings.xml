@@ -16,4 +16,8 @@
     <string name="general_bt_backUp">Back up</string>
     <string name="general_bt_printers">Impresoras</string>
     <string name="general_bt_more">|   ver más</string>
+    <string name="general_lb_sync">Sincronizar</string>
+    <string name="dialog_sync_bt_close">Aceptar</string>
+    <string name="dialog_sync_bt_done">sincronizado</string>
+    <string name="dialog_sync_bt_processing">Sincronizando</string>
 </resources>

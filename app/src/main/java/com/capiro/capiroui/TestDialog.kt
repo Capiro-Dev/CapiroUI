@@ -4,9 +4,7 @@ import android.widget.Toast
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Edit
 import androidx.compose.material.icons.filled.Lock
-import androidx.compose.material.icons.filled.Star
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -17,8 +15,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.capiro.composables.dialogs.ListDialogCapiro
-import com.capiro.composables.athomic_composables.ButtonCapiro
-import com.capiro.composables.dialogs.ListTextFieldDialogCapiro
+import com.capiro.composables.athomic_composables.buttons.ButtonCapiro
 import com.capiro.composables.dialogs.OneOptionDialogCapiro
 import com.capiro.composables.dialogs.SearchListDialogCapiro
 import com.capiro.composables.dialogs.TwoOptionsDialogCapiro
