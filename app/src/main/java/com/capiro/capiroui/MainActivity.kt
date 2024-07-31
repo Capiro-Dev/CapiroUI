@@ -82,8 +82,7 @@ fun TextFields() {
         TextFieldRoundedBorderCapiro(
             textInput = text.value,
             onTextChangeEvent = { text.value = it },
-            label = "TextFieldRoundedBorderCapiro",
-            keyboardType = keyboardType
+            label = "TextFieldRoundedBorderCapiro"
         )
         Spacer(modifier = Modifier.size(16.dp))
         TextFieldAndTileRoundedBorderCapiro(
