@@ -14,7 +14,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.capiro.composables.dialogs.ListDialogCapiro
 import com.capiro.composables.athomic_composables.buttons.ButtonCapiro
 import com.capiro.composables.dialogs.OneOptionDialogCapiro
 import com.capiro.composables.dialogs.SearchListDialogCapiro
@@ -89,7 +88,7 @@ fun TestDialog() {
 
 
 
-    ListDialogCapiro(
+   /* ListDialogCapiro(
         headerIcon = Icons.Filled.Lock,
         titleIdRes = R.string.app_name,
         allData = arrayOf(
@@ -201,7 +200,7 @@ fun TestDialog() {
         isTheDialogOpenState = isTheDialogOpenList,
         onCloseDialogEvent = { isTheDialogOpenList = false },
         rowIcon = Icons.Filled.Lock
-    )
+    )*/
 
     SearchListDialogCapiro(
         modifier = Modifier.padding(vertical = 80.dp),
