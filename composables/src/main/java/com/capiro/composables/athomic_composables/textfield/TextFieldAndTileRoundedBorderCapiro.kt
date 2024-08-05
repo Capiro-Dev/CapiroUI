@@ -24,6 +24,7 @@ import androidx.compose.ui.tooling.preview.Preview
  * @param onTextChangeEvent Callback triggered when the text input changes.
  * @param label The label for the text field.
  * @param title The title displayed above the text field.
+ * @param isNumeric Indicates whether the text field is for numeric input.
  * @param errorMessage An optional error message displayed below the text field.
  * @param typography The typography style to use for the text.
  * @param leadingIcon An optional leading icon for the text field.
@@ -38,6 +39,7 @@ fun TextFieldAndTileRoundedBorderCapiro(
     onTextChangeEvent: (String) -> Unit,
     label: String,
     title: String,
+    isNumeric: Boolean = false,
     errorMessage: String? = null,
     typography: Typography = TypographyProvider.typography,
     leadingIcon: ImageVector? = null,
@@ -62,6 +64,7 @@ fun TextFieldAndTileRoundedBorderCapiro(
             textInput = textInput,
             onTextChangeEvent = onTextChangeEvent,
             label = label,
+            isNumeric = isNumeric,
             errorMessage = errorMessage,
             typography = typography,
             leadingIcon = leadingIcon,
