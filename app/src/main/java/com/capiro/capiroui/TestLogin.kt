@@ -2,6 +2,7 @@ package com.capiro.capiroui
 
 import android.widget.Toast
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.Stable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.platform.LocalContext
@@ -12,17 +13,18 @@ import com.capiro.composables.R.drawable.test_app_logo
 @Preview(showBackground = true)
 @Composable
 fun Login() {
-    val toast = Toast.makeText(
-        LocalContext.current,
-        "click",
-        Toast.LENGTH_SHORT
-    )
+    val context = StableWrapper(LocalContext.current)
+
     val user = remember { mutableStateOf("") }
     val password = remember { mutableStateOf("") }
     val errorMessage = remember { mutableStateOf("") }
     LoginScreenCapiro(
         iconAppResource = test_app_logo,
-        onBackUpClick = {toast.show()},
+        onBackUpClick = {Toast.makeText(
+            context.value,
+            "click",
+            Toast.LENGTH_SHORT
+        ).show()},
         user = user.value,
         password = password.value,
         errorMessage = errorMessage.value,
@@ -34,3 +36,6 @@ fun Login() {
     )
 
 }
+
+@Stable
+data class StableWrapper<T>(val value: T)

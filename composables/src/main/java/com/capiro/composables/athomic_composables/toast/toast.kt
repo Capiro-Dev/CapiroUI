@@ -6,13 +6,15 @@ import androidx.compose.runtime.MutableState
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
+import com.capiro.composables.util_composables.StableWrapper
 
 @Composable
 fun ToastCapiro(messageResourceId: MutableState<Int?>){
 
+    val context = StableWrapper(LocalContext.current)
     if (messageResourceId.value != null) {
         Toast.makeText(
-            LocalContext.current,
+            context.value,
             stringResource(messageResourceId.value!!),
             Toast.LENGTH_SHORT
         ).show()

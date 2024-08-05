@@ -49,7 +49,7 @@ import com.capiro.composables.theme.ErrorCapiro
 @Composable
 fun LoginScreenCapiro(
     @DrawableRes iconAppResource: Int,
-    onBackUpClick: (Context) -> Unit,
+    onBackUpClick: () -> Unit,
     user: String,
     password: String,
     errorMessage: String? = null,
@@ -88,12 +88,11 @@ private fun ContentSection(
     passwordState: String,
     iconAppResource: Int,
     errorMessage: String? = null,
-    onStartBackUpProcessEvent: (Context) -> Unit,
+    onStartBackUpProcessEvent: () -> Unit,
     onUserTextEvent: (String) -> Unit,
     onUserPasswordEvent: (String) -> Unit,
     onLoginButtonClicked: () -> Unit
 ) {
-    val context = LocalContext.current
 
     Column(
         modifier = Modifier
@@ -110,7 +109,7 @@ private fun ContentSection(
         ) {
             ButtonIconCapiro(
                 image = Icons.Filled.DownloadForOffline,
-                onClick = { onStartBackUpProcessEvent(context) },
+                onClick = { onStartBackUpProcessEvent() },
                 modifier = Modifier.size(32.dp),
                 label = stringResource(id = R.string.login_bt_back_up)
             )
@@ -177,7 +176,7 @@ private fun ContentSection(
     }
 }
 
-@Preview
+/*@Preview
 @Composable
 private fun LoginScreenCapiroPreview() {
     LoginScreenCapiro(
@@ -189,4 +188,4 @@ private fun LoginScreenCapiroPreview() {
         onPasswordTextChange = { },
         onLoginClick = { }
     )
-}
+}*/
