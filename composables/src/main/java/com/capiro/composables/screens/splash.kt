@@ -47,7 +47,7 @@ fun SplashScreenCapiro(
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        Spacer(modifier = Modifier.weight(3f))
+        Spacer(modifier = Modifier.weight(2f))
 
         Column(
             modifier = Modifier
@@ -60,7 +60,7 @@ fun SplashScreenCapiro(
             // ICON APP
             ImageCapiro(
                 imageSourceId = iconAppResource,
-                modifier = Modifier.height(60.dp)
+                modifier = Modifier.height(240.dp)
             )
 
             Column(
@@ -71,9 +71,9 @@ fun SplashScreenCapiro(
                 Spacer(modifier = Modifier.height(40.dp))
                 Text(
                     text = version,
-                    style = typo.bodyMedium,
+                    style = typo.bodySmall,
                     color = GreenCapiro,
-                    fontWeight = FontWeight.Bold
+                    fontStyle = FontStyle.Italic
                 )
             }
         }
@@ -85,7 +85,7 @@ fun SplashScreenCapiro(
 @Composable
 private fun SplashScreenCapiroPreview() {
     SplashScreenCapiro(
-        iconAppResource = R.drawable.plagas_transparent,
+        iconAppResource = R.drawable.esquejes_logo,
         version = "v1.0.0"
     )
 }

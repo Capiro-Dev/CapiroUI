@@ -8,5 +8,5 @@ import com.capiro.composables.screens.SplashScreenCapiro
 @Preview(showBackground = true)
 @Composable
 fun TestSplashScreen(){
-    SplashScreenCapiro(iconAppResource = R.drawable.plagas_transparent, version = "1.0.0" )
+    SplashScreenCapiro(iconAppResource = R.drawable.esquejes_logo, version = "1.0.0" )
 }
