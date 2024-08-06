@@ -1,5 +1,6 @@
 package com.capiro.composables.screens
 
+import TypographyProvider
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -16,8 +17,11 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.capiro.composables.R
 import com.capiro.composables.athomic_composables.image.ImageCapiro
+import com.capiro.composables.theme.BeigeCapiro
 import com.capiro.composables.theme.GreenCapiro
 
 
@@ -33,10 +37,13 @@ fun SplashScreenCapiro(
     iconAppResource: Int,
     version: String
 ) {
+
+    val typo= TypographyProvider.typography
+
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .background(color = GreenCapiro),
+            .background(color = BeigeCapiro),
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
@@ -60,23 +67,12 @@ fun SplashScreenCapiro(
                 modifier = Modifier.fillMaxWidth(),
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
-                Text(
-                    text = "Soportado por:",
-                    style = MaterialTheme.typography.bodySmall,
-                    color = Color.White,
-                    fontStyle = FontStyle.Italic
-                )
-                Spacer(modifier = Modifier.height(8.dp))
-                Text(
-                    text = "Capiro dev",
-                    style = MaterialTheme.typography.bodyMedium,
-                    color = Color.White
-                )
+
                 Spacer(modifier = Modifier.height(40.dp))
                 Text(
                     text = version,
-                    style = MaterialTheme.typography.bodyMedium,
-                    color = Color.White,
+                    style = typo.bodyMedium,
+                    color = GreenCapiro,
                     fontWeight = FontWeight.Bold
                 )
             }
@@ -85,3 +81,11 @@ fun SplashScreenCapiro(
 }
 
 
+@Preview
+@Composable
+private fun SplashScreenCapiroPreview() {
+    SplashScreenCapiro(
+        iconAppResource = R.drawable.plagas_transparent,
+        version = "v1.0.0"
+    )
+}
