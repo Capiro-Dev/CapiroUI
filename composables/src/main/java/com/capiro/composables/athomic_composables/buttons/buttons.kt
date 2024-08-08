@@ -11,7 +11,10 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -45,33 +48,32 @@ fun ButtonCapiro(
     border: Color = GreenCapiro,
     borderIsNotEnabled: Color = GrayDarkCapiro,
 
-    // Text colors
-    fontColor: Color = WhiteCapiro,
-    fontColorIsNotEnabled: Color = GrayDarkCapiro,
 
     // Background colors
     background: Color = GreenCapiro,
     backgroundIsNotEnabled: Color = GrayClearCapiro,
+
+    // font style
+    textStyle: TextStyle = TypographyProvider.typography.bodyMedium
 ) {
     // Color state management
-    val fontColorState = if (isEnabled) fontColor else fontColorIsNotEnabled
     val backgroundState = if (isEnabled) background else backgroundIsNotEnabled
     val borderState = if (isEnabled) border else borderIsNotEnabled
 
-    val typo = TypographyProvider.typography
 
     Box(
         modifier = modifier
+            .shadow(8.dp, RoundedCornerShape(30))
             .background(color = backgroundState, shape = RoundedCornerShape(30))
             .border(1.dp, borderState, RoundedCornerShape(30))
-            .clickable(enabled = isEnabled) { onClick() },
+            .clickable(enabled = isEnabled) { onClick() }
+        ,
         contentAlignment = Alignment.Center
     ) {
         Text(
             text = text,
-            color = fontColorState,
             modifier = Modifier.padding(vertical = 4.dp, horizontal = 16.dp),
-            style = typo.displayMedium,
+            style = textStyle,
             textAlign = TextAlign.Center
         )
     }
