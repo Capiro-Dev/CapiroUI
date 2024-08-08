@@ -5,9 +5,6 @@
       <SelectionState runConfigName="app">
         <option name="selectionMode" value="DROPDOWN" />
       </SelectionState>
-      <SelectionState runConfigName="Login">
-        <option name="selectionMode" value="DROPDOWN" />
-      </SelectionState>
       <SelectionState runConfigName="PreviewSimpleTextField">
         <option name="selectionMode" value="DROPDOWN" />
         <DropdownSelection timestamp="2024-08-08T16:26:23.348145300Z">
@@ -20,6 +17,9 @@
         <DialogSelection />
       </SelectionState>
       <SelectionState runConfigName="TwoOptionsButtonPreview">
+        <option name="selectionMode" value="DROPDOWN" />
+      </SelectionState>
+      <SelectionState runConfigName="PreviewScannerFieldCapiro">
         <option name="selectionMode" value="DROPDOWN" />
       </SelectionState>
     </selectionStates>

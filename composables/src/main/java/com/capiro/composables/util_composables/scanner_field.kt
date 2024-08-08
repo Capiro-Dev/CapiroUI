@@ -1,8 +1,7 @@
 package com.capiro.composables.util_composables
 
 import android.util.Log
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.text.BasicTextField
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -26,7 +25,7 @@ import kotlinx.coroutines.launch
  * @param scanProcess A lambda function that takes a `String` as input. This function is called when the user enters text.
  */
 @Composable
-fun ScannerField(
+fun ScannerFieldCapiro(
     scanProcess: (String) -> Unit
 ) {
 
@@ -59,8 +58,7 @@ fun ScannerField(
             }
         },
         modifier = Modifier
-            .height(40.dp)
-            .fillMaxWidth()
+            .size(1.dp)
             .focusRequester(focusRequester)
             .onFocusChanged {
                 if (focus.value != it.isFocused) {
@@ -84,8 +82,8 @@ fun ScannerField(
 
 @Preview
 @Composable
-private fun PreviewSimpleTextField() {
-    ScannerField{
+private fun PreviewScannerFieldCapiro() {
+    ScannerFieldCapiro{
         Log.wtf("SimpleTextaaField", it)
     }
 }
