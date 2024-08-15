@@ -12,8 +12,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.capiro.composables.theme.GreenCapiro
-import com.capiro.composables.theme.GreenSecondCapiro
-import com.capiro.composables.util_composables.ItemScanner
+
+import com.capiro.composables.util_composables.ItemScannerCapiro
 
 @Composable
 @Preview
@@ -25,7 +25,7 @@ fun TestItems() {
             .fillMaxWidth()
             .height(100.dp)
     ) {
-        ItemScanner(
+        ItemScannerCapiro(
             itemNumber = "123456",
             scannedLabel = "A22Y32W33-44534",
             mainComposable = {
@@ -35,7 +35,6 @@ fun TestItems() {
                     color = GreenCapiro
                 )
             },
-            date = "12/12/2021",
             onExpandClick = {}
         )
     }
