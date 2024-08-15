@@ -37,10 +37,9 @@ import com.capiro.composables.theme.GreenSecondCapiro
  * @param onExpandClick Optional callback triggered when the expand button is clicked.
  */
 @Composable
-fun ItemScanner(
+fun ItemScannerCapiro(
     itemNumber: String,
     scannedLabel: String,
-    date: String,
     mainComposable: @Composable () -> Unit,
     onExpandClick: (() -> Unit)? = null,
 ) {
@@ -61,11 +60,6 @@ fun ItemScanner(
                                 .weight(1f)
                         ) {
                             mainComposable()
-                            Text(
-                                text = date,
-                                style = TypographyProvider.typography.bodySmall.merge(fontStyle = FontStyle.Italic),
-                                color = GreenCapiro,
-                            )
                         }
                         if (onExpandClick != null) {
                             ItemScannerMore {

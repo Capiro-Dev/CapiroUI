@@ -44,10 +44,9 @@ import com.capiro.composables.theme.GreenSecondCapiro
  * @param onDeleteClick remove the item
  */
 @Composable
-fun ItemManual(
+fun ItemManualCapiro(
     itemNumber: String,
     scannedLabel: String,
-    date: String,
     mainComposable: @Composable () -> Unit,
     onDeleteClick: (() -> Unit)? = null,
 
@@ -69,11 +68,6 @@ fun ItemManual(
                                 .weight(1f)
                         ) {
                             mainComposable()
-                            Text(
-                                text = date,
-                                style = TypographyProvider.typography.bodySmall,
-                                color = GreenCapiro,
-                            )
                         }
                         if (onDeleteClick != null) {
                             ItemManualMore {
@@ -169,10 +163,9 @@ private fun ItemManualPreview(){
         .fillMaxWidth()
         .background(color = BeigeCapiro)
         .padding(16.dp)) {
-        ItemManual(
+        ItemManualCapiro(
             itemNumber = "23456",
             scannedLabel = "A22W33Y33-12345",
-            date = "2002/23/07",
             mainComposable = {
                 Column {
                     Text(

@@ -122,7 +122,7 @@ fun ToolbarCapiro(
 private fun ToolbarPreview() {
     ToolbarCapiro(
         user = "John Doe",
-        farm = "Farm Name",
+        farm = "SS",
         section = "Section Title",
         userAbbreviation = "JD"
     )

@@ -18,6 +18,8 @@ import androidx.compose.material.icons.filled.DownloadForOffline
 import androidx.compose.material3.MaterialTheme.typography
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
@@ -176,16 +178,17 @@ private fun ContentSection(
     }
 }
 
-/*@Preview
+@Preview
 @Composable
 private fun LoginScreenCapiroPreview() {
+    val text = remember{ mutableStateOf("") }
     LoginScreenCapiro(
         iconAppResource = R.drawable.test_app_logo,
         onBackUpClick = { },
-        user = "",
+        user = text.value,
         password = "ssss",
-        onUserTextChange = { },
+        onUserTextChange = { text.value = it },
         onPasswordTextChange = { },
         onLoginClick = { }
     )
-}*/
+}
