@@ -47,7 +47,7 @@ fun SplashScreenCapiro(
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        Spacer(modifier = Modifier.weight(2f))
+        Spacer(modifier = Modifier.weight(1.5f))
 
         Column(
             modifier = Modifier
@@ -68,13 +68,14 @@ fun SplashScreenCapiro(
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
 
-                Spacer(modifier = Modifier.height(40.dp))
+                Spacer(modifier = Modifier.weight(5f))
                 Text(
                     text = version,
                     style = typo.bodySmall,
                     color = GreenCapiro,
                     fontStyle = FontStyle.Italic
                 )
+                Spacer(modifier = Modifier.weight(1f))
             }
         }
     }
