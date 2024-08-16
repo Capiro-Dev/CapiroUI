@@ -1,5 +1,6 @@
 package com.capiro.composables.screens
 
+import TypographyProvider
 import android.content.Context
 import androidx.annotation.DrawableRes
 import androidx.compose.foundation.background
@@ -22,8 +23,10 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -167,8 +170,11 @@ private fun ContentSection(
             // LOGIN BUTTON
             ButtonCapiro(
                 modifier = Modifier
-                    .padding(horizontal = 40.dp)
                     .fillMaxWidth(),
+                textStyle = TypographyProvider.typography.bodyMedium.copy(
+                    color = Color.White,
+                    fontWeight = FontWeight.Bold
+                ),
                 text = stringResource(id = R.string.login_bt_start_session),
                 onClick = { onLoginButtonClicked() }
             )
@@ -181,7 +187,7 @@ private fun ContentSection(
 @Preview
 @Composable
 private fun LoginScreenCapiroPreview() {
-    val text = remember{ mutableStateOf("") }
+    val text = remember { mutableStateOf("") }
     LoginScreenCapiro(
         iconAppResource = R.drawable.test_app_logo,
         onBackUpClick = { },
