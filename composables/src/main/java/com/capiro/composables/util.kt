@@ -1,8 +1,9 @@
 package com.capiro.composables
 
+import android.content.Context
 import android.media.MediaPlayer
 
-class AlarmEvents {
+class AlarmEvents(appContext: Context) {
     val ERROR_FORMAT_NOT_VALID = -1
     val ERROR_LABEL_ALREADY_READ = -2
     val ERROR_VARIETY_CHANGE = -4
@@ -10,26 +11,26 @@ class AlarmEvents {
 
     private val _alarmRightScan by lazy {
         MediaPlayer.create(
-            BaseApplicationCapiroUI.appContext,
+            appContext,
             R.raw.right
         )
     }
     private val _alarmWrongScan by lazy {
         MediaPlayer.create(
-            BaseApplicationCapiroUI.appContext,
+            appContext,
             R.raw.wrong
         )
     }
     private val _alarmRepeatedScan by lazy {
         MediaPlayer.create(
-            BaseApplicationCapiroUI.appContext,
+            appContext,
             R.raw.repeated
         )
     }
 
     private val _alarmVarietyChangeScan by lazy {
         MediaPlayer.create(
-            BaseApplicationCapiroUI.appContext,
+            appContext,
             R.raw.error
         )
     }
