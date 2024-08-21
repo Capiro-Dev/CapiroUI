@@ -2,8 +2,10 @@ package com.capiro.composables.util_composables
 
 import TypographyProvider
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.runtime.Composable
@@ -38,8 +40,7 @@ fun TwoOptionsButtonCapiro(
     text1: String,
     text2: String,
     onClick1: () -> Unit,
-    onClick2: () -> Unit,
-    width: Dp = 200.dp
+    onClick2: () -> Unit
 ) {
     // Retrieves the text style from a typography provider.
     val fontProvider = TypographyProvider.typography.bodyMedium
@@ -68,32 +69,35 @@ fun TwoOptionsButtonCapiro(
 
     // Displays the two buttons side by side with a slight overlap.
     Row(horizontalArrangement = Arrangement.spacedBy((-20).dp)) {
-        ButtonCapiro(
-            modifier = Modifier
-                .width(width)
-                .zIndex(zIndex1),
-            border = background1,
-            text = text1,
-            onClick = {
-                isFirstSelected = true
-                onClick1()
-            },
-            background = background1,
-            textStyle = textStyle1
-        )
-        ButtonCapiro(
-            border = background2,
-            modifier = Modifier
-                .width(width)
-                .zIndex(zIndex2),
-            text = text2,
-            onClick = {
-                isFirstSelected = false
-                onClick2()
-            },
-            background = background2,
-            textStyle = textStyle2
-        )
+        Box (modifier = Modifier.weight(1f).zIndex(zIndex1),) {
+
+            ButtonCapiro(
+                modifier = Modifier
+                    .fillMaxWidth(),
+                border = background1,
+                text = text1,
+                onClick = {
+                    isFirstSelected = true
+                    onClick1()
+                },
+                background = background1,
+                textStyle = textStyle1
+            )
+        }
+        Box (modifier = Modifier.weight(1f).zIndex(zIndex2),) {
+            ButtonCapiro(
+                border = background2,
+                modifier = Modifier
+                    .fillMaxWidth(),
+                text = text2,
+                onClick = {
+                    isFirstSelected = false
+                    onClick2()
+                },
+                background = background2,
+                textStyle = textStyle2
+            )
+        }
     }
 }
 
@@ -113,8 +117,7 @@ fun TwoOptionsButtonCapiroPreview() {
             text1 = "Option 1",
             text2 = "Option 2",
             onClick1 = {},
-            onClick2 = {},
-            width = 140.dp
+            onClick2 = {}
         )
     }
 }

@@ -47,6 +47,7 @@ fun TwoOptionsDialogCapiro(
     @DrawableRes imaResource: Int,
     boldText: String? = null,
     message: String,
+    innerComposable: (@Composable ()->Unit)? = null,
     positiveButtonText: String,
     negativeButtonText: String,
     onPositiveButtonClickEvent: () -> Unit,
@@ -59,6 +60,7 @@ fun TwoOptionsDialogCapiro(
                 imaResource = imaResource,
                 boldText = boldText,
                 message = message,
+                innerComposable=innerComposable,
                 positiveButtonText = positiveButtonText,
                 negativeButtonText = negativeButtonText,
                 onPositiveButtonClickEvent = onPositiveButtonClickEvent,
@@ -87,7 +89,8 @@ private fun TwoButtonsDialogLayout(
     positiveButtonText: String,
     negativeButtonText: String,
     onPositiveButtonClickEvent: () -> Unit,
-    onNegativeButtonClickEvent: () -> Unit
+    onNegativeButtonClickEvent: () -> Unit,
+    innerComposable: @Composable() (() -> Unit)?
 ) {
     // Create annotated string for bold text
     var messageAnnotated = buildAnnotatedString { append(message) }
@@ -117,6 +120,9 @@ private fun TwoButtonsDialogLayout(
             style = getTypography().bodyMedium,
             textAlign = TextAlign.Justify
         )
+        if (innerComposable != null) {
+            innerComposable()
+        }
         Row(
             modifier = Modifier.fillMaxWidth(),
             horizontalArrangement = Arrangement.SpaceBetween

@@ -50,7 +50,7 @@ fun ItemManualCapiro(
     mainComposable: @Composable () -> Unit,
     onDeleteClick: (() -> Unit)? = null,
 
-) {
+    ) {
     Column(modifier = Modifier.fillMaxWidth()) {
         CardCapiro(innerComposable = {
             Row(modifier = Modifier.fillMaxWidth()) {
@@ -139,17 +139,26 @@ private fun ItemManualLabel(
 private fun ItemManualMore(
     onClick: () -> Unit
 ) {
-    Row (
+    Row(
         Modifier
-            .padding(end = 20.dp)
-            .width(50.dp), horizontalArrangement = Arrangement.SpaceBetween, verticalAlignment = Alignment.CenterVertically){
-        Spacer(modifier = Modifier
-            .width(2.dp)
-            .height(20.dp)
-            .background(GrayCapiro))
-        Image(modifier = Modifier
-            .size(28.dp)
-            .clickable { onClick() }, painter = painterResource(id = R.drawable.delete), contentDescription = null )
+            .padding(end = 20.dp, top = 8.dp)
+            .width(50.dp),
+        horizontalArrangement = Arrangement.SpaceBetween,
+        verticalAlignment = Alignment.CenterVertically
+    ) {
+        Spacer(
+            modifier = Modifier
+                .width(2.dp)
+                .height(20.dp)
+                .background(GrayCapiro)
+        )
+        Image(
+            modifier = Modifier
+                .size(28.dp)
+                .clickable { onClick() },
+            painter = painterResource(id = R.drawable.delete),
+            contentDescription = null
+        )
 
     }
 }
@@ -158,11 +167,13 @@ private fun ItemManualMore(
 @OptIn(ExperimentalFoundationApi::class)
 @Preview
 @Composable
-private fun ItemManualPreview(){
-    Box(modifier = Modifier
-        .fillMaxWidth()
-        .background(color = BeigeCapiro)
-        .padding(16.dp)) {
+private fun ItemManualPreview() {
+    Box(
+        modifier = Modifier
+            .fillMaxWidth()
+            .background(color = BeigeCapiro)
+            .padding(16.dp)
+    ) {
         ItemManualCapiro(
             itemNumber = "23456",
             scannedLabel = "A22W33Y33-12345",
@@ -175,28 +186,10 @@ private fun ItemManualPreview(){
                         style = TypographyProvider.typography.bodyMedium,
 
                         )
-                    Text(
-                        modifier = Modifier.basicMarquee(),
-                        text = "Danilo es muy feo",
-                        color = GreenCapiro,
-                        style = TypographyProvider.typography.bodyMedium,
-
-                        )
-                    Text(
-                        modifier = Modifier.basicMarquee(),
-                        text = "Bonitaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
-                        color = GreenCapiro,
-                        style = TypographyProvider.typography.bodyMedium,
-
-                        )
-
-
-
                 }
-},
+            },
             onDeleteClick = {},
-
-            )
+        )
     }
 
 }

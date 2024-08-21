@@ -6,8 +6,8 @@
     <string name="login_bt_start_session">Ingresar</string>
     <string name="login_bt_backup">Back up</string>
     <string name="login_tt_password_label">Contraseña</string>
-    <string name="login_tf_password_label">Ingrese Contraseña…</string>
-    <string name="login_tf_user_label">Ingrese usuario…</string>
+    <string name="login_tf_password_label">Contraseña…</string>
+    <string name="login_tf_user_label">Usuario…</string>
     <string name="login_tt_user_label">Usuario</string>
     <string name="login_bt_back_up">Back up</string>
     <string name="general_bt_accept">Aceptar</string>

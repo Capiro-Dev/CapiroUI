@@ -68,9 +68,10 @@ fun ButtonCapiro(
     Box(
         modifier = modifier
             .shadow(8.dp, RoundedCornerShape(30))
+            .clickable(enabled = isEnabled) { onClick() }
             .background(color = backgroundState, shape = RoundedCornerShape(30))
             .border(1.dp, borderState, RoundedCornerShape(30))
-            .clickable(enabled = isEnabled) { onClick() },
+            .padding(vertical = 8.dp),
         contentAlignment = Alignment.Center
     ) {
         Text(
