@@ -3,10 +3,12 @@ package com.capiro.composables.util_composables
 import TypographyProvider
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
@@ -61,14 +63,14 @@ fun LabelManualCapiro(
     itemsW: List<String>,
     onTextChangeConsecutive: (String) -> Unit,
 ) {
-    CardCapiro(innerComposable = {
-        Row {
+    CardCapiro(modifier = Modifier.fillMaxWidth(), innerComposable = {
+        Row (modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.Center){
             // A
             TextLabelUnderlined(
                 title = "A",
                 textValue = textValueA,
                 onTextChange = onTextChangeA,
-                textLimit = 2
+                textLimit = 3
             )
 
             // Y
@@ -129,7 +131,7 @@ fun LabelManualFarmCapiro(
     onTextChangeConsecutive: (String) -> Unit,
 ) {
     CardCapiro(innerComposable = {
-        Row {
+        Row (modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.Center){
             // A
             TextLabelUnderlined(
                 title = "A",
@@ -340,7 +342,6 @@ fun LabelManualPreview() {
         Modifier
             .fillMaxSize()
             .background(BeigeCapiro)
-            .padding(16.dp)
     ) {
         LabelManualCapiro(
             textValueA = textValueA,

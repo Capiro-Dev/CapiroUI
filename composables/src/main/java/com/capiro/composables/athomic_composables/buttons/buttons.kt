@@ -15,6 +15,7 @@ import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontStyle
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -54,7 +55,10 @@ fun ButtonCapiro(
     backgroundIsNotEnabled: Color = GrayClearCapiro,
 
     // font style
-    textStyle: TextStyle = TypographyProvider.typography.bodyMedium
+    textStyle: TextStyle = TypographyProvider.typography.bodyMedium.copy(
+        color = WhiteCapiro,
+        fontWeight = FontWeight.Bold
+    )
 ) {
     // Color state management
     val backgroundState = if (isEnabled) background else backgroundIsNotEnabled
@@ -66,8 +70,7 @@ fun ButtonCapiro(
             .shadow(8.dp, RoundedCornerShape(30))
             .background(color = backgroundState, shape = RoundedCornerShape(30))
             .border(1.dp, borderState, RoundedCornerShape(30))
-            .clickable(enabled = isEnabled) { onClick() }
-        ,
+            .clickable(enabled = isEnabled) { onClick() },
         contentAlignment = Alignment.Center
     ) {
         Text(
