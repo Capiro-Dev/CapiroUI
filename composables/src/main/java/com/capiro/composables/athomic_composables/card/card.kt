@@ -29,12 +29,13 @@ import androidx.compose.ui.unit.dp
 fun CardCapiro(
     innerComposable: @Composable () -> (Unit),
     modifier: Modifier = Modifier,
+    backgroundColor: Color = Color.White,
     paddingInner: Dp = 16.dp) {
 
     Card(
         shape = RoundedCornerShape(16.dp),
         elevation = CardDefaults.elevatedCardElevation(8.dp),
-        colors = CardDefaults.cardColors(containerColor = Color.White),
+        colors = CardDefaults.cardColors(containerColor = backgroundColor),
         modifier = modifier
     )  {
         //Compose to be placed inside the card

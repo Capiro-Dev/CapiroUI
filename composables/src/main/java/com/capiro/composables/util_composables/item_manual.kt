@@ -33,6 +33,7 @@ import com.capiro.composables.theme.BeigeCapiro
 import com.capiro.composables.theme.GrayCapiro
 import com.capiro.composables.theme.GreenCapiro
 import com.capiro.composables.theme.GreenSecondCapiro
+import com.capiro.composables.theme.RedCapiro
 
 /**
  * A composable that displays an item scanner UI, including item number, label, date, and a main content section.
@@ -49,16 +50,22 @@ fun ItemManualCapiro(
     scannedLabel: String,
     mainComposable: @Composable () -> Unit,
     onDeleteClick: (() -> Unit)? = null,
+    color: Color
 
     ) {
     Column(modifier = Modifier.fillMaxWidth()) {
-        CardCapiro(innerComposable = {
+        CardCapiro(
+            backgroundColor = Color(0xFFF7BFBE),
+            innerComposable = {
             Row(modifier = Modifier.fillMaxWidth()) {
                 ItemManualHeader(itemNumber)
 
                 Column(modifier = Modifier.weight(1f), verticalArrangement = Arrangement.Top) {
                     Box(modifier = Modifier.fillMaxWidth()) {
-                        ItemManualLabel(scannedLabel)
+                        ItemManualLabel(
+                            color = color,
+                            label = scannedLabel
+                        )
                     }
 
                     Row(verticalAlignment = Alignment.CenterVertically) {
@@ -111,13 +118,14 @@ private fun ItemManualHeader(
  */
 @Composable
 private fun ItemManualLabel(
-    label: String
+    label: String,
+    color: Color
 ) {
     Box(
         modifier = Modifier
             .padding(horizontal = 8.dp)
             .fillMaxWidth()
-            .background(GreenSecondCapiro, RoundedCornerShape(4.dp))
+            .background(color, RoundedCornerShape(4.dp))
             .padding(horizontal = 4.dp),
         contentAlignment = Alignment.Center
     ) {
@@ -176,6 +184,7 @@ private fun ItemManualPreview() {
     ) {
         ItemManualCapiro(
             itemNumber = "23456",
+            color = RedCapiro,
             scannedLabel = "A22W33Y33-12345",
             mainComposable = {
                 Column {

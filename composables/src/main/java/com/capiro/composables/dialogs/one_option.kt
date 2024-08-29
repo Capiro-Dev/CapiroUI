@@ -7,12 +7,12 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.font.FontWeight
@@ -23,6 +23,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
 import com.capiro.composables.R
 import com.capiro.composables.athomic_composables.buttons.ButtonCapiro
+import com.capiro.composables.theme.BeigeCapiro
 import com.capiro.composables.theme.GreenCapiro
 import com.capiro.composables.theme.WhiteCapiro
 import com.capiro.composables.util_composables.DialogTitle2
@@ -42,8 +43,10 @@ import getTypography
 @Composable
 fun OneOptionDialogCapiro(
     @DrawableRes imaResource: Int,
+    backgroundColor: Color = WhiteCapiro,
+    innerComposable : (@Composable ()->Unit)? = null,
     boldText: String? = null,
-    message: String,
+    message: String? = null,
     positiveButtonText: String,
     onPositiveButtonClickEvent: () -> Unit,
     isDialogOpenState: Boolean
@@ -51,7 +54,9 @@ fun OneOptionDialogCapiro(
     if (isDialogOpenState) {
         Dialog(onDismissRequest = { /* No action on dismiss */ }) {
             OneOptionDialogLayout(
+                backgroundColor = backgroundColor,
                 imaResource = imaResource,
+                innerComposable=innerComposable,
                 boldText = boldText,
                 message = message,
                 positiveButtonText = positiveButtonText,
@@ -74,14 +79,16 @@ fun OneOptionDialogCapiro(
 private fun OneOptionDialogLayout(
     @DrawableRes imaResource: Int,
     boldText: String?,
-    message: String,
+    message: String?,
     positiveButtonText: String,
-    onPositiveButtonClickEvent: () -> Unit
+    onPositiveButtonClickEvent: () -> Unit,
+    innerComposable: @Composable() (() -> Unit)?,
+    backgroundColor: Color
 ) {
     // Create annotated string for bold text
     var messageAnnotated = buildAnnotatedString { append(message) }
 
-    if (boldText != null && message.contains(boldText)) {
+    if (boldText != null && message!=null && message.contains(boldText)) {
         messageAnnotated = buildAnnotatedString {
             append(message.substring(0, message.indexOf(boldText)))
             withStyle(style = SpanStyle(fontWeight = FontWeight.Bold)) {
@@ -93,19 +100,24 @@ private fun OneOptionDialogLayout(
 
     Column(
         modifier = Modifier
-            .width(300.dp)
-            .background(color = WhiteCapiro, shape = RoundedCornerShape(16.dp))
+            .fillMaxWidth()
+            .background(color = backgroundColor, shape = RoundedCornerShape(16.dp))
             .padding(16.dp),
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.spacedBy(16.dp)
     ) {
         DialogTitle2(imaResource)
+
+        innerComposable?.invoke()
+
         Text(
             text = messageAnnotated,
             color = GreenCapiro,
             style = getTypography().bodyMedium,
             textAlign = TextAlign.Justify
         )
+
+
         Row(
             modifier = Modifier.fillMaxWidth(),
             horizontalArrangement = Arrangement.Center
@@ -129,7 +141,16 @@ private fun OneOptionDialogCapiroPreview() {
         boldText = "Important",
         message = "This is an important message with a bold text.",
         positiveButtonText = "Ok",
+        innerComposable = { Column {
+          Text(text = "Inner Composable", color = GreenCapiro)
+            Text(text = "Inner Composable", color = GreenCapiro)
+            Text(text = "Inner Composable", color = GreenCapiro)
+            Text(text = "Inner Composable", color = GreenCapiro)
+            Text(text = "Inner Composable", color = GreenCapiro)
+
+        }},
         onPositiveButtonClickEvent = { /* Handle positive button click */ },
-        isDialogOpenState = true
+        isDialogOpenState = true,
+        backgroundColor = BeigeCapiro
     )
 }
