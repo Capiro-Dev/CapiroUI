@@ -19,24 +19,5 @@ import com.capiro.composables.util_composables.ItemScannerCapiro
 @Preview
 fun TestItems() {
 
-    Box(
-        modifier = Modifier
-            .padding(8.dp)
-            .fillMaxWidth()
-            .height(100.dp)
-    ) {
-        ItemScannerCapiro(
-            itemNumber = "123456",
-            scannedLabel = "A22Y32W33-44534",
-            mainComposable = {
-                Text(
-                    text = "Amesthy Dark red",
-                    style = TypographyProvider.typography.bodyMedium,
-                    color = GreenCapiro
-                )
-            },
-            onExpandClick = {}
-        )
-    }
 
 }
