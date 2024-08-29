@@ -42,15 +42,19 @@ fun ItemScannerCapiro(
     scannedLabel: String,
     mainComposable: @Composable () -> Unit,
     onExpandClick: (() -> Unit)? = null,
+    color: Color,
+    colorBackground: Color
 ) {
     Column(modifier = Modifier.fillMaxWidth()) {
-        CardCapiro(innerComposable = {
+        CardCapiro(
+            backgroundColor = colorBackground,
+            innerComposable = {
             Row(modifier = Modifier.fillMaxWidth()) {
                 ItemScannerHeader(itemNumber)
 
                 Column(modifier = Modifier.weight(1f), verticalArrangement = Arrangement.Top) {
                     Box(modifier = Modifier.fillMaxWidth()) {
-                        ItemScannerLabel(scannedLabel)
+                        ItemScannerLabel(color = color, label = scannedLabel)
                     }
 
                     Row(verticalAlignment = Alignment.CenterVertically) {
@@ -103,13 +107,14 @@ private fun ItemScannerHeader(
  */
 @Composable
 private fun ItemScannerLabel(
+    color: Color,
     label: String
 ) {
     Box(
         modifier = Modifier
             .padding(horizontal = 8.dp)
             .fillMaxWidth()
-            .background(GreenSecondCapiro, RoundedCornerShape(4.dp))
+            .background(color, RoundedCornerShape(4.dp))
             .padding(horizontal = 4.dp),
         contentAlignment = Alignment.Center
     ) {

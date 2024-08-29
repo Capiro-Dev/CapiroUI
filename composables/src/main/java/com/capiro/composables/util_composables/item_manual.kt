@@ -50,12 +50,13 @@ fun ItemManualCapiro(
     scannedLabel: String,
     mainComposable: @Composable () -> Unit,
     onDeleteClick: (() -> Unit)? = null,
-    color: Color
+    color: Color,
+    colorBackground: Color
 
     ) {
     Column(modifier = Modifier.fillMaxWidth()) {
         CardCapiro(
-            backgroundColor = Color(0xFFF7BFBE),
+            backgroundColor = colorBackground,
             innerComposable = {
             Row(modifier = Modifier.fillMaxWidth()) {
                 ItemManualHeader(itemNumber)
@@ -185,6 +186,7 @@ private fun ItemManualPreview() {
         ItemManualCapiro(
             itemNumber = "23456",
             color = RedCapiro,
+            colorBackground = GreenSecondCapiro,
             scannedLabel = "A22W33Y33-12345",
             mainComposable = {
                 Column {
