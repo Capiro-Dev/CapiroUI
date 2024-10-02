@@ -62,7 +62,7 @@ fun ButtonImageCapiro(
     val textColor = if (isEnabled) GreenCapiro else GrayDarkCapiro
 
     Column(horizontalAlignment = Alignment.CenterHorizontally) {
-        Box(modifier = Modifier.size(size), contentAlignment = Alignment.TopEnd) {
+        Box(modifier = Modifier.border(width = 2.dp, shape = RoundedCornerShape(20), color = actualBorderColor).size(size), contentAlignment = Alignment.TopEnd) {
             IconButton(
                 onClick = { if (isEnabled) onClick() },
                 enabled = isEnabled,
@@ -75,7 +75,6 @@ fun ButtonImageCapiro(
                     contentDescription = null,
                     modifier = Modifier
                         .fillMaxSize()
-                        .border(width = 2.dp, shape = RoundedCornerShape(20), color = actualBorderColor)
                         .clip(RoundedCornerShape(20))
                         .scale(0.8f)
                 )
@@ -101,7 +100,7 @@ fun ButtonImageCapiro(
             Text(
                 text = label,
                 color = textColor,
-                style = TypographyProvider.typography.bodySmall,
+                style = TypographyProvider.typography.bodyMedium,
             )
         }
     }
@@ -115,7 +114,7 @@ private fun ButtonImageCapiroPreview() {
             imageRes = R.drawable.icon,
             label = "Button",
             onClick = {  },
-            size = 50.dp,
+            size = 64.dp,
             isEnabled = true
         )
     }

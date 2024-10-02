@@ -19,6 +19,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.capiro.composables.R
 import com.capiro.composables.athomic_composables.card.CardCapiro
@@ -145,3 +146,29 @@ private fun ItemScannerMore(
 }
 
 
+
+@Preview
+@Composable
+fun ItemScanPreview() {
+    ItemScannerCapiro(
+        itemNumber = "123456",
+        scannedLabel = "Flower",
+        mainComposable = {
+            Column {
+                Text(
+                    text = "Date: 2022-10-10",
+                    style = TypographyProvider.typography.bodySmall,
+                    color = GreenSecondCapiro
+                )
+                Text(
+                    text = "Time: 10:00",
+                    style = TypographyProvider.typography.bodySmall,
+                    color = GreenSecondCapiro
+                )
+            }
+        },
+        onExpandClick = { /*TODO*/ },
+        color = GreenCapiro,
+        colorBackground = Color.White
+    )
+}
