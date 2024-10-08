@@ -133,7 +133,7 @@ fun LabelManualCapiroWeekText(
 
             // A
             TextLabelUnderlined(
-                title = "A",
+                title = "W",
                 textValue = textValueW,
                 onTextChange = onTextChangeW,
                 textLimit = 2
