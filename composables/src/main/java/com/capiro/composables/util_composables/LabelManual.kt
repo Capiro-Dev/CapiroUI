@@ -101,6 +101,56 @@ fun LabelManualCapiro(
     })
 }
 
+@Composable
+fun LabelManualCapiroWeekText(
+    textValueA: String,
+    textValueY: String,
+    textValueW: String,
+    textConsecutive: String,
+    onTextChangeA: (String) -> Unit,
+    onTextChangeY: (String) -> Unit,
+    onTextChangeW: (String) -> Unit,
+    itemsY: List<String>,
+    onTextChangeConsecutive: (String) -> Unit,
+) {
+    CardCapiro(modifier = Modifier.fillMaxWidth(), innerComposable = {
+        Row (modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.Center){
+            // A
+            TextLabelUnderlined(
+                title = "A",
+                textValue = textValueA,
+                onTextChange = onTextChangeA,
+                textLimit = 3
+            )
+
+            // Y
+            LabelManualDropDownSelection(
+                fieldName = "Y",
+                items = itemsY,
+                selectedItem = textValueY,
+                onItemSelectedChange = onTextChangeY
+            )
+
+            // A
+            TextLabelUnderlined(
+                title = "A",
+                textValue = textValueW,
+                onTextChange = onTextChangeW,
+                textLimit = 2
+            )
+
+            // Consecutive
+            TextLabelUnderlined(
+                title = "-",
+                textValue = textConsecutive,
+                onTextChange = onTextChangeConsecutive,
+                modifier = Modifier.width(80.dp),
+                textLimit = 5
+            )
+        }
+    })
+}
+
 /**
  * A composable function that displays a label with manual input fields and dropdowns for "A", "Y", "W", "F", and a consecutive field.
  *
@@ -353,6 +403,18 @@ fun LabelManualPreview() {
             onTextChangeW = { textValueW = it },
             itemsY = listItemsY,
             itemsW = listItemsW,
+            onTextChangeConsecutive = { textConsecutive = it }
+        )
+
+        LabelManualCapiroWeekText(
+            textValueA = textValueA,
+            textValueY = textValueY,
+            textValueW = textValueW,
+            textConsecutive = textConsecutive,
+            onTextChangeA = { textValueA = it },
+            onTextChangeY = { textValueY = it },
+            onTextChangeW = { textValueW = it },
+            itemsY = listItemsY,
             onTextChangeConsecutive = { textConsecutive = it }
         )
 
