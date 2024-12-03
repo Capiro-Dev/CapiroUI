@@ -7,6 +7,7 @@ class AlarmEvents(appContext: Context) {
     val ERROR_FORMAT_NOT_VALID = -1
     val ERROR_LABEL_ALREADY_READ = -2
     val ERROR_VARIETY_CHANGE = -4
+    val RIP_SOUND = -5
     val SUCCESSFUL_READ = 0
 
     private val _alarmRightScan by lazy {
@@ -35,6 +36,13 @@ class AlarmEvents(appContext: Context) {
         )
     }
 
+    private val _alarmRipScan by lazy {
+        MediaPlayer.create(
+            appContext,
+            R.raw.rip
+        )
+    }
+
     //sound Scanner
     fun playAlarmCapiro(
         readingState: Int,
@@ -57,12 +65,17 @@ class AlarmEvents(appContext: Context) {
             _alarmVarietyChangeScan.pause()
             _alarmVarietyChangeScan.seekTo(0)
         }
+        if (_alarmRipScan.isPlaying) {
+            _alarmRipScan.pause()
+            _alarmRipScan.seekTo(0)
+        }
 
         when (readingState) {
             SUCCESSFUL_READ -> _alarmRightScan.start()
             ERROR_FORMAT_NOT_VALID -> _alarmWrongScan.start()
             ERROR_LABEL_ALREADY_READ -> _alarmRepeatedScan.start()
             ERROR_VARIETY_CHANGE -> _alarmVarietyChangeScan.start()
+            RIP_SOUND -> _alarmRipScan.start()
         }
     }
 }
