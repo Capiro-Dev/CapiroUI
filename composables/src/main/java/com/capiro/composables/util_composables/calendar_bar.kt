@@ -42,7 +42,7 @@ import getTypography
  * @param onCalendarClick A lambda function to be invoked when the calendar icon is clicked.
  */
 @Composable
-fun CalendarBar(
+fun CalendarBarCapiro(
     day: String,
     dayOfWeek: String,
     month: String,
@@ -107,10 +107,10 @@ fun CalendarBar(
 @Preview
 @Composable
 fun CalendarBarPreview() {
-    CalendarBar(
-        day = "12",
-        dayOfWeek = "Monday",
-        month = "January",
-        onCalendarClick = {}
+    CalendarBarCapiro (
+            day = "12",
+            dayOfWeek = "Monday",
+            month = "January",
+            onCalendarClick = {}
     )
 }

@@ -11,14 +11,14 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.capiro.composables.theme.BeigeCapiro
-import com.capiro.composables.util_composables.CalendarBar
+import com.capiro.composables.util_composables.CalendarBarCapiro
 
 
 @Preview
 @Composable
 fun CalendarBarTest(){
     Box(modifier = Modifier.background(BeigeCapiro).fillMaxWidth().padding(horizontal = 16.dp, vertical = 8.dp)) {
-        CalendarBar(
+        CalendarBarCapiro(
             23.toString(),
             dayOfWeek = "Jueves",
             month = "Agosto",

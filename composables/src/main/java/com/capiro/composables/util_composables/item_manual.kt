@@ -34,6 +34,7 @@ import com.capiro.composables.theme.GrayCapiro
 import com.capiro.composables.theme.GreenCapiro
 import com.capiro.composables.theme.GreenSecondCapiro
 import com.capiro.composables.theme.RedCapiro
+import com.capiro.composables.theme.WhiteCapiro
 
 /**
  * A composable that displays an item scanner UI, including item number, label, date, and a main content section.
@@ -50,8 +51,8 @@ fun ItemManualCapiro(
     scannedLabel: String,
     mainComposable: @Composable () -> Unit,
     onDeleteClick: (() -> Unit)? = null,
-    color: Color,
-    colorBackground: Color
+    color: Color = GreenCapiro,
+    colorBackground: Color = WhiteCapiro
 
     ) {
     Column(modifier = Modifier.fillMaxWidth()) {
@@ -185,8 +186,6 @@ private fun ItemManualPreview() {
     ) {
         ItemManualCapiro(
             itemNumber = "23456",
-            color = RedCapiro,
-            colorBackground = GreenSecondCapiro,
             scannedLabel = "A22W33Y33-12345",
             mainComposable = {
                 Column {
@@ -195,7 +194,6 @@ private fun ItemManualPreview() {
                         text = "MAteo es muy sexy",
                         color = GreenCapiro,
                         style = TypographyProvider.typography.bodyMedium,
-
                         )
                 }
             },

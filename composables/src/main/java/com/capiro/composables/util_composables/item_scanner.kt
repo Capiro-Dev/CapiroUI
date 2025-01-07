@@ -1,7 +1,9 @@
 package com.capiro.composables.util_composables
 
 import TypographyProvider
+import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
+import androidx.compose.foundation.basicMarquee
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -19,6 +21,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.capiro.composables.R
@@ -84,7 +87,7 @@ fun ItemScannerCapiro(
  * @param itemNumber The number associated with the scanned item.
  */
 @Composable
-private fun ItemScannerHeader(
+fun ItemScannerHeader(
     itemNumber: String
 ) {
     Column(horizontalAlignment = Alignment.CenterHorizontally) {
@@ -106,8 +109,9 @@ private fun ItemScannerHeader(
  *
  * @param label The label or description of the scanned item.
  */
+@OptIn(ExperimentalFoundationApi::class)
 @Composable
-private fun ItemScannerLabel(
+fun ItemScannerLabel(
     color: Color,
     label: String
 ) {
@@ -119,11 +123,12 @@ private fun ItemScannerLabel(
             .padding(horizontal = 4.dp),
         contentAlignment = Alignment.Center
     ) {
-        Text(
+        Text(modifier = Modifier.basicMarquee(),
             text = label,
             style = TypographyProvider.typography.bodyMedium,
             fontWeight = FontWeight.Bold,
-            color = Color.White
+            color = Color.White,
+            maxLines = 1
         )
     }
 }
