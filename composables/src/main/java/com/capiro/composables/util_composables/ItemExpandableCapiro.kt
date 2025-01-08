@@ -21,6 +21,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.font.FontWeight.Companion.Bold
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -29,7 +30,7 @@ import com.capiro.composables.theme.GreenCapiro
 import java.io.Serializable
 
 @Composable
-fun ItemExpandableCairo(
+fun ItemExpandableCapiro(
     itemNumber: String,
     customer: String,
     mainComposable: @Composable () -> Unit,
@@ -76,45 +77,44 @@ fun ItemExpandableCairo(
         )
         // Mostrar la lista solo si el estado de expansión es verdadero
         if (isExpanded.value) {
-            LazyColumn(
+            Column(
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(8.dp)
+                //.verticalScroll(rememberScrollState()) // Usa verticalScroll si la lista es pequeña
             ) {
-                items(listVarieties.size, key = {
-                    listVarieties[it].variety
-                }
-                ) { index ->
-                    Column {
-                        CardCapiro(
-                            backgroundColor = colorBackground,
-                            innerComposable = {
-                                Row {
-                                    ItemScannerHeader(itemNumber)
-                                    Column(
-                                        modifier = Modifier
-                                            .fillMaxWidth()
-                                            .padding(start = 8.dp)
-                                    ) {
-                                        Text(
-                                            text = listVarieties[index].variety,
-                                            color = GreenCapiro,
-                                            fontWeight = Bold,
-                                            style = TypographyProvider.typography.bodyMedium,
-                                        )
-                                        Text("Tallos: ${listVarieties[index].stems}", color = GreenCapiro)
-                                        Text("Ramos: ${listVarieties[index].bouquets}", color = GreenCapiro)
-                                    }
+                listVarieties.forEach { variety ->
+
+                    CardCapiro(
+                        backgroundColor = colorBackground,
+                        innerComposable = {
+                            Row {
+                                ItemScannerHeader((listVarieties.indexOf(variety)+1).toString())
+                                Column(
+                                    modifier = Modifier
+                                        .fillMaxWidth()
+                                        .padding(start = 8.dp)
+                                ) {
+                                    Text(
+                                        text = variety.variety,
+                                        color = GreenCapiro,
+                                        fontWeight = FontWeight.Bold,
+                                        style = TypographyProvider.typography.bodyMedium,
+                                    )
+                                    Text("Tallos: ${variety.stems}", color = GreenCapiro)
+                                    Text("Ramos: ${variety.bouquets}", color = GreenCapiro)
                                 }
                             }
-                        )
-                        Spacer(modifier = Modifier.padding(4.dp))
-                    }
+                        }
+                    )
+                    Spacer(modifier = Modifier.padding(4.dp))
                 }
             }
         }
     }
 }
+
+
 
 data class VarietyReport(
     val variety: String,
@@ -133,7 +133,7 @@ fun TestItemExpandible() {
     )
 
     Column {
-        ItemExpandableCairo(
+        ItemExpandableCapiro(
             itemNumber = "c14",
             customer = "Dumment orange the netherlands BV",
             mainComposable = {
@@ -147,7 +147,7 @@ fun TestItemExpandible() {
             colorBackground = Color.White
         )
 
-        ItemExpandableCairo(
+        ItemExpandableCapiro(
             itemNumber = "c20",
             customer = "Dumment orange the netherlands BV",
             mainComposable = {
@@ -161,7 +161,7 @@ fun TestItemExpandible() {
             colorBackground = Color.White
         )
 
-        ItemExpandableCairo(
+        ItemExpandableCapiro(
             itemNumber = "c32",
             customer = "Dumment orange the netherlands BV",
             mainComposable = {
@@ -175,7 +175,7 @@ fun TestItemExpandible() {
             colorBackground = Color.White
         )
 
-        ItemExpandableCairo(
+        ItemExpandableCapiro(
             itemNumber = "c25",
             customer = "Dumment orange the netherlands BV",
             mainComposable = {

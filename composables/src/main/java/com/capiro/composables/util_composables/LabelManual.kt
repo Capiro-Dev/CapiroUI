@@ -176,8 +176,10 @@ fun LabelManualFarmCapiro(
     onTextChangeA: (String) -> Unit,
     onTextChangeY: (String) -> Unit,
     onTextChangeW: (String) -> Unit,
+    onTextChangeF: (String) -> Unit,
     itemsY: List<String>,
     itemsW: List<String>,
+    itemsF: List<String>,
     onTextChangeConsecutive: (String) -> Unit,
 ) {
     CardCapiro(innerComposable = {
@@ -187,7 +189,7 @@ fun LabelManualFarmCapiro(
                 title = "A",
                 textValue = textValueA,
                 onTextChange = onTextChangeA,
-                textLimit = 2
+                textLimit = 3
             )
 
             // Y
@@ -207,12 +209,11 @@ fun LabelManualFarmCapiro(
             )
 
             // F
-            TextLabelUnderlined(
-                title = "F",
-                textValue = textValueF,
-                onTextChange = {},
-                isEnabled = false,
-                textLimit = 2
+            LabelManualDropDownSelection(
+                fieldName = "F",
+                items = itemsF,
+                selectedItem = textValueF,
+                onItemSelectedChange = onTextChangeF
             )
 
             // Consecutive
@@ -383,10 +384,12 @@ fun LabelManualPreview() {
     var textValueA by remember { mutableStateOf("0") }
     var textValueY by remember { mutableStateOf("0") }
     var textValueW by remember { mutableStateOf("0") }
+    var textValueF by remember { mutableStateOf("0") }
     var textConsecutive by remember { mutableStateOf("0") }
 
     val listItemsY = listOf("01", "02", "3", "4", "5")
     val listItemsW = listOf("01", "02", "3", "4", "5")
+    val listItemsF = listOf("SS", "AF", "SS3", "PM", "LC")
 
     Column(
         Modifier
@@ -422,13 +425,15 @@ fun LabelManualPreview() {
             textValueA = textValueA,
             textValueY = textValueY,
             textValueW = textValueW,
-            textValueF = "SS",
+            textValueF = textValueF,
             textConsecutive = textConsecutive,
             onTextChangeA = { textValueA = it },
             onTextChangeY = { textValueY = it },
             onTextChangeW = { textValueW = it },
+            onTextChangeF = { textValueF = it},
             itemsY = listItemsY,
             itemsW = listItemsW,
+            itemsF = listItemsF,
             onTextChangeConsecutive = { textConsecutive = it }
         )
     }
