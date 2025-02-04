@@ -20,4 +20,6 @@
     <string name="dialog_sync_bt_close">Aceptar</string>
     <string name="dialog_sync_bt_done">sincronizado</string>
     <string name="dialog_sync_bt_processing">Sincronizando</string>
+    <string name="dialog_sync_error">Error</string>
+    <string name="list_dialog">list</string>
 </resources>

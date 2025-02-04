@@ -62,6 +62,7 @@ dependencies {
     debugImplementation libs.androidx.ui.tooling
     debugImplementation libs.androidx.ui.test.manifest
 
+    implementation "androidx.graphics:graphics-shapes:1.0.1"
 
 
 }
@@ -74,7 +75,7 @@ afterEvaluate {
 
                 groupId = 'com.github.Capiro-Dev'
                 artifactId = 'composables'
-                version = '1.8.34'
+                version = '1.9.34'
             }
         }
     }

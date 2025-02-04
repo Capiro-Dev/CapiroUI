@@ -51,7 +51,8 @@ class MainActivity : ComponentActivity() {
                 ) {
                     CapiroUITheme {
                         //TextFields()
-                        Login()
+                       // Login()
+                        TestDialog()
                     }
                 }
             }

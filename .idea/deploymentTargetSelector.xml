@@ -5,19 +5,19 @@
       <SelectionState runConfigName="app">
         <option name="selectionMode" value="DROPDOWN" />
       </SelectionState>
-      <SelectionState runConfigName="TestWeekFilter">
+      <SelectionState runConfigName="PreviewDialogHistory">
         <option name="selectionMode" value="DROPDOWN" />
       </SelectionState>
-      <SelectionState runConfigName="ItemScanPreview">
+      <SelectionState runConfigName="previewPolygonCapiro">
         <option name="selectionMode" value="DROPDOWN" />
       </SelectionState>
-      <SelectionState runConfigName="TestItemExpandible">
+      <SelectionState runConfigName="SyncDialogPreview">
         <option name="selectionMode" value="DROPDOWN" />
       </SelectionState>
-      <SelectionState runConfigName="TestItemExpandible (1)">
+      <SelectionState runConfigName="TestDialog">
         <option name="selectionMode" value="DROPDOWN" />
       </SelectionState>
-      <SelectionState runConfigName="LabelManualPreview">
+      <SelectionState runConfigName="ListDialogCapiroPreview">
         <option name="selectionMode" value="DROPDOWN" />
       </SelectionState>
     </selectionStates>

@@ -222,31 +222,22 @@ private fun UtilRow(label: String, currentState: State<SyncStatus>) {
 @Composable
 private fun SyncDialogPreview() {
 
-    val message1 = remember { mutableIntStateOf(R.string.dialog_sync_bt_close) }
-    val message2 = remember { mutableIntStateOf(R.string.dialog_sync_bt_close) }
-    val message3 = remember { mutableIntStateOf(R.string.dialog_sync_bt_close) }
+    val message1 = remember { mutableIntStateOf(R.string.dialog_sync_bt_done) }
+    val message2 = remember { mutableIntStateOf(R.string.dialog_sync_bt_processing) }
+    val message3 = remember { mutableIntStateOf(R.string.dialog_sync_error) }
 
     var syncItems = arrayOf(
         SyncItem(
             messageDisplayed = message1,
-            syncState = remember { mutableStateOf(SyncStatus.IsDone())},
-            messageError = R.string.dialog_sync_bt_close,
-            messageDone = R.string.dialog_sync_bt_done,
-            messageProcessing = R.string.dialog_sync_bt_processing
+            syncState = remember { mutableStateOf(SyncStatus.IsLoading())},
         ),
         SyncItem(
             messageDisplayed = message2,
-            syncState = remember { mutableStateOf(SyncStatus.IsDone())},
-            messageError = R.string.dialog_sync_bt_close,
-            messageDone = R.string.dialog_sync_bt_done,
-            messageProcessing = R.string.dialog_sync_bt_processing
+            syncState = remember { mutableStateOf(SyncStatus.Error())},
         ),
         SyncItem(
             messageDisplayed = message3,
             syncState = remember { mutableStateOf(SyncStatus.IsDone())},
-            messageError = R.string.dialog_sync_bt_close,
-            messageDone = R.string.dialog_sync_bt_done,
-            messageProcessing = R.string.dialog_sync_bt_processing
         )
     )
 
