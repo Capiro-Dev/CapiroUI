@@ -20,6 +20,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Cancel
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
@@ -52,6 +53,7 @@ fun DialogHistoryCapiro(
     onCleanText: () -> Unit,
     onSearchItemSelectedChangeState: (String) -> Unit,
     onCloseDialogEvent: () -> Unit,
+    daysState: MutableState<Map<String, Boolean>>
 ) {
     if (isTheDialogOpenState) {
         Dialog(
@@ -64,9 +66,11 @@ fun DialogHistoryCapiro(
                     title = title,
                     allData = allData,
                     searchItemSelectedState = onSearchItemSelectedChangeState,
-                    onCleanText = onCleanText
+                    onCleanText = onCleanText,
+                    daysState = daysState,
                 )
-            }, properties = DialogProperties(usePlatformDefaultWidth = false)
+            },
+            properties = DialogProperties(usePlatformDefaultWidth = false)
         )
 
     }
@@ -91,7 +95,8 @@ private fun DialogLayout(
     searchItemSelectedState: (String) -> Unit,
     onCleanText: () -> Unit,
     onSearchTextChange: (String) -> Unit,
-    searchText: String
+    searchText: String,
+    daysState: MutableState<Map<String, Boolean>>
 ) {
     Column(
         modifier = modifier
@@ -139,7 +144,12 @@ private fun DialogLayout(
                 )
             }
             Box(modifier = Modifier.padding(top = 8.dp)) {
-                WeekFilterCapiro()
+                WeekFilterCapiro(daysChecked = daysState.value,
+                    onDayCheckedChange = { day, isChecked ->
+                        daysState.value = daysState.value.toMutableMap().apply {
+                            this[day] = isChecked
+                        }
+                    })
             }
 
             // LIST OF DATA
@@ -175,7 +185,7 @@ private fun ItemHistoryCapiroView(
     variety: String,
     customer: String,
 ) {
-    var isExpanded = remember { mutableStateOf(true) }
+    var isExpanded = remember { mutableStateOf(false) }
     Column {
         ItemScannerCapiro(
             itemNumber = "1",
@@ -241,9 +251,20 @@ data class ItemHistoryCapiro(
 @Preview
 @Composable
 fun PreviewDialogHistory() {
+    val daysState = remember {
+        mutableStateOf(
+            mapOf(
+                "L" to false, "M" to false, "W" to false,
+                "J" to false, "V" to false, "S" to false, "D" to false
+            )
+        )
+    }
+    val textSearch = remember {
+        mutableStateOf("")
+    }
     DialogHistoryCapiro(
-        searchText = "Search",
-        onSearchTextChange = {},
+        searchText = textSearch.value,
+        onSearchTextChange = {textSearch.value = it},
         title = "Historial",
         isTheDialogOpenState = true,
         allData = arrayOf(
@@ -296,8 +317,9 @@ fun PreviewDialogHistory() {
                 bed = "Bed"
             )
         ),
-        onCleanText = {},
+        onCleanText = {textSearch.value = ""},
         onSearchItemSelectedChangeState = {},
-        onCloseDialogEvent = {}
+        onCloseDialogEvent = {},
+        daysState = daysState
     )
 }
