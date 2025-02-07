@@ -43,13 +43,14 @@ import com.capiro.composables.util_composables.WeekFilterCapiro
 import getTypography
 
 @Composable
-fun DialogHistoryCapiro(
+fun <T>DialogHistoryCapiro(
     modifier: Modifier = Modifier,
     searchText: String,
     onSearchTextChange: (String) -> Unit,
     title: String,
     isTheDialogOpenState: Boolean,
-    allData: Array<ItemHistoryCapiro>,
+    allData: Array<T>,
+    composableItem: @Composable (T)->Unit,
     onCleanText: () -> Unit,
     onSearchItemSelectedChangeState: (String) -> Unit,
     onCloseDialogEvent: () -> Unit,
@@ -65,6 +66,7 @@ fun DialogHistoryCapiro(
                     modifier = modifier,
                     title = title,
                     allData = allData,
+                    composableItem = composableItem,
                     searchItemSelectedState = onSearchItemSelectedChangeState,
                     onCleanText = onCleanText,
                     daysState = daysState,
@@ -88,10 +90,11 @@ fun DialogHistoryCapiro(
  * @param searchText The current text in the search input.
  */
 @Composable
-private fun DialogLayout(
+private fun <T>DialogLayout(
     modifier: Modifier,
     title: String,
-    allData: Array<ItemHistoryCapiro>,
+    allData: Array<T>,
+    composableItem: @Composable (T)->Unit,
     searchItemSelectedState: (String) -> Unit,
     onCleanText: () -> Unit,
     onSearchTextChange: (String) -> Unit,
@@ -159,12 +162,13 @@ private fun DialogLayout(
                 ) {
                     items(allData.size) { index ->
                         val item = allData[index]
+                        composableItem(item)
                         //ItemsList(allData[index], searchItemSelectedState)
-                        ItemHistoryCapiroView(
+                       /* ItemHistoryCapiroView(
                             code = item.code,
                             variety = item.variety,
                             customer = item.customer
-                        )
+                        )*/
                     }
                 }
             }
@@ -180,25 +184,21 @@ private fun DialogLayout(
  */
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
-private fun ItemHistoryCapiroView(
-    code: String,
-    variety: String,
-    customer: String,
-) {
+private fun ItemCutHistoryCapiroView(item : ItemCutHistoryCapiro) {
     var isExpanded = remember { mutableStateOf(false) }
     Column {
         ItemScannerCapiro(
             itemNumber = "1",
-            scannedLabel = code,
+            scannedLabel = item.code,
             mainComposable = {
                 Column {
                     Text(
-                        text = customer,
+                        text = item.customer,
                         style = getTypography().bodyMedium,
                         color = GreenCapiro
                     )
                     Text(
-                        text = variety,
+                        text = item.variety,
                         style = getTypography().bodySmall,
                         color = GreenCapiro,
                         fontWeight = FontWeight.Bold
@@ -216,7 +216,7 @@ private fun ItemHistoryCapiroView(
                     innerComposable = {
                         Column(modifier = Modifier.fillMaxWidth()) {
                             Text(
-                                text = variety,
+                                text = item.variety,
                                 style = getTypography().bodyMedium,
                                 modifier = Modifier.padding(8.dp),
                                 color = GreenCapiro
@@ -230,7 +230,7 @@ private fun ItemHistoryCapiroView(
 
 }
 
-data class ItemHistoryCapiro(
+data class ItemCutHistoryCapiro(
     val code: String,
     val block: String,
     val bed: String,
@@ -247,6 +247,7 @@ data class ItemHistoryCapiro(
     val date: String,
 
     )
+
 
 @Preview
 @Composable
@@ -268,7 +269,7 @@ fun PreviewDialogHistory() {
         title = "Historial",
         isTheDialogOpenState = true,
         allData = arrayOf(
-            ItemHistoryCapiro(
+            ItemCutHistoryCapiro(
                 code = "A203Y25W04FLC-00501",
                 variety = "Baltica",
                 varietyType = "Type",
@@ -284,7 +285,7 @@ fun PreviewDialogHistory() {
                 block = "Block",
                 bed = "Bed"
             ),
-            ItemHistoryCapiro(
+            ItemCutHistoryCapiro(
                 code = "A203Y25W04FLC-00504",
                 variety = "Zippo",
                 varietyType = "Type",
@@ -300,7 +301,7 @@ fun PreviewDialogHistory() {
                 block = "Block",
                 bed = "Bed"
             ),
-            ItemHistoryCapiro(
+            ItemCutHistoryCapiro(
                 code = "A203Y25W04FLC-00505",
                 variety = "Bonita",
                 varietyType = "Type",
@@ -317,6 +318,7 @@ fun PreviewDialogHistory() {
                 bed = "Bed"
             )
         ),
+        composableItem = {ItemCutHistoryCapiroView(it)},
         onCleanText = {textSearch.value = ""},
         onSearchItemSelectedChangeState = {},
         onCloseDialogEvent = {},
