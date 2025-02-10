@@ -17,6 +17,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.capiro.composables.R
 import com.capiro.composables.theme.GreenCapiro
@@ -39,6 +40,8 @@ fun ButtonFabCapiro(
     onClick1: (() -> Unit)? = null,
     onClick2: (() -> Unit)? = null,
     onClick3: (() -> Unit)? = null,
+    innerPadding: Dp,
+    iconSize: Dp
 ) {
     val isExpanded = remember { mutableStateOf(false) }
 
@@ -50,7 +53,9 @@ fun ButtonFabCapiro(
             imageRes3 = imageRes3,
             onClick1 = onClick1,
             onClick2 = onClick2,
-            onClick3 = onClick3
+            onClick3 = onClick3,
+            innerPadding = innerPadding,
+            iconSize = iconSize
         )
 
         Spacer(modifier = Modifier.size(16.dp))
@@ -58,7 +63,9 @@ fun ButtonFabCapiro(
         val imageFab = if (isExpanded.value) R.drawable.fab_x else R.drawable.fab
         FabButton(
             imageRes = imageFab,
-            onClick = { isExpanded.value = !isExpanded.value }
+            onClick = { isExpanded.value = !isExpanded.value },
+            innerPadding = 4.dp,
+            iconSize = 50.dp
         )
     }
 }
@@ -72,15 +79,17 @@ fun ButtonFabCapiro(
 @Composable
 private fun FabButton(
     @DrawableRes imageRes: Int?,
-    onClick: (() -> Unit)?
+    onClick: (() -> Unit)?,
+    innerPadding: Dp,
+    iconSize:Dp
 ) {
     if (imageRes != null) {
         Image(
             painter = painterResource(id = imageRes),
             contentDescription = null,
             modifier = Modifier
-                .padding(4.dp)
-                .size(50.dp)
+                .padding(innerPadding)
+                .size(iconSize)
                 .clickable { onClick?.invoke() }
         )
     }
@@ -106,6 +115,8 @@ private fun FabButtonItems(
     onClick1: (() -> Unit)? = null,
     onClick2: (() -> Unit)? = null,
     onClick3: (() -> Unit)? = null,
+    innerPadding: Dp,
+    iconSize: Dp
 ) {
     val borderCorner = remember { 16.dp }
 
@@ -124,9 +135,9 @@ private fun FabButtonItems(
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         if (isExpanded) {
-            FabButton(imageRes = imageRes1, onClick = onClick1)
-            FabButton(imageRes = imageRes2, onClick = onClick2)
-            FabButton(imageRes = imageRes3, onClick = onClick3)
+            FabButton(imageRes = imageRes1, onClick = onClick1, innerPadding = innerPadding,iconSize=iconSize)
+            FabButton(imageRes = imageRes2, onClick = onClick2, innerPadding = innerPadding,iconSize=iconSize)
+            FabButton(imageRes = imageRes3, onClick = onClick3, innerPadding = innerPadding,iconSize=iconSize)
         }
     }
 }
@@ -136,11 +147,13 @@ private fun FabButtonItems(
 @Composable
 private fun ButtonFabPreview() {
     ButtonFabCapiro(
-        imageRes1 = R.drawable.flower,
-        imageRes2 = R.drawable.fab,
-        imageRes3 = R.drawable.flower,
+        imageRes1 = R.drawable.error,
+        imageRes2 = R.drawable.sync,
+        imageRes3 = R.drawable.farm_secondary,
         onClick1 = { },
         onClick2 = { },
-        onClick3 = { }
+        onClick3 = { },
+        innerPadding = 12.dp,
+        iconSize = 32.dp
     )
 }

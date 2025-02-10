@@ -139,7 +139,7 @@ fun ItemScannerLabel(
  * @param onMoreClick Callback triggered when the text is clicked.
  */
 @Composable
-private fun ItemScannerMore(
+fun ItemScannerMore(
     onMoreClick: () -> Unit
 ) {
     Text(
