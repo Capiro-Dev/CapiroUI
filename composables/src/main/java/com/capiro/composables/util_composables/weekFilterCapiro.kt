@@ -17,11 +17,8 @@ import com.capiro.composables.theme.GreenCapiro
 
 @Composable
 fun WeekFilterCapiro(
-    daysChecked: Map<String, Boolean> = mapOf(
-        "L" to false, "M" to false, "W" to false,
-        "J" to false, "V" to false, "S" to false, "D" to false
-    ),
-    onDayCheckedChange: (String, Boolean) -> Unit = { _, _ -> }
+    daysChecked: Map<String, Boolean>,
+    onDayCheckedChange: (String, Boolean) -> Unit
 ) {
     Row(horizontalArrangement = Arrangement.SpaceEvenly, modifier = Modifier.fillMaxWidth()) {
         daysChecked.forEach { (day, isChecked) ->

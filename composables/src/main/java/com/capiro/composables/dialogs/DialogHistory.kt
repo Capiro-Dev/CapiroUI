@@ -41,6 +41,7 @@ import com.capiro.composables.theme.GreenCapiro
 import com.capiro.composables.util_composables.ItemScannerCapiro
 import com.capiro.composables.util_composables.WeekFilterCapiro
 import getTypography
+import kotlin.text.set
 
 @Composable
 fun <T>DialogHistoryCapiro(
@@ -54,7 +55,8 @@ fun <T>DialogHistoryCapiro(
     onCleanText: () -> Unit,
     onSearchItemSelectedChangeState: (String) -> Unit,
     onCloseDialogEvent: () -> Unit,
-    daysState: MutableState<Map<String, Boolean>>
+    daysState: Map<String, Boolean>,
+    onDayCheckedChange: (String, Boolean) -> Unit
 ) {
     if (isTheDialogOpenState) {
         Dialog(
@@ -70,6 +72,7 @@ fun <T>DialogHistoryCapiro(
                     searchItemSelectedState = onSearchItemSelectedChangeState,
                     onCleanText = onCleanText,
                     daysState = daysState,
+                    onDayCheckedChange = onDayCheckedChange
                 )
             },
             properties = DialogProperties(usePlatformDefaultWidth = false)
@@ -99,7 +102,8 @@ private fun <T>DialogLayout(
     onCleanText: () -> Unit,
     onSearchTextChange: (String) -> Unit,
     searchText: String,
-    daysState: MutableState<Map<String, Boolean>>
+    daysState: Map<String, Boolean>,
+    onDayCheckedChange: (String, Boolean) -> Unit
 ) {
     Column(
         modifier = modifier
@@ -147,12 +151,9 @@ private fun <T>DialogLayout(
                 )
             }
             Box(modifier = Modifier.padding(top = 8.dp)) {
-                WeekFilterCapiro(daysChecked = daysState.value,
-                    onDayCheckedChange = { day, isChecked ->
-                        daysState.value = daysState.value.toMutableMap().apply {
-                            this[day] = isChecked
-                        }
-                    })
+                WeekFilterCapiro(daysChecked = daysState,
+                    onDayCheckedChange = onDayCheckedChange
+                )
             }
 
             // LIST OF DATA
@@ -252,14 +253,7 @@ data class ItemCutHistoryCapiro(
 @Preview
 @Composable
 fun PreviewDialogHistory() {
-    val daysState = remember {
-        mutableStateOf(
-            mapOf(
-                "L" to false, "M" to false, "W" to false,
-                "J" to false, "V" to false, "S" to false, "D" to false
-            )
-        )
-    }
+
     val textSearch = remember {
         mutableStateOf("")
     }
@@ -322,6 +316,21 @@ fun PreviewDialogHistory() {
         onCleanText = {textSearch.value = ""},
         onSearchItemSelectedChangeState = {},
         onCloseDialogEvent = {},
-        daysState = daysState
+        daysState = daysState.value,
+        onDayCheckedChange = { day,checked ->
+            previewOnDayCheckedChange(day,checked)}
     )
+}
+val daysState =
+    mutableStateOf(
+        mapOf(
+            "L" to false, "M" to false, "W" to false,
+            "J" to false, "V" to false, "S" to false, "D" to false
+        )
+    )
+
+fun previewOnDayCheckedChange(day: String, isChecked: Boolean){
+    daysState.value = daysState.value.toMutableMap().apply {
+        this[day] = isChecked
+    }
 }

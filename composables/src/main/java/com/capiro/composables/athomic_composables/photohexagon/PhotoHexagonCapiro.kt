@@ -26,11 +26,12 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import com.capiro.composables.R
+import com.capiro.composables.athomic_composables.photohexagon.PolygonCapiro
 import com.capiro.composables.theme.GrayCapiro
 import com.capiro.composables.theme.GreenCapiro
 
 @Composable
-fun polygonCapiro(modifier: Modifier, image: Int) {
+fun PolygonCapiro(modifier: Modifier, image: Int) {
     Box() {
         Image(
             painter = painterResource(id = image ),
@@ -88,7 +89,7 @@ fun previewPolygonCapiro() {
                     maxLines = 2,
                     textAlign = TextAlign.Center
                 )
-                polygonCapiro(modifier = Modifier
+                PolygonCapiro(modifier = Modifier
                     .height(160.dp)
                     .width(160.dp), image = pestArray[item].image)
                 Spacer(modifier = Modifier.height(16.dp))
