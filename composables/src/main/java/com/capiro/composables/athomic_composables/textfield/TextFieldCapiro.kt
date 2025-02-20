@@ -2,6 +2,7 @@ package com.capiro.composables.athomic_composables.textfield
 
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.text.BasicTextField
@@ -19,15 +20,19 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.scale
 import androidx.compose.ui.graphics.SolidColor
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.tooling.preview.Preview
+import com.capiro.composables.theme.BlackCapiro
 import com.capiro.composables.theme.GreenCapiro
 import com.capiro.composables.theme.GreenSecondCapiro
 import com.capiro.composables.theme.GrayDarkCapiro
 import com.capiro.composables.theme.RedCapiro
+import getTypography
 
 /**
  * A custom text field with a label and optional trailing icon, designed with rounded borders.
@@ -44,7 +49,8 @@ fun TextFieldCapiro(
     label: String,
     onTextChangeEvent: (String) -> Unit,
     isEnabled: Boolean = true,
-    isNumeric: Boolean = true
+    isNumeric: Boolean = true,
+    isError: Boolean = false
 ) {
     val interactionSource = remember { MutableInteractionSource() }
     val typography = TypographyProvider.typography
@@ -54,7 +60,7 @@ fun TextFieldCapiro(
         modifier = Modifier.fillMaxWidth(),
         value = textInput,
         enabled = isEnabled,
-        textStyle = typography.bodyMedium.copy(textAlign = TextAlign.Center),
+        textStyle = typography.bodyMedium.copy(textAlign = TextAlign.Start, color = GreenCapiro, fontWeight = FontWeight.Bold),
         singleLine = true,
         keyboardOptions = KeyboardOptions(keyboardType = keyType),
         interactionSource = interactionSource,
@@ -81,8 +87,10 @@ fun TextFieldCapiro(
             label = {
                 Text(
                     text = label,
-                    color = if (textInput.isEmpty() || !isEnabled) GrayDarkCapiro else GreenSecondCapiro,
-                    style = typography.labelSmall,
+                    style = getTypography().bodyMedium,
+                    maxLines = 1,
+                    overflow = TextOverflow.Ellipsis,
+                    color = if (!isError) BlackCapiro else RedCapiro,
                 )
             },
             container = {
@@ -105,7 +113,7 @@ fun TextFieldCapiro(
 @Preview
 @Composable
 private fun TextFieldCapiroPreview() {
-    val text = remember { mutableStateOf("Text") }
+    val text = remember { mutableStateOf("") }
     Box(
         modifier = Modifier
             .fillMaxWidth()

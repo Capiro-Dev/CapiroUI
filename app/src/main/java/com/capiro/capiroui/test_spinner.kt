@@ -23,6 +23,7 @@ import com.capiro.composables.athomic_composables.spinners.SpinnerButtonCapiro
 import com.capiro.composables.athomic_composables.spinners.SpinnerButtonUnderlined
 import com.capiro.composables.athomic_composables.spinners.SpinnerDropdownCapiro
 import com.capiro.composables.athomic_composables.spinners.SpinnerDropdownUnderlined
+import com.capiro.composables.athomic_composables.textfield.TextFieldCapiro
 import com.capiro.composables.dialogs.ListTextFieldDialogCapiro
 import com.capiro.composables.theme.BeigeCapiro
 
@@ -114,12 +115,13 @@ fun TestSpinners() {
             Spacer(modifier = Modifier.size(16.dp))
 
             Box(modifier = Modifier.weight(1f)) {
-                SpinnerButtonUnderlined(
-                    labelResourceId = R.string.type,
-                    selectedItem = dialogText.value,
-                    onClick = { isDialogOpenState.value = true },
-                    isErrorActive = true
-                )
+                val text = remember { mutableStateOf("Selecciona...") }
+                    TextFieldCapiro(
+                        textInput = text.value,
+                        label = "Label",
+                        onTextChangeEvent = { text.value = it },
+                        isError = true
+                    )
             }
         }
 

@@ -148,6 +148,6 @@ private fun SpinnerUnderLinedSelectedItem(
         }
 
         // Divider line
-        Divider(thickness = 1.dp, color = GrayDarkCapiro)
+        Divider(modifier = Modifier.padding(top = 4.dp), thickness = 1.dp, color = GrayDarkCapiro)
     }
 }
