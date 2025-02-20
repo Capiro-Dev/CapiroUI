@@ -321,7 +321,7 @@ fun PreviewDialogHistory() {
             previewOnDayCheckedChange(day,checked)}
     )
 }
-val daysState =
+private val daysState =
     mutableStateOf(
         mapOf(
             "L" to false, "M" to false, "W" to false,
@@ -329,7 +329,7 @@ val daysState =
         )
     )
 
-fun previewOnDayCheckedChange(day: String, isChecked: Boolean){
+private fun previewOnDayCheckedChange(day: String, isChecked: Boolean){
     daysState.value = daysState.value.toMutableMap().apply {
         this[day] = isChecked
     }
