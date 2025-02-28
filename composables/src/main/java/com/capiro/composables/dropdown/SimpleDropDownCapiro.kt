@@ -87,7 +87,7 @@ fun SimpleDropdownTextCapiro(
             selectedItem = selectedItem,
             onClick = {
                 if (isEnabled) {
-                    action
+                    action()
                     isExpanded.value = !isExpanded.value
                 }
             },
