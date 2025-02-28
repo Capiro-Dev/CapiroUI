@@ -45,7 +45,7 @@ fun SpinnerButtonCapiro(
     val label = if (isItemSelectedEmpty) "" else stringResource(id = labelResourceId)
     val displayText = if (isItemSelectedEmpty) stringResource(id = labelResourceId) else itemSelected
     val textColor = GreenCapiro
-    val topLabelVisibility = if (isItemSelectedEmpty) false else true
+    val topLabelVisibility = !isItemSelectedEmpty
 
     Column(
         modifier = Modifier.fillMaxWidth(),

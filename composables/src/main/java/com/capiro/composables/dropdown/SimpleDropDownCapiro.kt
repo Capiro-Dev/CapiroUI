@@ -76,7 +76,8 @@ fun SimpleDropdownTextCapiro(
     onItemSelect: (String) -> Unit,
     isEnabled: Boolean = true,
     labelResourceId: Int,
-    isErrorActive: Boolean = false
+    isErrorActive: Boolean = false,
+    action: ()->Unit = {}
 ) {
     val isExpanded = remember { mutableStateOf(false) }
 
@@ -86,6 +87,7 @@ fun SimpleDropdownTextCapiro(
             selectedItem = selectedItem,
             onClick = {
                 if (isEnabled) {
+                    action
                     isExpanded.value = !isExpanded.value
                 }
             },
@@ -254,7 +256,7 @@ fun SimpleDropDownUnderlined(
         }
 
         // Divider line
-        Divider(thickness = 1.dp, color = GrayDarkCapiro)
+        Divider(modifier = Modifier.padding(top = 4.dp),thickness = 1.dp, color = GrayDarkCapiro)
     }
 }
 
