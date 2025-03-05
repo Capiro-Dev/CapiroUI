@@ -80,7 +80,8 @@ fun TestSpinners() {
         SpinnerButtonCapiro(
             labelResourceId = R.string.block,
             itemSelected = "00 A",
-            onClick = { Toast.makeText(context, "clicked", Toast.LENGTH_SHORT).show() }
+            onClick = { isDialogOpenState.value = true
+                Toast.makeText(context, "clicked", Toast.LENGTH_SHORT).show() }
         )
 
         SpinnerButtonCapiro(
