@@ -42,9 +42,9 @@ import getTypography
  */
 @Composable
 fun OneOptionDialogCapiro(
-    @DrawableRes imaResource: Int,
+    @DrawableRes imaResource: Int?,
     backgroundColor: Color = WhiteCapiro,
-    innerComposable : (@Composable ()->Unit)? = null,
+    innerComposable: (@Composable () -> Unit)? = null,
     boldText: String? = null,
     message: String? = null,
     positiveButtonText: String,
@@ -56,7 +56,7 @@ fun OneOptionDialogCapiro(
             OneOptionDialogLayout(
                 backgroundColor = backgroundColor,
                 imaResource = imaResource,
-                innerComposable=innerComposable,
+                innerComposable = innerComposable,
                 boldText = boldText,
                 message = message,
                 positiveButtonText = positiveButtonText,
@@ -77,7 +77,7 @@ fun OneOptionDialogCapiro(
  */
 @Composable
 private fun OneOptionDialogLayout(
-    @DrawableRes imaResource: Int,
+    @DrawableRes imaResource: Int?,
     boldText: String?,
     message: String?,
     positiveButtonText: String,
@@ -88,7 +88,7 @@ private fun OneOptionDialogLayout(
     // Create annotated string for bold text
     var messageAnnotated = buildAnnotatedString { append(message) }
 
-    if (boldText != null && message!=null && message.contains(boldText)) {
+    if (boldText != null && message != null && message.contains(boldText)) {
         messageAnnotated = buildAnnotatedString {
             append(message.substring(0, message.indexOf(boldText)))
             withStyle(style = SpanStyle(fontWeight = FontWeight.Bold)) {
@@ -106,16 +106,17 @@ private fun OneOptionDialogLayout(
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.spacedBy(16.dp)
     ) {
-        DialogTitle2(imaResource)
+        if (imaResource != null)
+            DialogTitle2(imaResource)
 
         innerComposable?.invoke()
-
-        Text(
-            text = messageAnnotated,
-            color = GreenCapiro,
-            style = getTypography().bodyMedium,
-            textAlign = TextAlign.Justify
-        )
+        if (message != null)
+            Text(
+                text = messageAnnotated,
+                color = GreenCapiro,
+                style = getTypography().bodyMedium,
+                textAlign = TextAlign.Justify
+            )
 
 
         Row(
@@ -141,14 +142,16 @@ private fun OneOptionDialogCapiroPreview() {
         boldText = "Important",
         message = "This is an important message with a bold text.",
         positiveButtonText = "Ok",
-        innerComposable = { Column {
-          Text(text = "Inner Composable", color = GreenCapiro)
-            Text(text = "Inner Composable", color = GreenCapiro)
-            Text(text = "Inner Composable", color = GreenCapiro)
-            Text(text = "Inner Composable", color = GreenCapiro)
-            Text(text = "Inner Composable", color = GreenCapiro)
+        innerComposable = {
+            Column {
+                Text(text = "Inner Composable", color = GreenCapiro)
+                Text(text = "Inner Composable", color = GreenCapiro)
+                Text(text = "Inner Composable", color = GreenCapiro)
+                Text(text = "Inner Composable", color = GreenCapiro)
+                Text(text = "Inner Composable", color = GreenCapiro)
 
-        }},
+            }
+        },
         onPositiveButtonClickEvent = { /* Handle positive button click */ },
         isDialogOpenState = true,
         backgroundColor = BeigeCapiro

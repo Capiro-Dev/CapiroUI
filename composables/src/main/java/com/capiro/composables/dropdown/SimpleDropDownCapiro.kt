@@ -1,6 +1,5 @@
 package com.capiro.composables.dropdown
 
-import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -10,17 +9,12 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Lock
-import androidx.compose.material3.Card
-import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Divider
 import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.DropdownMenuItem
@@ -38,7 +32,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.layout.onSizeChanged
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.res.painterResource
@@ -56,7 +49,6 @@ import com.capiro.composables.theme.GreenCapiro
 import com.capiro.composables.theme.GreenSecondCapiro
 import com.capiro.composables.theme.RedCapiro
 import getTypography
-import java.nio.file.WatchEvent
 
 /**
  * A composable function that displays a spinner dropdown with a list of items.
@@ -77,6 +69,7 @@ fun SimpleDropdownTextCapiro(
     isEnabled: Boolean = true,
     labelResourceId: Int,
     isErrorActive: Boolean = false,
+    maxLength : Int = 5,
     action: ()->Unit = {}
 ) {
     val isExpanded = remember { mutableStateOf(false) }
@@ -97,6 +90,7 @@ fun SimpleDropdownTextCapiro(
         SimpleDropdownTextMenu(
             isExpanded = isExpanded,
             items = items,
+            maxLength = maxLength,
             onItemSelectedChange = onItemSelect
         )
     }
@@ -114,6 +108,7 @@ fun SimpleDropdownTextCapiro(
 private fun SimpleDropdownTextMenu(
     isExpanded: MutableState<Boolean>,
     items: List<String>,
+    maxLength: Int ,
     onItemSelectedChange: (String) -> Unit,
 ) {
     var dropDownWidth by remember { mutableIntStateOf(0) }
@@ -148,7 +143,7 @@ private fun SimpleDropdownTextMenu(
                                     Box(modifier = Modifier.weight(1f)) { // Ocupa el máximo espacio posible)
                                         TextFieldSolidBackground(
                                             text = otherText,
-                                            onTextChanged = { otherText = it },
+                                            onTextChanged = { if (it.length<maxLength) otherText = it },
                                             keyboardType = KeyboardType.Number
                                             )
                                     }
