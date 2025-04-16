@@ -24,6 +24,7 @@ import com.capiro.composables.athomic_composables.card.CardCapiro
 import com.capiro.composables.theme.GrayDarkCapiro
 import com.capiro.composables.theme.GreenCapiro
 import com.capiro.composables.theme.GreenSecondCapiro
+import com.capiro.composables.theme.WhiteCapiro
 import getTypography
 import java.time.LocalDate
 import java.time.YearMonth
@@ -43,6 +44,7 @@ import java.util.*
 fun CustomDatePicker(
     setLimit: String? = null,
     isOpenDialog: Boolean = false,
+    date : LocalDate = LocalDate.now(),
     onDateSelected: (LocalDate) -> Unit,
     onCloseDialog: () -> Unit
 ) {
@@ -50,7 +52,8 @@ fun CustomDatePicker(
         Dialog(onDismissRequest = { onCloseDialog() }) {
             CustomDatePickerLayout(
                 setLimit = setLimit,
-                onNewDateSelected = onDateSelected
+                onNewDateSelected = onDateSelected,
+                date = date
             )
         }
     }
@@ -66,10 +69,11 @@ fun CustomDatePicker(
 @Composable
 fun CustomDatePickerLayout(
     setLimit: String? = null,
-    onNewDateSelected: (LocalDate) -> Unit
+    onNewDateSelected: (LocalDate) -> Unit,
+    date: LocalDate
 ) {
-    var selectedDate by remember { mutableStateOf(LocalDate.now()) }
-    var currentMonth by remember { mutableStateOf(YearMonth.now()) }
+    var selectedDate by remember { mutableStateOf(date) }
+    var currentMonth by remember { mutableStateOf(YearMonth.of(date.year, date.month)) }
 
     Card(
         modifier = Modifier.padding(8.dp),
@@ -77,7 +81,7 @@ fun CustomDatePickerLayout(
         shape = RoundedCornerShape(8.dp)
     ) {
         Column(
-            modifier = Modifier.padding(16.dp),
+            modifier = Modifier.background(WhiteCapiro).padding(16.dp),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             MonthHeader(
