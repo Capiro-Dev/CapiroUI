@@ -31,25 +31,19 @@ import com.capiro.composables.theme.GrayCapiro
 import com.capiro.composables.theme.GreenCapiro
 
 @Composable
-fun PolygonCapiro(modifier: Modifier, image: Int) {
+fun PolygonCapiro(modifier: Modifier, imageContent: @Composable (modifier: Modifier) -> Unit = {}) {
     Box() {
-        Image(
-            painter = painterResource(id = image ),
-            contentDescription = null,
-            contentScale = ContentScale.FillHeight,
-            modifier = modifier.padding(1.dp)
-        )
+        imageContent(modifier)
         Image(
             modifier = modifier,
             painter = painterResource(id = R.drawable.hexagono),
             contentDescription = null,
             contentScale = ContentScale.FillBounds,
-
             )
-
     }
 
 }
+
 data class PestDetail(
     val name: String,
     val image: Int
@@ -59,7 +53,8 @@ data class PestDetail(
 @Composable
 fun previewPolygonCapiro() {
 
-    val pestArray = arrayOf(PestDetail(name = "Acaro", image = R.drawable.acaro),
+    val pestArray = arrayOf(
+        PestDetail(name = "Acaro", image = R.drawable.acaro),
         PestDetail(name = "Botritis", image = R.drawable.botritis),
         PestDetail(name = "Mariquita", image = R.drawable.mariquita),
         PestDetail(name = "Mosca Blanca", image = R.drawable.mosca),
@@ -89,9 +84,19 @@ fun previewPolygonCapiro() {
                     maxLines = 2,
                     textAlign = TextAlign.Center
                 )
-                PolygonCapiro(modifier = Modifier
-                    .height(160.dp)
-                    .width(160.dp), image = pestArray[item].image)
+                PolygonCapiro(
+                    modifier = Modifier
+                        .height(160.dp)
+                        .width(160.dp)
+                ) {
+                    Image(
+                        painter = painterResource(id = pestArray[item].image),
+                        contentDescription = null,
+                        contentScale = ContentScale.FillHeight,
+                        modifier = it.padding(1.dp)
+                    )
+                }
+
                 Spacer(modifier = Modifier.height(16.dp))
 
             }
