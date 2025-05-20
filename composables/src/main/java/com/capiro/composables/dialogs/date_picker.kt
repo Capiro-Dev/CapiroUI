@@ -174,7 +174,7 @@ fun DateGrid(
     Column {
         Divider(modifier = Modifier.fillMaxWidth(), thickness = 2.dp, color = GreenCapiro)
         Row {
-            listOf("Lu", "Ma", "Mi", "Ju", "Vi", "Sa", "Do").forEach { day ->
+            listOf("Do","Lu", "Ma", "Mi", "Ju", "Vi", "Sa" ).forEach { day ->
                 Text(
                     text = day,
                     modifier = Modifier
