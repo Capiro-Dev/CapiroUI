@@ -50,7 +50,7 @@ fun ItemExpandableCapiro(
 
                     Column(modifier = Modifier.weight(1f), verticalArrangement = Arrangement.Top) {
                         Box(modifier = Modifier.fillMaxWidth()) {
-                            ItemScannerLabel(color = color, label = customer)
+                            ItemScannerLabel(color = color, label = customer,basicMarquee = true)
                         }
 
                         Row(verticalAlignment = Alignment.CenterVertically) {

@@ -113,7 +113,8 @@ fun ItemScannerHeader(
 @Composable
 fun ItemScannerLabel(
     color: Color,
-    label: String
+    label: String,
+    basicMarquee: Boolean = false
 ) {
     Box(
         modifier = Modifier
@@ -123,7 +124,7 @@ fun ItemScannerLabel(
             .padding(horizontal = 4.dp),
         contentAlignment = Alignment.Center
     ) {
-        Text(modifier = Modifier.basicMarquee(),
+        Text(modifier = if(basicMarquee)Modifier.basicMarquee() else Modifier,
             text = label,
             style = TypographyProvider.typography.bodyMedium,
             fontWeight = FontWeight.Bold,
