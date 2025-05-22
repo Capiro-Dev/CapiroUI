@@ -54,6 +54,7 @@ fun SearchListDialogCapiro(
     searchText: String,
     onSearchTextChange: (String) -> Unit,
     @StringRes titleIdRes: Int,
+    overTitle: String? = null,
     isTheDialogOpenState: Boolean,
     allData: Array<String>,
     onCleanText: () -> Unit,
@@ -69,6 +70,7 @@ fun SearchListDialogCapiro(
                     onSearchTextChange = onSearchTextChange,
                     modifier = modifier,
                     titleIdRes = titleIdRes,
+                    overTitle = overTitle,
                     allData = allData,
                     searchItemSelectedState = onSearchItemSelectedChangeState,
                     onCleanText = onCleanText
@@ -91,6 +93,7 @@ fun SearchListDialogCapiro(
 @Composable
 private fun SearchListDialogLayout(
     modifier: Modifier,
+    overTitle: String?,
     @StringRes titleIdRes: Int,
     allData: Array<String>,
     searchItemSelectedState: (String) -> Unit,
@@ -105,12 +108,23 @@ private fun SearchListDialogLayout(
                 .padding(horizontal = 24.dp),
             verticalArrangement = Arrangement.SpaceBetween
         ) {
+            if(overTitle != null) {
+                Text(
+                    text = overTitle,
+                    style = getTypography().bodyMedium,
+                    modifier = Modifier
+                        .fillMaxWidth(),
+                    fontWeight = FontWeight.Bold,
+                    textAlign = TextAlign.Center,
+                    color = GreenCapiro
+                )
+            }
             // TITLE
             Text(
                 text = stringResource(id = titleIdRes),
                 style = getTypography().bodyMedium,
                 modifier = Modifier
-                    .padding(16.dp)
+                    .padding(bottom = 16.dp)
                     .fillMaxWidth(),
                 fontWeight = FontWeight.Bold,
                 textAlign = TextAlign.Center,

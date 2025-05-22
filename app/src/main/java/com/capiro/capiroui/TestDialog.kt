@@ -207,6 +207,7 @@ fun TestDialog() {
         searchText = searchText,
         onSearchTextChange = { searchText = it },
         titleIdRes = R.string.app_name,
+        overTitle = "01",
         isTheDialogOpenState = isTheDialogOpenListSearch,
         allData = arrayOf("item 1",
             "item 2",

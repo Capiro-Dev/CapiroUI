@@ -118,7 +118,7 @@ fun ItemScannerLabel(
 ) {
     Box(
         modifier = Modifier
-            .padding(horizontal = 8.dp)
+            .padding(start = 8.dp)
             .fillMaxWidth()
             .background(color, RoundedCornerShape(4.dp))
             .padding(horizontal = 4.dp),
@@ -126,7 +126,7 @@ fun ItemScannerLabel(
     ) {
         Text(modifier = if(basicMarquee)Modifier.basicMarquee() else Modifier,
             text = label,
-            style = TypographyProvider.typography.bodyMedium,
+            style = TypographyProvider.typography.titleMedium,
             fontWeight = FontWeight.Bold,
             color = Color.White,
             maxLines = 1
@@ -156,9 +156,10 @@ fun ItemScannerMore(
 @Preview
 @Composable
 fun ItemScanPreview() {
+    Box(modifier = Modifier.padding(16.dp)) {
     ItemScannerCapiro(
-        itemNumber = "123456",
-        scannedLabel = "Flower",
+        itemNumber = "9999",
+        scannedLabel = "A200Y25W20FSS3-02345",
         mainComposable = {
             Column {
                 Text(
@@ -177,4 +178,5 @@ fun ItemScanPreview() {
         color = GreenCapiro,
         colorBackground = Color.White
     )
+}
 }
