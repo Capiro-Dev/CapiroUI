@@ -54,8 +54,8 @@ data class PestDetail(
 fun previewPolygonCapiro() {
 
     val pestArray = arrayOf(
-        PestDetail(name = "Acaro", image = R.drawable.acaro),
-        PestDetail(name = "Botritis", image = R.drawable.botritis),
+        PestDetail(name = "Acaro", image = R.drawable.icon),
+       /* PestDetail(name = "Botritis", image = R.drawable.botritis),
         PestDetail(name = "Mariquita", image = R.drawable.mariquita),
         PestDetail(name = "Mosca Blanca", image = R.drawable.mosca),
         PestDetail(name = "Nematodo", image = R.drawable.nematodo),
@@ -63,7 +63,7 @@ fun previewPolygonCapiro() {
         PestDetail(name = "Mariposas", image = R.drawable.mariposa),
         PestDetail(name = "Mariquita", image = R.drawable.mariquita),
         PestDetail(name = "Minador", image = R.drawable.minador),
-        PestDetail(name = "Roya Blanca", image = R.drawable.royablanca),
+        PestDetail(name = "Roya Blanca", image = R.drawable.royablanca),*/
     )
 
     LazyVerticalGrid(
