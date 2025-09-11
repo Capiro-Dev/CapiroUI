@@ -1,16 +1,20 @@
 package com.capiro.capiroui
 
 import android.widget.Toast
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Lock
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -18,6 +22,7 @@ import com.capiro.composables.athomic_composables.buttons.ButtonCapiro
 import com.capiro.composables.dialogs.OneOptionDialogCapiro
 import com.capiro.composables.dialogs.SearchListDialogCapiro
 import com.capiro.composables.dialogs.TwoOptionsDialogCapiro
+import com.capiro.composables.theme.GreenCapiro
 
 @Preview(showBackground = true)
 @Composable
@@ -241,7 +246,8 @@ fun TestDialog() {
             Toast.makeText(context, it, Toast.LENGTH_SHORT).show()
             isTheDialogOpenListSearch = false
         },
-        onCloseDialogEvent = { isTheDialogOpenListSearch = false }
+        onCloseDialogEvent = { isTheDialogOpenListSearch = false },
+        item = {Text(text = it, color = GreenCapiro) }
     )
 
 

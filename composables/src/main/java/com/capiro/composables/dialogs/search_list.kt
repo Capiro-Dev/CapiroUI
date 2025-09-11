@@ -49,17 +49,18 @@ import getTypography
  * @param onCloseDialogEvent Callback to close the dialog.
  */
 @Composable
-fun SearchListDialogCapiro(
+fun <T> SearchListDialogCapiro(
     modifier: Modifier = Modifier,
     searchText: String,
     onSearchTextChange: (String) -> Unit,
     @StringRes titleIdRes: Int,
     overTitle: String? = null,
     isTheDialogOpenState: Boolean,
-    allData: Array<String>,
+    allData: Array<T>,
     onCleanText: () -> Unit,
-    onSearchItemSelectedChangeState: (String) -> Unit,
+    onSearchItemSelectedChangeState: (T) -> Unit,
     onCloseDialogEvent: () -> Unit,
+    item: @Composable (T) -> Unit
 ) {
     if (isTheDialogOpenState) {
         Dialog(
@@ -73,7 +74,8 @@ fun SearchListDialogCapiro(
                     overTitle = overTitle,
                     allData = allData,
                     searchItemSelectedState = onSearchItemSelectedChangeState,
-                    onCleanText = onCleanText
+                    onCleanText = onCleanText,
+                    item =item
                 )
             })
     }
@@ -91,15 +93,16 @@ fun SearchListDialogCapiro(
  * @param searchText The current text in the search input.
  */
 @Composable
-private fun SearchListDialogLayout(
+private fun <T>SearchListDialogLayout(
     modifier: Modifier,
     overTitle: String?,
     @StringRes titleIdRes: Int,
-    allData: Array<String>,
-    searchItemSelectedState: (String) -> Unit,
+    allData: Array<T>,
+    searchItemSelectedState: (T) -> Unit,
     onCleanText: () -> Unit,
     onSearchTextChange: (String) -> Unit,
-    searchText: String
+    searchText: String,
+    item: @Composable (T) -> Unit
 ) {
     Column(modifier = modifier.background(color = Color.White, RoundedCornerShape(5.dp))) {
         Column(
@@ -156,7 +159,7 @@ private fun SearchListDialogLayout(
                     verticalArrangement = Arrangement.spacedBy(8.dp)
                 ) {
                     items(allData.size) { index ->
-                        ItemsList(allData[index], searchItemSelectedState)
+                        ItemsLists(allData[index], searchItemSelectedState, item)
                     }
                 }
             }
@@ -172,23 +175,18 @@ private fun SearchListDialogLayout(
  */
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
-private fun ItemsList(
-    variety: String,
-    itemSelectedEvent: (String) -> Unit,
+private  fun <T> ItemsLists(
+    data: T,
+    itemSelectedEvent: (T) -> Unit,
+    item: @Composable (T) -> Unit
 ) {
-    val textColor = remember { GreenCapiro }
-    Column(
+    Box(
         modifier = Modifier
             .fillMaxWidth()
             .height(44.dp)
-            .clickable { itemSelectedEvent(variety) },
-        verticalArrangement = Arrangement.Center
+            .clickable { itemSelectedEvent(data) },
+        contentAlignment = Alignment.CenterStart
     ) {
-        Text(
-            modifier = Modifier.basicMarquee(),
-            text = variety,
-            color = textColor,
-            style = getTypography().bodyMedium
-        )
+        item(data)
     }
 }
