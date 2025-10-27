@@ -46,31 +46,11 @@ fun ListDialogCapiro(
     onCloseDialogEvent: () -> Unit,
     itemSelectedEvent: (String) -> Unit
 ) {
-    // Forward to the new generic implementation (keeps backward compatibility)
-    SimpleListDialogsCapiro(
-        modifier = modifier,
-        titleIdRes = titleIdRes,
-        isTheDialogOpenState = isTheDialogOpenState,
-        allData = allData,
-        onCloseDialogEvent = onCloseDialogEvent,
-        itemSelectedEvent = itemSelectedEvent
-    )
-}
-
-@Composable
-fun <T> SimpleListDialogsCapiro(
-    modifier: Modifier = Modifier,
-    @StringRes titleIdRes: Int,
-    isTheDialogOpenState: Boolean,
-    allData: Array<T>,
-    onCloseDialogEvent: () -> Unit,
-    itemSelectedEvent: (T) -> Unit
-) {
     if (isTheDialogOpenState) {
         Dialog(
             onDismissRequest = { onCloseDialogEvent() },
             content = {
-                SimpleListDialogLayout(
+                ListDialogLayout(
                     modifier = modifier,
                     titleIdRes = titleIdRes,
                     allData = allData,
@@ -78,18 +58,18 @@ fun <T> SimpleListDialogsCapiro(
                         itemSelectedEvent(it)
                         onCloseDialogEvent()
                     },
-                    onCloseDialogEvent = { onCloseDialogEvent() }
+                    onCloseDialogEvent = { onCloseDialogEvent()}
                 )
             })
     }
 }
 
 @Composable
-fun <T> SimpleListDialogLayout(
+fun ListDialogLayout(
     modifier: Modifier,
     @StringRes titleIdRes: Int,
-    allData: Array<T>,
-    itemSelectedEvent: (T) -> Unit,
+    allData: Array<String>,
+    itemSelectedEvent: (String) -> Unit,
     onCloseDialogEvent: () -> Unit
 ) {
     Column(
@@ -117,7 +97,149 @@ fun <T> SimpleListDialogLayout(
             verticalArrangement = Arrangement.spacedBy(8.dp)
         ) {
             items(allData.size) { index ->
-                SimpleItem(allData[index], itemSelectedEvent = { itemSelectedEvent(it) })
+                Items(allData[index], itemSelectedEvent = { itemSelectedEvent(it) })
+            }
+        }
+
+        // BOTÓN ACEPTAR al final
+        ButtonCapiro(
+            text = "Aceptar",
+            onClick = { onCloseDialogEvent() },
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(top = 16.dp) // Espacio entre la lista y el botón
+        )
+    }
+}
+
+
+@OptIn(ExperimentalFoundationApi::class)
+@Composable
+private fun Items(
+    item: String,
+    itemSelectedEvent: (String) -> Unit,
+) {
+    val textColor = remember { GreenCapiro }
+    var backgroundColor = remember { mutableStateOf(Color.White) }
+    Column(
+        modifier = Modifier
+            .fillMaxWidth()
+            .height(44.dp)
+            .background(color = backgroundColor.value)
+            .padding(horizontal = 24.dp)
+            .pointerInput(Unit) {
+                detectTapGestures(
+                    onPress = {
+                        backgroundColor.value = GreenSecondCapiro
+                        tryAwaitRelease() // Espera a que el usuario suelte el click/tap
+                        backgroundColor.value = Color.White // Vuelve al color original
+                    },
+                    onTap = { itemSelectedEvent(item) }
+                )
+            },
+        verticalArrangement = Arrangement.Center
+    ) {
+        Text(
+            modifier = Modifier.basicMarquee(),
+            text = item,
+            color = textColor,
+            style = getTypography().bodyMedium
+        )
+    }
+}
+
+@Preview
+@Composable
+fun ListDialogCapiroPreview() {
+    val isOpenDialog = remember { mutableStateOf(false) }
+    Button(content = {Text("Open")}, onClick = {
+        isOpenDialog.value=true
+    })
+    ListDialogCapiro(
+        modifier = Modifier.height(400.dp),
+        titleIdRes = R.string.list_dialog,
+        isTheDialogOpenState = isOpenDialog.value,
+        allData = arrayOf(
+            "1",
+            "2",
+            "3",
+            "4",
+            "5",
+            "6",
+            "7",
+            "8",
+            "9",
+            "10",
+            "11",
+            "12",
+            "13",
+            "14",
+            "15"
+        ),
+        onCloseDialogEvent = {isOpenDialog.value = false},
+        itemSelectedEvent = { Log.d("qweqe", it) }
+    )
+
+}
+
+@Composable
+fun <T> SimpleListDialogsCapiro(
+    modifier: Modifier = Modifier,
+    @StringRes titleIdRes: Int,
+    isTheDialogOpenState: Boolean,
+    allData: Array<T>,
+    onCloseDialogEvent: () -> Unit,
+    items: @Composable (T) -> Unit,
+) {
+    if (isTheDialogOpenState) {
+        Dialog(
+            onDismissRequest = { onCloseDialogEvent() },
+            content = {
+                SimpleListDialogLayout(
+                    modifier = modifier,
+                    titleIdRes = titleIdRes,
+                    allData = allData,
+                    onCloseDialogEvent = { onCloseDialogEvent() },
+                    items = items
+                )
+            })
+    }
+}
+
+@Composable
+fun <T> SimpleListDialogLayout(
+    modifier: Modifier,
+    @StringRes titleIdRes: Int,
+    allData: Array<T>,
+    onCloseDialogEvent: () -> Unit,
+    items: @Composable (T) -> Unit,
+) {
+    Column(
+        modifier = modifier
+            .background(color = Color.White, RoundedCornerShape(5.dp))
+            .padding(16.dp) // Agregamos padding general
+    ) {
+        // TITLE
+        Text(
+            text = stringResource(id = titleIdRes),
+            style = getTypography().bodyMedium,
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(bottom = 16.dp),
+            fontWeight = FontWeight.Bold,
+            textAlign = TextAlign.Center,
+            color = GreenCapiro
+        )
+
+        // LIST OF DATA con weight(1f) para expandirse y empujar el botón
+        LazyColumn(
+            modifier = Modifier
+                .weight(1f)
+                .fillMaxWidth(),
+            verticalArrangement = Arrangement.spacedBy(8.dp)
+        ) {
+            items(allData.size) { index ->
+                items(allData[index])
             }
         }
 
@@ -166,10 +288,9 @@ private fun <T> SimpleItem(
         )
     }
 }
-
 @Preview
 @Composable
-fun ListDialogCapiroPreview() {
+fun ListSimpleDialogCapiroPreview() {
     val isOpenDialog = remember { mutableStateOf(false) }
     Button(content = {Text("Open")}, onClick = {
         isOpenDialog.value=true
@@ -196,7 +317,12 @@ fun ListDialogCapiroPreview() {
             "15"
         ),
         onCloseDialogEvent = {isOpenDialog.value = false},
-        itemSelectedEvent = { Log.d("qweqe", it) }
+        items = {
+            SimpleItem(item = it, itemSelectedEvent = {
+                isOpenDialog.value = false
+                Log.d("qweqe", it) }
+            )
+        }
     )
 
 }
