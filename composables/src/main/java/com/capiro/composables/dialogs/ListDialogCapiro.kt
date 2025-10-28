@@ -256,7 +256,7 @@ fun <T> SimpleListDialogLayout(
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
-private fun <T> SimpleItem(
+fun <T> SimpleItem(
     item: T,
     itemSelectedEvent: (T) -> Unit,
 ) {
