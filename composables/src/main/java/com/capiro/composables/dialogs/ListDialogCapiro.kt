@@ -256,9 +256,9 @@ fun <T> SimpleListDialogLayout(
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
-fun <T> SimpleItem(
-    item: T,
-    itemSelectedEvent: (T) -> Unit,
+fun SimpleItem(
+    text: String,
+    itemSelectedEvent: () -> Unit,
 ) {
     val textColor = remember { GreenCapiro }
     val backgroundColor = remember { mutableStateOf(Color.White) }
@@ -275,14 +275,14 @@ fun <T> SimpleItem(
                         tryAwaitRelease() // Espera a que el usuario suelte el click/tap
                         backgroundColor.value = Color.White // Vuelve al color original
                     },
-                    onTap = { itemSelectedEvent(item) }
+                    onTap = { itemSelectedEvent() }
                 )
             },
         verticalArrangement = Arrangement.Center
     ) {
         Text(
             modifier = Modifier.basicMarquee(),
-            text = item.toString(),
+            text = text,
             color = textColor,
             style = getTypography().bodyMedium
         )
@@ -317,10 +317,10 @@ fun ListSimpleDialogCapiroPreview() {
             "15"
         ),
         onCloseDialogEvent = {isOpenDialog.value = false},
-        items = {
-            SimpleItem(item = it, itemSelectedEvent = {
+        items = { item ->
+            SimpleItem(text = item, itemSelectedEvent = {
                 isOpenDialog.value = false
-                Log.d("qweqe", it) }
+                Log.d("qweqe", item) }
             )
         }
     )
