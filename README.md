@@ -42,6 +42,7 @@ Buttons, text fields, spinners, dialogs, scanner/labeling widgets and full scree
   - [Date & filters](#date--filters)
   - [Dialogs](#dialogs)
   - [Screens](#screens)
+  - [QR scanner](#qr-scanner)
 - [Generating the screenshots](#generating-the-screenshots)
 - [Building from source](#building-from-source)
 - [License](#license)
@@ -488,6 +489,43 @@ LoginScreenCapiro(
 )
 ```
 </details>
+
+### QR scanner
+
+Open the camera and read a QR code (or any barcode) with a **single component**. Built on CameraX + ML Kit; camera permission is requested automatically and is already declared in the library manifest (it merges into your app — no manifest edits needed). The live camera preview can't be captured in a screenshot, so the preview below shows the scan button.
+
+| Preview | Component | Description |
+|:---:|---|---|
+| <img src="docs/screenshots/qr_scanner_button_capiro.png" width="120"/> | `QrScannerButtonCapiro` | Drop-in scan button that manages the camera dialog and returns the scanned value. |
+| _(live camera)_ | `QrScannerDialogCapiro` | The underlying state-hoisted scanner dialog, if you want to supply your own trigger. |
+
+<details><summary>💻 Usage</summary>
+
+```kotlin
+// 1. The easiest way — a self-managed scan button:
+QrScannerButtonCapiro(
+    onQrCodeScanned = { code -> /* use the scanned code */ },
+    label = "Escanear",
+)
+
+// 2. Or drive the dialog yourself from any trigger (hoisted state):
+var scannerOpen by remember { mutableStateOf(false) }
+
+ButtonCapiro(text = "Escanear", onClick = { scannerOpen = true })
+
+QrScannerDialogCapiro(
+    isOpen = scannerOpen,
+    onQrCodeScanned = { code ->
+        scannerOpen = false
+        // use the scanned code
+    },
+    onDismiss = { scannerOpen = false },
+    onlyQrCodes = true, // set false to also read other barcode formats
+)
+```
+</details>
+
+> ℹ️ The `android.permission.CAMERA` permission is declared by this library and merged into the consuming app. You do **not** need to add it yourself; the component requests it at runtime the first time the scanner opens.
 
 ---
 

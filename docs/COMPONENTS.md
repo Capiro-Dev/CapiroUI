@@ -17,6 +17,7 @@ Full parameter reference for every public composable. For previews, descriptions
 - [Input utilities](#input-utilities)
 - [Dialogs](#dialogs)
 - [Screens](#screens)
+- [QR scanner](#qr-scanner)
 
 ---
 
@@ -714,3 +715,34 @@ A login screen with user/password fields, a backup button, and a login button.
 | `onUserTextChange` | `(String) -> Unit` | — | Invoked when the user text changes. |
 | `onPasswordTextChange` | `(String) -> Unit` | — | Invoked when the password text changes. |
 | `onLoginClick` | `() -> Unit` | — | Invoked when the login button is clicked. |
+
+---
+
+## QR scanner
+
+Built on CameraX + ML Kit. The `android.permission.CAMERA` permission is declared by the library and merged into the consuming app; the components request it at runtime on first open. The camera is released automatically when the dialog leaves the composition.
+
+#### `QrScannerButtonCapiro`
+A ready-to-use scan button that manages the scanner dialog — the easiest way to add QR scanning to a screen.
+
+| Parameter | Type | Default | Description |
+|---|---|---|---|
+| `onQrCodeScanned` | `(String) -> Unit` | — | Invoked with the raw value of the scanned code (the dialog closes first). |
+| `modifier` | `Modifier` | `Modifier` | Modifier applied to the button. |
+| `label` | `String?` | `null` | Optional label displayed under the scan icon. |
+| `onlyQrCodes` | `Boolean` | `true` | When `true` only QR codes are detected; when `false` any supported barcode is. |
+| `scanningText` | `String` | `"Escaneando…"` | Hint text overlaid at the bottom of the preview. |
+| `permissionDeniedText` | `String` | `"Se necesita permiso de cámara para escanear"` | Toast shown when camera permission is denied. |
+
+#### `QrScannerDialogCapiro`
+A self-contained, state-hoisted scanner dialog. Renders nothing while `isOpen` is `false`; close it from `onQrCodeScanned`.
+
+| Parameter | Type | Default | Description |
+|---|---|---|---|
+| `isOpen` | `Boolean` | — | Whether the scanner dialog is shown. |
+| `onQrCodeScanned` | `(String) -> Unit` | — | Invoked with the raw value of the first code detected. |
+| `onDismiss` | `() -> Unit` | — | Invoked when dismissed (tap outside, or permission denied). |
+| `modifier` | `Modifier` | `Modifier` | Modifier applied to the camera preview container. |
+| `onlyQrCodes` | `Boolean` | `true` | When `true` only QR codes are detected; when `false` any supported barcode is. |
+| `scanningText` | `String` | `"Escaneando…"` | Hint text overlaid at the bottom of the preview. |
+| `permissionDeniedText` | `String` | `"Se necesita permiso de cámara para escanear"` | Toast shown when camera permission is denied. |

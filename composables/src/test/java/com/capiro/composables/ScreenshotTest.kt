@@ -6,6 +6,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.QrCodeScanner
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -106,6 +107,11 @@ class ScreenshotTest {
 
     @Test fun button_icon_capiro() = snap(width = null) {
         ButtonIconCapiro(image = Icons.Filled.Search, onClick = {}, label = "Buscar")
+    }
+
+    // QrScannerButtonCapiro renders this icon button; the live camera preview cannot be snapshotted.
+    @Test fun qr_scanner_button_capiro() = snap(width = null) {
+        ButtonIconCapiro(image = Icons.Filled.QrCodeScanner, onClick = {}, label = "Escanear")
     }
 
     @Test fun button_image_capiro() = snap(width = null) {

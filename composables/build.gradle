@@ -66,6 +66,12 @@ dependencies {
 
     implementation "androidx.graphics:graphics-shapes:1.0.1"
 
+    // CameraX + ML Kit — power QrScannerDialogCapiro / QrScannerButtonCapiro
+    implementation libs.androidx.camera.core
+    implementation libs.androidx.camera.camera2
+    implementation libs.androidx.camera.lifecycle
+    implementation libs.androidx.camera.view
+    implementation libs.mlkit.barcode
 
 }
 
@@ -77,7 +83,7 @@ afterEvaluate {
 
                 groupId = 'com.github.Capiro-Dev'
                 artifactId = 'composables'
-                version = '1.12.55'
+                version = '1.13.55'
             }
         }
     }

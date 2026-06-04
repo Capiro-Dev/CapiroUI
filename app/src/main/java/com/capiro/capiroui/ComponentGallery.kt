@@ -61,6 +61,7 @@ import com.capiro.composables.dialogs.TwoOptionsDialogCapiro
 import com.capiro.composables.dropdown.SimpleDropDownUnderlined
 import com.capiro.composables.dropdown.SimpleDropdownTextCapiro
 import com.capiro.composables.model.MenuItemCapiro
+import com.capiro.composables.qr_scanner.QrScannerButtonCapiro
 import com.capiro.composables.model.SyncItem
 import com.capiro.composables.model.SyncStatus
 import com.capiro.composables.screens.LoginScreenCapiro
@@ -111,6 +112,7 @@ fun ComponentGallery() {
         Navigation()
         ItemsAndLabels()
         DateAndFilters()
+        QrScanner()
         Dialogs()
         Screens()
     }
@@ -275,6 +277,15 @@ private fun DateAndFilters() = Section("Date & filters") {
         WeekFilterCapiro(daysChecked = days, onDayCheckedChange = { day, c -> days = LinkedHashMap(days).apply { this[day] = c } })
     }
     Demo("TwoOptionsButtonCapiro") { TwoOptionsButtonCapiro(text1 = "Activos", text2 = "Inactivos", onClick1 = {}, onClick2 = {}) }
+}
+
+@Composable
+private fun QrScanner() = Section("QR scanner") {
+    var lastScan by remember { mutableStateOf("—") }
+    Demo("QrScannerButtonCapiro") {
+        QrScannerButtonCapiro(onQrCodeScanned = { lastScan = it }, label = "Escanear")
+        Text(text = "Último código: $lastScan", color = GreenCapiro)
+    }
 }
 
 @Composable
