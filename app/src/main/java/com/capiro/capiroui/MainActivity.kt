@@ -50,9 +50,7 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(), color = MaterialTheme.colorScheme.background
                 ) {
                     CapiroUITheme {
-                        //TextFields()
-                       // Login()
-                        TestDialog()
+                        ComponentGallery()
                     }
                 }
             }

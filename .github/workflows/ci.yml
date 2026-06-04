@@ -1,0 +1,64 @@
+name: CI
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+
+# Cancel superseded runs on the same ref to save CI minutes.
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  build:
+    name: Build (library + demo app)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up JDK 17
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+
+      - name: Set up Gradle
+        uses: gradle/actions/setup-gradle@v4
+
+      - name: Make gradlew executable
+        run: chmod +x ./gradlew
+
+      - name: Assemble
+        run: ./gradlew :composables:assembleDebug :app:assembleDebug --stacktrace
+
+  screenshots:
+    name: Verify screenshots (Paparazzi)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up JDK 17
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+
+      - name: Set up Gradle
+        uses: gradle/actions/setup-gradle@v4
+
+      - name: Make gradlew executable
+        run: chmod +x ./gradlew
+
+      # Re-renders every composable and compares it against the committed golden
+      # images in composables/src/test/snapshots/. Fails the build on any visual diff.
+      - name: Verify Paparazzi snapshots
+        run: ./gradlew :composables:verifyPaparazziDebug --stacktrace
+
+      - name: Upload diff report on failure
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: paparazzi-report
+          path: composables/build/reports/paparazzi/
+          if-no-files-found: ignore
