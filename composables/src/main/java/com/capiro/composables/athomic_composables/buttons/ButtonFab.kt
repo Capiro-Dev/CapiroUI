@@ -25,12 +25,23 @@ import com.capiro.composables.theme.GreenCapiro
 /**
  * A composable function that displays a floating action button (FAB) with optional expandable items.
  *
+ * The expanded/collapsed state can be used in two modes:
+ *  - **Uncontrolled** (default): leave [expanded] `null` and the FAB manages its own state internally,
+ *    exactly as before — fully backward compatible with existing call sites.
+ *  - **Controlled**: pass a non-null [expanded] together with [onExpandedChange] to hoist the state.
+ *    This lets the caller collapse the FAB from the outside (e.g. when the user taps elsewhere on the
+ *    screen) by setting its own state to `false`.
+ *
  * @param imageRes1 The drawable resource for the first FAB item.
  * @param imageRes2 The drawable resource for the second FAB item.
  * @param imageRes3 The drawable resource for the third FAB item.
  * @param onClick1 The click handler for the first FAB item.
  * @param onClick2 The click handler for the second FAB item.
  * @param onClick3 The click handler for the third FAB item.
+ * @param expanded Optional controlled expanded state. When `null` the FAB is uncontrolled and keeps
+ *   its own internal state.
+ * @param onExpandedChange Invoked with the requested new expanded value when the main FAB is tapped.
+ *   Required (together with [expanded]) to run in controlled mode.
  */
 @Composable
 fun ButtonFabCapiro(
@@ -41,13 +52,17 @@ fun ButtonFabCapiro(
     onClick2: (() -> Unit)? = null,
     onClick3: (() -> Unit)? = null,
     innerPadding: Dp,
-    iconSize: Dp
+    iconSize: Dp,
+    expanded: Boolean? = null,
+    onExpandedChange: ((Boolean) -> Unit)? = null
 ) {
-    val isExpanded = remember { mutableStateOf(false) }
+    // Uncontrolled fallback: only used when the caller does not hoist [expanded].
+    val internalExpanded = remember { mutableStateOf(false) }
+    val isExpanded = expanded ?: internalExpanded.value
 
     Column(horizontalAlignment = Alignment.CenterHorizontally) {
         FabButtonItems(
-            isExpanded = isExpanded.value,
+            isExpanded = isExpanded,
             imageRes1 = imageRes1,
             imageRes2 = imageRes2,
             imageRes3 = imageRes3,
@@ -60,10 +75,14 @@ fun ButtonFabCapiro(
 
         Spacer(modifier = Modifier.size(16.dp))
 
-        val imageFab = if (isExpanded.value) R.drawable.fab_x else R.drawable.fab
+        val imageFab = if (isExpanded) R.drawable.fab_x else R.drawable.fab
         FabButton(
             imageRes = imageFab,
-            onClick = { isExpanded.value = !isExpanded.value },
+            onClick = {
+                val newValue = !isExpanded
+                if (expanded == null) internalExpanded.value = newValue
+                onExpandedChange?.invoke(newValue)
+            },
             innerPadding = 4.dp,
             iconSize = 50.dp
         )

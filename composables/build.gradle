@@ -83,7 +83,7 @@ afterEvaluate {
 
                 groupId = 'com.github.Capiro-Dev'
                 artifactId = 'composables'
-                version = '1.13.55'
+                version = '1.13.56'
             }
         }
     }
