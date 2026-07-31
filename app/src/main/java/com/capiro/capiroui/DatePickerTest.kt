@@ -24,11 +24,13 @@ fun DatePickerTest(){
    val isTheDialogOpen1 = remember { mutableStateOf(true) }
    val isTheDialogOpen2 = remember { mutableStateOf(true) }
    val isTheDialogOpen3 = remember { mutableStateOf(true) }
+   val isTheDialogOpen4 = remember { mutableStateOf(true) }
 
    val selectedDate1 = remember { mutableStateOf("") }
    val selectedDate2 = remember { mutableStateOf("") }
    val selectedDate3 = remember { mutableStateOf("") }
    val selectedDate4 = remember { mutableStateOf(LocalDate.now()) }
+   val selectedDate5 = remember { mutableStateOf(LocalDate.now()) }
 
 
 
@@ -85,6 +87,26 @@ fun DatePickerTest(){
                selectedDate4.value = date
                selectedDate3.value = date.toString()
                isTheDialogOpen3.value=false
+            }
+         )
+      }
+
+      // Explicit range: only today and yesterday are pickable, everything else is greyed out
+      // and the month arrows are dead.
+      Box(
+         modifier = Modifier
+            .fillMaxSize()
+            .padding(horizontal = 16.dp, vertical = 8.dp)
+      ) {
+         CustomDatePicker(
+            isOpenDialog = isTheDialogOpen4.value,
+            onCloseDialog = { isTheDialogOpen4.value = false },
+            date = selectedDate5.value,
+            minDate = LocalDate.now().minusDays(1),
+            maxDate = LocalDate.now(),
+            onDateSelected = { date ->
+               selectedDate5.value = date
+               isTheDialogOpen4.value = false
             }
          )
       }

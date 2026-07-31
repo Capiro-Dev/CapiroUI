@@ -24,7 +24,9 @@ There is **no real test suite** — `ExampleUnitTest.kt` / `ExampleInstrumentedT
 
 ## Releasing a new version
 
-Bump `version` in `composables/build.gradle` (the `afterEvaluate { publishing { ... } }` block, currently `1.12.55`), then tag/push so JitPack builds from the tag. The publication coordinates are `com.github.Capiro-Dev:composables:<version>`.
+Bump `version` in `composables/build.gradle` (the `afterEvaluate { publishing { ... } }` block, currently `1.14.56`), then tag/push so JitPack builds from the tag. The publication coordinates are `com.github.Capiro-Dev:composables:<version>`; consumers resolve it through JitPack as `com.github.Capiro-Dev:CapiroUI:<version>` (the repo name). Bump the minor for a new feature, the patch for a fix.
+
+To try a version before tagging, `.\gradlew.bat :composables:publishToMavenLocal` and have the consuming app add `mavenLocal()` plus the **`composables`** artifactId — the repo-name alias only exists on JitPack.
 
 ## Architecture & conventions
 
