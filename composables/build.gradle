@@ -35,10 +35,17 @@ kotlin {
             implementation(compose.material3)
             implementation(compose.ui)
             implementation(compose.components.resources)
+            // Several commonMain composables reference androidx.compose.material.icons.Icons
+            // directly (Close, Lock, Visibility/VisibilityOff, DownloadForOffline, ...), so the
+            // commonMain metadata compile (used by publishToMavenLocal / JitPack) needs this
+            // resolvable from commonMain itself, not just from a platform source set.
+            implementation(compose.materialIconsExtended)
             implementation "org.jetbrains.compose.ui:ui-tooling-preview:${libs.versions.composeMultiplatform.get()}"
         }
         androidMain.dependencies {
-            implementation libs.androidx.material.icons.extended
+            // material-icons-extended comes from commonMain's compose.materialIconsExtended
+            // (substituted to this exact androidx artifact for the Android target) — declaring
+            // it again here caused a Gradle dependency-resolution-result corruption bug.
             implementation libs.androidx.core.ktx
             implementation libs.androidx.appcompat
             implementation libs.material
@@ -52,12 +59,6 @@ kotlin {
             implementation libs.androidx.camera.lifecycle
             implementation libs.androidx.camera.view
             implementation libs.mlkit.barcode
-        }
-        iosMain.dependencies {
-            // Android gets Icons.Filled.* via the androidx material-icons-extended dependency below;
-            // iOS needs its own equivalent, scoped here (not commonMain) to avoid clashing with the
-            // androidx artifact when the `app` module resolves the composables project dependency.
-            implementation(compose.materialIconsExtended)
         }
         androidUnitTest.dependencies {
             implementation libs.junit
@@ -101,4 +102,4 @@ dependencies {
 // (androidRelease, iosArm64, iosX64, iosSimulatorArm64) plus a root Gradle-metadata
 // publication, instead of the single AAR `components.release` used pre-KMP.
 group = 'com.github.Capiro-Dev'
-version = '2.0.0'
+version = '2.0.1'
