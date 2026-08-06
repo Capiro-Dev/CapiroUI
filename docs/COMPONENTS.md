@@ -74,9 +74,9 @@ Displays a floating action button (FAB) with up to three optional expandable ite
 
 | Parameter | Type | Default | Description |
 |---|---|---|---|
-| `imageRes1` | `@DrawableRes Int?` | `null` | The drawable resource for the first FAB item. |
-| `imageRes2` | `@DrawableRes Int?` | `null` | The drawable resource for the second FAB item. |
-| `imageRes3` | `@DrawableRes Int?` | `null` | The drawable resource for the third FAB item. |
+| `icon1` | `Painter?` | `null` | The icon for the first FAB item. |
+| `icon2` | `Painter?` | `null` | The icon for the second FAB item. |
+| `icon3` | `Painter?` | `null` | The icon for the third FAB item. |
 | `onClick1` | `(() -> Unit)?` | `null` | The click handler for the first FAB item. |
 | `onClick2` | `(() -> Unit)?` | `null` | The click handler for the second FAB item. |
 | `onClick3` | `(() -> Unit)?` | `null` | The click handler for the third FAB item. |
@@ -202,7 +202,7 @@ A dropdown with a leading image and an expandable list of items.
 | Parameter | Type | Default | Description |
 |---|---|---|---|
 | `modifier` | `Modifier` | `Modifier` | Modifier for styling and layout. |
-| `imageResourceId` | `@DrawableRes Int` | — | Drawable displayed alongside the spinner. |
+| `icon` | `Painter` | — | Icon displayed alongside the spinner. |
 | `items` | `List<String>` | — | List of items in the dropdown menu. |
 | `selectedItem` | `String` | — | The currently selected item. |
 | `onItemSelect` | `(String) -> Unit` | — | Callback invoked when an item is selected. |
@@ -319,7 +319,7 @@ Displays a drawable resource with fit scaling.
 
 | Parameter | Type | Default | Description |
 |---|---|---|---|
-| `imageSourceId` | `@DrawableRes Int` | — | The resource ID of the drawable to display. |
+| `painter` | `Painter` | — | The painter to display (e.g. `painterResource(Res.drawable.x)`). |
 | `modifier` | `Modifier` | `Modifier` | Modifier to customize layout/appearance. |
 
 #### `PolygonCapiro`
@@ -350,7 +350,7 @@ A centered image header with rounded corners for dialogs.
 
 | Parameter | Type | Default | Description |
 |---|---|---|---|
-| `imageResource` | `@DrawableRes Int` | — | The drawable resource ID for the image. |
+| `painter` | `Painter` | — | The painter for the image. |
 
 ---
 
@@ -557,7 +557,7 @@ A confirm/cancel dialog with two buttons.
 
 | Parameter | Type | Default | Description |
 |---|---|---|---|
-| `imaResource` | `@DrawableRes Int` | — | Drawable for the image. |
+| `image` | `Painter` | — | Painter for the image. |
 | `boldText` | `String?` | `null` | Substring of `message` to render bold. |
 | `message` | `String` | — | The message text. |
 | `innerComposable` | `@Composable (() -> Unit)?` | `null` | Optional custom content inside the dialog. |
@@ -699,7 +699,7 @@ A splash screen with app icon, a support message, and the app version.
 
 | Parameter | Type | Default | Description |
 |---|---|---|---|
-| `iconAppResource` | `@DrawableRes Int` | — | Drawable of the app icon. |
+| `icon` | `Painter` | — | Painter for the app icon. |
 | `version` | `String` | — | Version string shown at the bottom. |
 
 #### `LoginScreenCapiro`
@@ -707,7 +707,7 @@ A login screen with user/password fields, a backup button, and a login button.
 
 | Parameter | Type | Default | Description |
 |---|---|---|---|
-| `iconAppResource` | `@DrawableRes Int` | — | Drawable of the app icon. |
+| `icon` | `Painter` | — | Painter for the app icon. |
 | `onBackUpClick` | `() -> Unit` | — | Invoked when the backup button is clicked. |
 | `user` | `String` | — | The current user-field value. |
 | `password` | `String` | — | The current password-field value. |

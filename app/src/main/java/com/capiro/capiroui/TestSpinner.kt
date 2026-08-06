@@ -16,6 +16,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.capiro.capiroui.R
@@ -131,7 +132,7 @@ fun TestSpinners() {
                 items = listOf("Alhambra - AF", "Bochica - BC", "Capri - CC", "San Sebastían - SS", "Bouquetera - BQ", "Valley VF", "Plantas Madres - PM"),
                 selectedItem = selectedItemUnderlined2.value,
                 onItemSelect = { selectedItemUnderlined2.value = it },
-                imageResourceId = com.capiro.composables.R.drawable.farm_secondary
+                icon = painterResource(id = com.capiro.composables.R.drawable.farm_secondary)
 
             )
         }

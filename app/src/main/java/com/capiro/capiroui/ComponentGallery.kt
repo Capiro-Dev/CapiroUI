@@ -22,6 +22,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import com.capiro.composables.R as CapiroR
@@ -165,7 +166,7 @@ private fun Buttons() = Section("Buttons") {
     }
     Demo("ButtonFabCapiro") {
         Box(Modifier.size(150.dp)) {
-            ButtonFabCapiro(imageRes1 = CapiroR.drawable.fab, onClick1 = {}, innerPadding = 0.dp, iconSize = 56.dp)
+            ButtonFabCapiro(icon1 = painterResource(id = CapiroR.drawable.fab), onClick1 = {}, innerPadding = 0.dp, iconSize = 56.dp)
         }
     }
     Demo("ButtonMenu") {
@@ -198,7 +199,7 @@ private fun SpinnersAndDropdowns() = Section("Spinners & dropdowns") {
     Demo("SpinnerButtonCapiro") { SpinnerButtonCapiro(itemSelected = selected, labelResourceId = CapiroR.string.login_tt_user_label, onClick = {}) }
     Demo("SpinnerButtonUnderlined") { SpinnerButtonUnderlined(labelResourceId = CapiroR.string.login_tt_user_label, selectedItem = selected, onClick = {}) }
     Demo("SpinnerDropdownCapiro") {
-        SpinnerDropdownCapiro(imageResourceId = CapiroR.drawable.farm, items = items, selectedItem = selected, onItemSelect = { selected = it })
+        SpinnerDropdownCapiro(icon = painterResource(id = CapiroR.drawable.farm), items = items, selectedItem = selected, onItemSelect = { selected = it })
     }
     Demo("SpinnerDropdownUnderlined") {
         SpinnerDropdownUnderlined(items = items, selectedItem = selected, onItemSelectedChange = { selected = it }, labelResourceId = CapiroR.string.login_tt_user_label)
@@ -223,10 +224,10 @@ private fun SelectionControls() = Section("Selection controls") {
 @Composable
 private fun DisplayAndLayout() = Section("Display & layout") {
     Demo("CardCapiro") { CardCapiro(innerComposable = { Text("Contenido de la Card", color = GreenCapiro) }) }
-    Demo("ImageCapiro") { ImageCapiro(imageSourceId = CapiroR.drawable.test_app_logo, modifier = Modifier.size(120.dp)) }
+    Demo("ImageCapiro") { ImageCapiro(painter = painterResource(id = CapiroR.drawable.test_app_logo), modifier = Modifier.size(120.dp)) }
     Demo("PolygonCapiro") { PolygonCapiro(modifier = Modifier.size(110.dp)) }
     Demo("DialogTitle") { DialogTitle(text = "Seleccione una finca", onCloseClick = {}) }
-    Demo("DialogTitle2") { DialogTitle2(imageResource = CapiroR.drawable.flower) }
+    Demo("DialogTitle2") { DialogTitle2(painter = painterResource(id = CapiroR.drawable.flower)) }
 }
 
 @Composable
@@ -302,7 +303,7 @@ private fun Dialogs() = Section("Dialogs") {
     }
     DialogDemo("TwoOptionsDialogCapiro") { open, onClose ->
         TwoOptionsDialogCapiro(
-            imaResource = CapiroR.drawable.error, message = "¿Desea eliminar el registro?",
+            image = painterResource(id = CapiroR.drawable.error), message = "¿Desea eliminar el registro?",
             positiveButtonText = "Sí", negativeButtonText = "No",
             onPositiveButtonClickEvent = onClose, onNegativeButtonClickEvent = onClose, isDialogOpenState = open,
         )
@@ -371,7 +372,7 @@ private fun Dialogs() = Section("Dialogs") {
 private fun Screens() = Section("Screens") {
     Demo("SplashScreenCapiro") {
         Box(Modifier.fillMaxWidth().height(420.dp)) {
-            SplashScreenCapiro(iconAppResource = CapiroR.drawable.test_app_logo, version = "1.0.0")
+            SplashScreenCapiro(icon = painterResource(id = CapiroR.drawable.test_app_logo), version = "1.0.0")
         }
     }
     Demo("LoginScreenCapiro") {
@@ -379,7 +380,7 @@ private fun Screens() = Section("Screens") {
         var password by remember { mutableStateOf("") }
         Box(Modifier.fillMaxWidth().height(560.dp)) {
             LoginScreenCapiro(
-                iconAppResource = CapiroR.drawable.test_app_logo, onBackUpClick = {},
+                icon = painterResource(id = CapiroR.drawable.test_app_logo), onBackUpClick = {},
                 user = user, password = password,
                 onUserTextChange = { user = it }, onPasswordTextChange = { password = it }, onLoginClick = {},
             )

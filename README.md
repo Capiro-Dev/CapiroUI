@@ -176,7 +176,7 @@ ButtonIconCapiro(image = Icons.Filled.Search, onClick = { }, label = "Buscar")
 
 ButtonImageCapiro(imageRes = R.drawable.farm, onClick = { }, size = 72.dp, label = "Finca")
 
-ButtonFabCapiro(imageRes1 = R.drawable.fab, onClick1 = { }, innerPadding = 0.dp, iconSize = 56.dp)
+ButtonFabCapiro(icon1 = painterResource(id = R.drawable.fab), onClick1 = { }, innerPadding = 0.dp, iconSize = 56.dp)
 
 ButtonMenu(
     menuItem = MenuItemCapiro(
@@ -239,7 +239,7 @@ SpinnerButtonCapiro(itemSelected = selected, labelResourceId = R.string.label, o
 SpinnerButtonUnderlined(labelResourceId = R.string.label, selectedItem = selected, onClick = { })
 
 SpinnerDropdownCapiro(
-    imageResourceId = R.drawable.farm, items = items,
+    icon = painterResource(id = R.drawable.farm), items = items,
     selectedItem = selected, onItemSelect = { selected = it },
 )
 
@@ -300,13 +300,13 @@ SwitchCapiro(text = "Activar", isChecked = checked, onCheckedChange = { checked 
 ```kotlin
 CardCapiro(innerComposable = { Text("Contenido") })
 
-ImageCapiro(imageSourceId = R.drawable.logo, modifier = Modifier.size(120.dp))
+ImageCapiro(painter = painterResource(id = R.drawable.logo), modifier = Modifier.size(120.dp))
 
 PolygonCapiro(modifier = Modifier.size(110.dp))
 
 DialogTitle(text = "Seleccione una finca", onCloseClick = { })
 
-DialogTitle2(imageResource = R.drawable.flower)
+DialogTitle2(painter = painterResource(id = R.drawable.flower))
 ```
 </details>
 
@@ -439,7 +439,7 @@ OneOptionDialogCapiro(
 )
 
 TwoOptionsDialogCapiro(
-    imaResource = R.drawable.error, message = "¿Desea eliminar el registro?",
+    image = painterResource(id = R.drawable.error), message = "¿Desea eliminar el registro?",
     positiveButtonText = "Sí", negativeButtonText = "No",
     onPositiveButtonClickEvent = { }, onNegativeButtonClickEvent = { open = false },
     isDialogOpenState = open,
@@ -475,12 +475,12 @@ Full-screen composables ready to host in an `Activity` / nav destination.
 <details><summary>💻 Usage</summary>
 
 ```kotlin
-SplashScreenCapiro(iconAppResource = R.drawable.logo, version = "1.0.0")
+SplashScreenCapiro(icon = painterResource(id = R.drawable.logo), version = "1.0.0")
 
 var user by remember { mutableStateOf("") }
 var password by remember { mutableStateOf("") }
 LoginScreenCapiro(
-    iconAppResource = R.drawable.logo,
+    icon = painterResource(id = R.drawable.logo),
     onBackUpClick = { },
     user = user, password = password,
     onUserTextChange = { user = it },

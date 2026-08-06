@@ -16,6 +16,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.capiro.composables.athomic_composables.buttons.ButtonCapiro
@@ -66,7 +67,7 @@ fun TestDialog() {
 
 
     TwoOptionsDialogCapiro(
-        imaResource = R.drawable.siembralogo,
+        image = painterResource(id = R.drawable.siembralogo),
         boldText = "dolor",
         message = "message Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam",
         positiveButtonText = "Positive",

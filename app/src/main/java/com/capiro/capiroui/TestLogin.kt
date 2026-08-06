@@ -6,6 +6,7 @@ import androidx.compose.runtime.Stable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import com.capiro.composables.screens.LoginScreenCapiro
 import com.capiro.composables.R.drawable.test_app_logo
@@ -19,7 +20,7 @@ fun Login() {
     val password = remember { mutableStateOf("") }
     val errorMessage = remember { mutableStateOf("") }
     LoginScreenCapiro(
-        iconAppResource = test_app_logo,
+        icon = painterResource(id = test_app_logo),
         onBackUpClick = {Toast.makeText(
             context.value,
             "click",
