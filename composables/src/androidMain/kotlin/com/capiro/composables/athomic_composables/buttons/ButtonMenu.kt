@@ -41,6 +41,10 @@ import com.capiro.composables.theme.GrayDarkCapiro
 import com.capiro.composables.theme.GreenCapiro
 import com.capiro.composables.theme.RedCapiro
 
+@Deprecated(
+    "Android-only. Use com.capiro.composables.athomic_composables.buttons.MenuButtonCapiro " +
+        "(multiplatform) instead.",
+)
 @Composable
 fun ButtonMenu(
     menuItem: MenuItemCapiro,

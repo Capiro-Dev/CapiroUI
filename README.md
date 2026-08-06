@@ -33,6 +33,7 @@ Buttons, text fields, spinners, dialogs, scanner/labeling widgets and full scree
   - [Typography](#typography)
 - [Components](#components)
   - [Buttons](#buttons)
+  - [Drag & drop](#drag--drop)
   - [Text fields](#text-fields)
   - [Spinners & dropdowns](#spinners--dropdowns)
   - [Selection controls](#selection-controls)
@@ -154,17 +155,20 @@ Text("Cuerpo", style = TypographyProvider.typography.bodyMedium)
 > All previews below are generated automatically from the real composables — see [Generating the screenshots](#generating-the-screenshots).
 >
 > 📖 Looking for every parameter? See the full **[API reference →](docs/COMPONENTS.md)**. To browse the components live on a device, run the demo app (`:app`), which renders the [interactive gallery](app/src/main/java/com/capiro/capiroui/ComponentGallery.kt).
+>
+> **Platform** column: 🤖 Android · 🍎 also available on iOS (lives in Compose Multiplatform `commonMain`). Anything without 🍎 is `androidMain`-only today — usually because it wraps an Android-only API (CameraX, ML Kit), or just hasn't been ported yet.
 
 ### Buttons
 
-| Preview | Component | Description |
-|:---:|---|---|
-| <img src="docs/screenshots/button_capiro.png" width="150"/> | `ButtonCapiro` | Primary rounded button with enabled/disabled states and fully configurable colors. |
-| <img src="docs/screenshots/button_capiro_disabled.png" width="150"/> | `ButtonCapiro` *(disabled)* | The same button in its disabled state (`isEnabled = false`). |
-| <img src="docs/screenshots/button_icon_capiro.png" width="110"/> | `ButtonIconCapiro` | Icon button with an optional label and color changes on press. |
-| <img src="docs/screenshots/button_image_capiro.png" width="110"/> | `ButtonImageCapiro` | Image button with optional label and a locked/disabled indicator. |
-| <img src="docs/screenshots/button_fab_capiro.png" width="120"/> | `ButtonFabCapiro` | Floating action button with up to three expandable menu actions. |
-| <img src="docs/screenshots/button_menu.png" width="120"/> | `ButtonMenu` | Large menu tile (image + title) built from a `MenuItemCapiro`. |
+| Preview | Component | Description | Platform |
+|:---:|---|---|:---:|
+| <img src="docs/screenshots/button_capiro.png" width="150"/> | `ButtonCapiro` | Primary rounded button with enabled/disabled states and fully configurable colors. | 🤖🍎 |
+| <img src="docs/screenshots/button_capiro_disabled.png" width="150"/> | `ButtonCapiro` *(disabled)* | The same button in its disabled state (`isEnabled = false`). | 🤖🍎 |
+| <img src="docs/screenshots/button_icon_capiro.png" width="110"/> | `ButtonIconCapiro` | Icon button with an optional label and color changes on press. | 🤖🍎 |
+| <img src="docs/screenshots/button_image_capiro.png" width="110"/> | `ButtonImageCapiro` | Image button with optional label and a locked/disabled indicator. | 🤖 |
+| <img src="docs/screenshots/button_fab_capiro.png" width="120"/> | `ButtonFabCapiro` | Floating action button with up to three expandable menu actions. | 🤖🍎 |
+| <img src="docs/screenshots/button_menu.png" width="120"/> | `ButtonMenu` *(deprecated)* | Large menu tile (image + title) built from a `MenuItemCapiro`. Android-only — replaced by `MenuButtonCapiro` below. | 🤖 |
+| _(new — screenshot pending)_ | `MenuButtonCapiro` | Multiplatform module-navigation tile (icon + title) built from a `MenuButtonItemCapiro`; has an optional corner `badge` slot. | 🤖🍎 |
 
 <details><summary>💻 Usage</summary>
 
@@ -178,6 +182,7 @@ ButtonImageCapiro(imageRes = R.drawable.farm, onClick = { }, size = 72.dp, label
 
 ButtonFabCapiro(icon1 = painterResource(id = R.drawable.fab), onClick1 = { }, innerPadding = 0.dp, iconSize = 56.dp)
 
+// Deprecated (Android-only) — prefer MenuButtonCapiro, which also runs on iOS:
 ButtonMenu(
     menuItem = MenuItemCapiro(
         image = R.drawable.farm, title = "Fincas",
@@ -185,18 +190,80 @@ ButtonMenu(
     ),
     size = 120.dp,
 )
+
+MenuButtonCapiro(
+    item = MenuButtonItemCapiro(
+        id = "fincas", title = "Fincas", icon = painterResource(id = R.drawable.farm),
+        onClick = { },
+    ),
+    size = 120.dp,
+)
+```
+</details>
+
+### Drag & drop
+
+A reorderable grid with an iOS-style long-press "jiggle" edit mode, paired with a matching archive/restore tray — both multiplatform. `DragDropGridCapiro` renders whatever tile you give it (e.g. `MenuButtonCapiro`) and only reports index-based reorder/archive intents; you own the id list and the archived-items store.
+
+| Preview | Component | Description | Platform |
+|:---:|---|---|:---:|
+| _(new — screenshot pending)_ | `DragDropGridCapiro<T>` | Long-press-to-reorder grid with an edit-mode archive badge on each tile. | 🤖🍎 |
+| _(new — screenshot pending)_ | `ArchiveTrayCapiro<T>` | Dialog listing archived items with a restore action per item. | 🤖🍎 |
+
+<details><summary>💻 Usage</summary>
+
+```kotlin
+var itemIds by remember { mutableStateOf(listOf("fincas", "cosecha", "riego")) }
+var archivedIds by remember { mutableStateOf(emptyList<String>()) }
+val items = remember {
+    mapOf(
+        "fincas" to MenuButtonItemCapiro(id = "fincas", title = "Fincas", icon = painterResource(id = R.drawable.farm), onClick = { }),
+        "cosecha" to MenuButtonItemCapiro(id = "cosecha", title = "Cosecha", icon = painterResource(id = R.drawable.harvest), onClick = { }),
+        "riego" to MenuButtonItemCapiro(id = "riego", title = "Riego", icon = painterResource(id = R.drawable.water), onClick = { }),
+    )
+}
+
+DragDropGridCapiro(
+    itemIds = itemIds,
+    getItem = { items[it] },
+    columns = 3,
+    onReorder = { from, to -> itemIds = itemIds.toMutableList().apply { add(to, removeAt(from)) } },
+    onArchiveItem = { index ->
+        val id = itemIds[index]
+        itemIds = itemIds - id
+        archivedIds = archivedIds + id
+    },
+) { item, isDragged ->
+    MenuButtonCapiro(item = item, size = 80.dp, enabled = !isDragged)
+}
+
+var trayOpen by remember { mutableStateOf(false) }
+ArchiveTrayCapiro(
+    isOpen = trayOpen,
+    archivedItems = archivedIds.mapNotNull { items[it] },
+    getId = { it.id },
+    title = "Elementos archivados",
+    emptyMessage = "No hay elementos archivados",
+    onDismiss = { trayOpen = false },
+    onRestoreItem = { id ->
+        archivedIds = archivedIds - id
+        itemIds = itemIds + id
+    },
+) { item ->
+    MenuButtonCapiro(item = item, size = 70.dp)
+}
 ```
 </details>
 
 ### Text fields
 
-| Preview | Component | Description |
-|:---:|---|---|
-| <img src="docs/screenshots/text_field_capiro.png" width="200"/> | `TextFieldCapiro` | Labeled text field with a trailing lock icon when disabled. |
-| <img src="docs/screenshots/text_field_outlined_capiro.png" width="200"/> | `TextFieldOutlinedCapiro` | Outlined field with password support and optional leading/trailing icons. |
-| <img src="docs/screenshots/text_field_rounded_border_capiro.png" width="200"/> | `TextFieldRoundedBorderCapiro` | Rounded-border field with inline error message and password toggle. |
-| <img src="docs/screenshots/text_field_and_tile_rounded_border_capiro.png" width="200"/> | `TextFieldAndTileRoundedBorderCapiro` | Rounded-border field with a title label above it. |
-| <img src="docs/screenshots/text_field_solid_background.png" width="200"/> | `TextFieldSolidBackground` | Borderless field with a solid background, used for search inputs. |
+| Preview | Component | Description | Platform |
+|:---:|---|---|:---:|
+| <img src="docs/screenshots/text_field_capiro.png" width="200"/> | `TextFieldCapiro` | Labeled text field with a trailing lock icon when disabled. | 🤖 |
+| <img src="docs/screenshots/text_field_outlined_capiro.png" width="200"/> | `TextFieldOutlinedCapiro` | Outlined field with password support and optional leading/trailing icons. | 🤖 |
+| <img src="docs/screenshots/text_field_rounded_border_capiro.png" width="200"/> | `TextFieldRoundedBorderCapiro` | Rounded-border field with inline error message and password toggle. | 🤖🍎 |
+| <img src="docs/screenshots/text_field_and_tile_rounded_border_capiro.png" width="200"/> | `TextFieldAndTileRoundedBorderCapiro` | Rounded-border field with a title label above it. | 🤖🍎 |
+| <img src="docs/screenshots/text_field_solid_background.png" width="200"/> | `TextFieldSolidBackground` | Borderless field with a solid background, used for search inputs. | 🤖 |
 
 <details><summary>💻 Usage</summary>
 
@@ -219,14 +286,14 @@ TextFieldSolidBackground(text = text, onTextChanged = { text = it })
 
 ### Spinners & dropdowns
 
-| Preview | Component | Description |
-|:---:|---|---|
-| <img src="docs/screenshots/spinner_button_capiro.png" width="200"/> | `SpinnerButtonCapiro` | Clickable spinner showing the selected item (or placeholder) with a label. |
-| <img src="docs/screenshots/spinner_button_underlined.png" width="200"/> | `SpinnerButtonUnderlined` | Underlined spinner button with an optional error state. |
-| <img src="docs/screenshots/spinner_dropdown_capiro.png" width="200"/> | `SpinnerDropdownCapiro` | Dropdown with a leading image and an expandable list of items. |
-| <img src="docs/screenshots/spinner_dropdown_underlined.png" width="200"/> | `SpinnerDropdownUnderlined` | Underlined dropdown with an optional label and error state. |
-| <img src="docs/screenshots/simple_dropdown_text_capiro.png" width="200"/> | `SimpleDropdownTextCapiro` | Dropdown that includes a custom "otro" (other) free-text option. |
-| <img src="docs/screenshots/simple_dropdown_underlined.png" width="200"/> | `SimpleDropDownUnderlined` | Minimal underlined dropdown field with a down arrow. |
+| Preview | Component | Description | Platform |
+|:---:|---|---|:---:|
+| <img src="docs/screenshots/spinner_button_capiro.png" width="200"/> | `SpinnerButtonCapiro` | Clickable spinner showing the selected item (or placeholder) with a label. | 🤖 |
+| <img src="docs/screenshots/spinner_button_underlined.png" width="200"/> | `SpinnerButtonUnderlined` | Underlined spinner button with an optional error state. | 🤖 |
+| <img src="docs/screenshots/spinner_dropdown_capiro.png" width="200"/> | `SpinnerDropdownCapiro` | Dropdown with a leading image and an expandable list of items. | 🤖🍎 |
+| <img src="docs/screenshots/spinner_dropdown_underlined.png" width="200"/> | `SpinnerDropdownUnderlined` | Underlined dropdown with an optional label and error state. | 🤖 |
+| <img src="docs/screenshots/simple_dropdown_text_capiro.png" width="200"/> | `SimpleDropdownTextCapiro` | Dropdown that includes a custom "otro" (other) free-text option. | 🤖 |
+| <img src="docs/screenshots/simple_dropdown_underlined.png" width="200"/> | `SimpleDropDownUnderlined` | Minimal underlined dropdown field with a down arrow. | 🤖 |
 
 <details><summary>💻 Usage</summary>
 
@@ -259,13 +326,13 @@ SimpleDropDownUnderlined(labelResourceId = R.string.label, selectedItem = select
 
 ### Selection controls
 
-| Preview | Component | Description |
-|:---:|---|---|
-| <img src="docs/screenshots/check_box_capiro.png" width="80"/> | `CheckBoxCapiro` | Branded checkbox with a configurable scale and enabled state. |
-| <img src="docs/screenshots/check_box_and_text_capiro.png" width="180"/> | `CheckBoxAndTextCapiro` | Checkbox with an accompanying text label. |
-| <img src="docs/screenshots/radio_button_capiro.png" width="70"/> | `RadioButtonCapiro` | Radio button driven by `selection`/`identifier` equality. |
-| <img src="docs/screenshots/radio_button_text_capiro.png" width="150"/> | `RadioButtonTextCapiro` | Radio button with a text label. |
-| <img src="docs/screenshots/switch_capiro.png" width="150"/> | `SwitchCapiro` | Toggle switch with a text label. |
+| Preview | Component | Description | Platform |
+|:---:|---|---|:---:|
+| <img src="docs/screenshots/check_box_capiro.png" width="80"/> | `CheckBoxCapiro` | Branded checkbox with a configurable scale and enabled state. | 🤖 |
+| <img src="docs/screenshots/check_box_and_text_capiro.png" width="180"/> | `CheckBoxAndTextCapiro` | Checkbox with an accompanying text label. | 🤖 |
+| <img src="docs/screenshots/radio_button_capiro.png" width="70"/> | `RadioButtonCapiro` | Radio button driven by `selection`/`identifier` equality. | 🤖 |
+| <img src="docs/screenshots/radio_button_text_capiro.png" width="150"/> | `RadioButtonTextCapiro` | Radio button with a text label. | 🤖 |
+| <img src="docs/screenshots/switch_capiro.png" width="150"/> | `SwitchCapiro` | Toggle switch with a text label. | 🤖 |
 
 <details><summary>💻 Usage</summary>
 
@@ -287,13 +354,13 @@ SwitchCapiro(text = "Activar", isChecked = checked, onCheckedChange = { checked 
 
 ### Display & layout
 
-| Preview | Component | Description |
-|:---:|---|---|
-| <img src="docs/screenshots/card_capiro.png" width="200"/> | `CardCapiro` | Rounded, elevated container with inner padding for any content. |
-| <img src="docs/screenshots/image_capiro.png" width="110"/> | `ImageCapiro` | Displays a drawable resource with fit scaling. |
-| <img src="docs/screenshots/polygon_capiro.png" width="100"/> | `PolygonCapiro` | Hexagonal shape, optionally hosting image content (e.g. profile photos). |
-| <img src="docs/screenshots/dialog_title.png" width="200"/> | `DialogTitle` | Centered dialog title with an optional close button. |
-| <img src="docs/screenshots/dialog_title_2.png" width="110"/> | `DialogTitle2` | Centered image header with rounded corners for dialogs. |
+| Preview | Component | Description | Platform |
+|:---:|---|---|:---:|
+| <img src="docs/screenshots/card_capiro.png" width="200"/> | `CardCapiro` | Rounded, elevated container with inner padding for any content. | 🤖 |
+| <img src="docs/screenshots/image_capiro.png" width="110"/> | `ImageCapiro` | Displays a drawable resource with fit scaling. | 🤖🍎 |
+| <img src="docs/screenshots/polygon_capiro.png" width="100"/> | `PolygonCapiro` | Hexagonal shape, optionally hosting image content (e.g. profile photos). | 🤖 |
+| <img src="docs/screenshots/dialog_title.png" width="200"/> | `DialogTitle` | Centered dialog title with an optional close button. | 🤖🍎 |
+| <img src="docs/screenshots/dialog_title_2.png" width="110"/> | `DialogTitle2` | Centered image header with rounded corners for dialogs. | 🤖🍎 |
 
 <details><summary>💻 Usage</summary>
 
@@ -312,11 +379,11 @@ DialogTitle2(painter = painterResource(id = R.drawable.flower))
 
 ### Navigation
 
-| Preview | Component | Description |
-|:---:|---|---|
-| <img src="docs/screenshots/toolbar_capiro.png" width="280"/> | `ToolbarCapiro` | App toolbar with farm name, section title and a user-menu button that opens the account dialog. |
-| <img src="docs/screenshots/current_account_menu_top_bar.png" width="200"/> | `CurrentAccountMenuTopBar` | Top bar of the account menu with a "close session" action. |
-| <img src="docs/screenshots/account_menu_dialog.png" width="190"/> | `ToolbarMenuLayoutDialogCapiro` | Account options dialog (logout / backup / printers). |
+| Preview | Component | Description | Platform |
+|:---:|---|---|:---:|
+| <img src="docs/screenshots/toolbar_capiro.png" width="280"/> | `ToolbarCapiro` | App toolbar with farm name, section title and a user-menu button that opens the account dialog. | 🤖🍎 |
+| <img src="docs/screenshots/current_account_menu_top_bar.png" width="200"/> | `CurrentAccountMenuTopBar` | Top bar of the account menu with a "close session" action. | 🤖🍎 |
+| <img src="docs/screenshots/account_menu_dialog.png" width="190"/> | `ToolbarMenuLayoutDialogCapiro` | Account options dialog (logout / backup / printers). | 🤖🍎 |
 
 <details><summary>💻 Usage</summary>
 
@@ -343,12 +410,12 @@ ToolbarMenuLayoutDialogCapiro(
 
 ### Lists, items & labels
 
-| Preview | Component | Description |
-|:---:|---|---|
-| <img src="docs/screenshots/item_manual_capiro.png" width="220"/> | `ItemManualCapiro` | Scanned-item row with number, label, custom content and optional delete. |
-| <img src="docs/screenshots/item_scanner_capiro.png" width="220"/> | `ItemScannerCapiro` | Scanned-item row with number, label, custom content and optional expand. |
-| <img src="docs/screenshots/item_expandable_capiro.png" width="220"/> | `ItemExpandableCapiro` | Expandable item card that reveals a list of variety details. |
-| <img src="docs/screenshots/label_manual_capiro.png" width="240"/> | `LabelManualCapiro` | A/Y/W + consecutive manual label entry fields (farm & week variants available). |
+| Preview | Component | Description | Platform |
+|:---:|---|---|:---:|
+| <img src="docs/screenshots/item_manual_capiro.png" width="220"/> | `ItemManualCapiro` | Scanned-item row with number, label, custom content and optional delete. | 🤖 |
+| <img src="docs/screenshots/item_scanner_capiro.png" width="220"/> | `ItemScannerCapiro` | Scanned-item row with number, label, custom content and optional expand. | 🤖 |
+| <img src="docs/screenshots/item_expandable_capiro.png" width="220"/> | `ItemExpandableCapiro` | Expandable item card that reveals a list of variety details. | 🤖 |
+| <img src="docs/screenshots/label_manual_capiro.png" width="240"/> | `LabelManualCapiro` | A/Y/W + consecutive manual label entry fields (farm & week variants available). | 🤖 |
 
 <details><summary>💻 Usage</summary>
 
@@ -383,11 +450,11 @@ LabelManualCapiro(
 
 ### Date & filters
 
-| Preview | Component | Description |
-|:---:|---|---|
-| <img src="docs/screenshots/calendar_bar_capiro.png" width="220"/> | `CalendarBarCapiro` | Date bar showing day / weekday / month with a calendar trigger. |
-| <img src="docs/screenshots/week_filter_capiro.png" width="240"/> | `WeekFilterCapiro` | Row of day checkboxes for filtering by weekday. |
-| <img src="docs/screenshots/two_options_button_capiro.png" width="220"/> | `TwoOptionsButtonCapiro` | Two mutually-exclusive toggle buttons (only one active at a time). |
+| Preview | Component | Description | Platform |
+|:---:|---|---|:---:|
+| <img src="docs/screenshots/calendar_bar_capiro.png" width="220"/> | `CalendarBarCapiro` | Date bar showing day / weekday / month with a calendar trigger. | 🤖 |
+| <img src="docs/screenshots/week_filter_capiro.png" width="240"/> | `WeekFilterCapiro` | Row of day checkboxes for filtering by weekday. | 🤖 |
+| <img src="docs/screenshots/two_options_button_capiro.png" width="220"/> | `TwoOptionsButtonCapiro` | Two mutually-exclusive toggle buttons (only one active at a time). | 🤖 |
 
 <details><summary>💻 Usage</summary>
 
@@ -411,19 +478,19 @@ TwoOptionsButtonCapiro(text1 = "Activos", text2 = "Inactivos", onClick1 = { }, o
 
 All dialogs follow the same pattern: pass an `isOpen` boolean and they render nothing while closed.
 
-| Preview | Component | Description |
-|:---:|---|---|
-| <img src="docs/screenshots/loading_dialog.png" width="200"/> | `LoadingDialog` | Blocking loading dialog with a title, message and spinner. |
-| <img src="docs/screenshots/one_option_dialog_capiro.png" width="200"/> | `OneOptionDialogCapiro` | Single-action dialog with an image and (optionally bolded) message. |
-| <img src="docs/screenshots/two_options_dialog_capiro.png" width="200"/> | `TwoOptionsDialogCapiro` | Confirm/cancel dialog with two buttons. |
-| <img src="docs/screenshots/custom_date_picker.png" width="220"/> | `CustomDatePicker` | Custom calendar date picker with optional date-range limiting. |
-| <img src="docs/screenshots/search_list_dialog_capiro.png" width="160"/> | `SearchListDialogCapiro<T>` | Generic searchable list dialog with a caller-supplied item slot. |
-| <img src="docs/screenshots/simple_list_dialogs_capiro.png" width="160"/> | `SimpleListDialogsCapiro<T>` | Generic list dialog with a custom item slot. |
-| <img src="docs/screenshots/radio_button_dialog_capiro.png" width="160"/> | `RadioButtonDialogCapiro` | Dialog with a list of radio-button options. |
-| <img src="docs/screenshots/simple_dialog_history_capiro.png" width="160"/> | `SimpleDialogHistoryCapiro<T>` | Generic list dialog with a title and close button. |
-| <img src="docs/screenshots/dialog_history_capiro.png" width="160"/> | `DialogHistoryCapiro<T>` | Searchable history dialog with a built-in week filter. |
-| <img src="docs/screenshots/list_text_field_dialog_capiro.png" width="160"/> | `ListTextFieldDialogCapiro` | Dialog combining a selectable list with a text/units input. |
-| <img src="docs/screenshots/sync_dialog_capiro.png" width="160"/> | `SyncDialogCapiro` | Progress dialog showing the status of multiple sync items. |
+| Preview | Component | Description | Platform |
+|:---:|---|---|:---:|
+| <img src="docs/screenshots/loading_dialog.png" width="200"/> | `LoadingDialog` | Blocking loading dialog with a title, message and spinner. | 🤖🍎 |
+| <img src="docs/screenshots/one_option_dialog_capiro.png" width="200"/> | `OneOptionDialogCapiro` | Single-action dialog with an image and (optionally bolded) message. | 🤖 |
+| <img src="docs/screenshots/two_options_dialog_capiro.png" width="200"/> | `TwoOptionsDialogCapiro` | Confirm/cancel dialog with two buttons. | 🤖🍎 |
+| <img src="docs/screenshots/custom_date_picker.png" width="220"/> | `CustomDatePicker` | Custom calendar date picker with optional date-range limiting. | 🤖 |
+| <img src="docs/screenshots/search_list_dialog_capiro.png" width="160"/> | `SearchListDialogCapiro<T>` | Generic searchable list dialog with a caller-supplied item slot. | 🤖 |
+| <img src="docs/screenshots/simple_list_dialogs_capiro.png" width="160"/> | `SimpleListDialogsCapiro<T>` | Generic list dialog with a custom item slot. | 🤖 |
+| <img src="docs/screenshots/radio_button_dialog_capiro.png" width="160"/> | `RadioButtonDialogCapiro` | Dialog with a list of radio-button options. | 🤖 |
+| <img src="docs/screenshots/simple_dialog_history_capiro.png" width="160"/> | `SimpleDialogHistoryCapiro<T>` | Generic list dialog with a title and close button. | 🤖 |
+| <img src="docs/screenshots/dialog_history_capiro.png" width="160"/> | `DialogHistoryCapiro<T>` | Searchable history dialog with a built-in week filter. | 🤖 |
+| <img src="docs/screenshots/list_text_field_dialog_capiro.png" width="160"/> | `ListTextFieldDialogCapiro` | Dialog combining a selectable list with a text/units input. | 🤖 |
+| <img src="docs/screenshots/sync_dialog_capiro.png" width="160"/> | `SyncDialogCapiro` | Progress dialog showing the status of multiple sync items. | 🤖 |
 
 <details><summary>💻 Usage</summary>
 
@@ -467,10 +534,10 @@ SearchListDialogCapiro(
 
 Full-screen composables ready to host in an `Activity` / nav destination.
 
-| Preview | Component | Description |
-|:---:|---|---|
-| <img src="docs/screenshots/splash_screen_capiro.png" width="180"/> | `SplashScreenCapiro` | Splash screen with app icon, support message and version. |
-| <img src="docs/screenshots/login_screen_capiro.png" width="180"/> | `LoginScreenCapiro` | Login screen with user/password fields, backup and login actions. |
+| Preview | Component | Description | Platform |
+|:---:|---|---|:---:|
+| <img src="docs/screenshots/splash_screen_capiro.png" width="180"/> | `SplashScreenCapiro` | Splash screen with app icon, support message and version. | 🤖🍎 |
+| <img src="docs/screenshots/login_screen_capiro.png" width="180"/> | `LoginScreenCapiro` | Login screen with user/password fields, backup and login actions. | 🤖🍎 |
 
 <details><summary>💻 Usage</summary>
 
@@ -494,10 +561,10 @@ LoginScreenCapiro(
 
 Open the camera and read a QR code (or any barcode) with a **single component**. Built on CameraX + ML Kit; camera permission is requested automatically and is already declared in the library manifest (it merges into your app — no manifest edits needed). The live camera preview can't be captured in a screenshot, so the preview below shows the scan button.
 
-| Preview | Component | Description |
-|:---:|---|---|
-| <img src="docs/screenshots/qr_scanner_button_capiro.png" width="120"/> | `QrScannerButtonCapiro` | Drop-in scan button that manages the camera dialog and returns the scanned value. |
-| _(live camera)_ | `QrScannerDialogCapiro` | The underlying state-hoisted scanner dialog, if you want to supply your own trigger. |
+| Preview | Component | Description | Platform |
+|:---:|---|---|:---:|
+| <img src="docs/screenshots/qr_scanner_button_capiro.png" width="120"/> | `QrScannerButtonCapiro` | Drop-in scan button that manages the camera dialog and returns the scanned value. | 🤖 |
+| _(live camera)_ | `QrScannerDialogCapiro` | The underlying state-hoisted scanner dialog, if you want to supply your own trigger. | 🤖 |
 
 <details><summary>💻 Usage</summary>
 
