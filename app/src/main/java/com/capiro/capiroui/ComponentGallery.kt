@@ -43,6 +43,7 @@ import com.capiro.composables.athomic_composables.spinners.SpinnerButtonUnderlin
 import com.capiro.composables.athomic_composables.spinners.SpinnerDropdownCapiro
 import com.capiro.composables.athomic_composables.spinners.SpinnerDropdownUnderlined
 import com.capiro.composables.athomic_composables.switchcapiro.SwitchCapiro
+import com.capiro.composables.athomic_composables.textfield.SearchBarCapiro
 import com.capiro.composables.athomic_composables.textfield.TextFieldAndTileRoundedBorderCapiro
 import com.capiro.composables.athomic_composables.textfield.TextFieldCapiro
 import com.capiro.composables.athomic_composables.textfield.TextFieldOutlinedCapiro
@@ -190,6 +191,25 @@ private fun GalleryTextFields() = Section("Text fields") {
         TextFieldAndTileRoundedBorderCapiro(textInput = text, onTextChangeEvent = { text = it }, label = "Usuario", title = "Usuario")
     }
     Demo("TextFieldSolidBackground") { TextFieldSolidBackground(text = text, onTextChanged = { text = it }) }
+    var searchText by remember { mutableStateOf("") }
+    Demo("SearchBarCapiro (on white background)") {
+        SearchBarCapiro(searchText = searchText, onSearchTextChange = { searchText = it }, placeholder = "Buscar finca")
+    }
+    Demo("SearchBarCapiro (on gray background — needs containerColor override)") {
+        Box(
+            modifier = Modifier
+                .fillMaxWidth()
+                .background(GrayClearCapiro)
+                .padding(12.dp)
+        ) {
+            SearchBarCapiro(
+                searchText = searchText,
+                onSearchTextChange = { searchText = it },
+                placeholder = "Buscar finca",
+                containerColor = WhiteCapiro,
+            )
+        }
+    }
 }
 
 @Composable

@@ -102,4 +102,4 @@ dependencies {
 // (androidRelease, iosArm64, iosX64, iosSimulatorArm64) plus a root Gradle-metadata
 // publication, instead of the single AAR `components.release` used pre-KMP.
 group = 'com.github.Capiro-Dev'
-version = '2.1.0'
+version = '2.2.0'
