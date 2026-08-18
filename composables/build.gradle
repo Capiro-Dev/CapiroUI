@@ -101,5 +101,8 @@ dependencies {
 // Kotlin Multiplatform + maven-publish auto-generates one publication per target
 // (androidRelease, iosArm64, iosX64, iosSimulatorArm64) plus a root Gradle-metadata
 // publication, instead of the single AAR `components.release` used pre-KMP.
-group = 'com.github.Capiro-Dev'
-version = '2.2.0'
+// JitPack serves multi-module builds under com.github.<owner>.<repo>, not the bare owner —
+// matching that here keeps a mavenLocal publish resolvable under the same coordinates real
+// consumers use, so switching between the two doesn't silently change which artifact resolves.
+group = 'com.github.Capiro-Dev.CapiroUI'
+version = '2.3.0'

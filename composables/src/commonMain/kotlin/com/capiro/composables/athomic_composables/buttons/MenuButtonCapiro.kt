@@ -46,6 +46,8 @@ import getTypography
  * Lets composables that arrange these tiles — such as
  * [com.capiro.composables.dragdrop.DragDropGridCapiro] — decorate a tile without this composable
  * knowing about that concept.
+ * @param titleFontStyle Style applied to [item]'s title below the icon. Defaults to [FontStyle.Italic]
+ * to preserve this tile's original look; pass [FontStyle.Normal] to opt out per call site.
  */
 @Composable
 fun MenuButtonCapiro(
@@ -54,6 +56,7 @@ fun MenuButtonCapiro(
     modifier: Modifier = Modifier,
     enabled: Boolean = true,
     badge: (@Composable BoxScope.() -> Unit)? = null,
+    titleFontStyle: FontStyle = FontStyle.Italic,
 ) {
     Column(
         modifier = modifier
@@ -105,7 +108,7 @@ fun MenuButtonCapiro(
             text = item.title,
             style = getTypography().bodyMedium,
             color = if (enabled) GreenCapiro else GreenCapiro.copy(alpha = 0.5f),
-            fontStyle = FontStyle.Italic,
+            fontStyle = titleFontStyle,
             maxLines = 2,
             overflow = TextOverflow.Ellipsis,
             textAlign = TextAlign.Center,
