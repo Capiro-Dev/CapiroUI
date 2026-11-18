@@ -5,14 +5,17 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.text.BasicTextField
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.focus.onFocusChanged
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
+import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.capiro.composables.AlarmEvents
@@ -42,12 +45,19 @@ fun ScannerFieldCapiro(
     // Manages coroutine scope within the composable.
     val coroutineScope = rememberCoroutineScope()
 
+    // What the scanner just typed. It stays in the field for one frame and is then cleared (see the
+    // LaunchedEffect below), so every scan — even the same label twice in a row — is a real change.
+    // With BasicTextField(value = ""), Compose remembers the last text it reported and silently
+    // dropped a second identical scan: no callback, so no beep and no "repeated" warning.
+    var fieldValue by remember { mutableStateOf(TextFieldValue("")) }
+
     // Basic text field that captures user input.
     BasicTextField(
-        value = "",
-        onValueChange = { newText ->
-            // If this is the first execution and the input is not empty.
-            if (firstExecute.value && newText.isNotEmpty()) {
+        value = fieldValue,
+        onValueChange = { newValue ->
+            val newText = newValue.text
+            // Only new text counts as a scan (not cursor/selection updates), once per anti-repeat window.
+            if (firstExecute.value && newText.isNotEmpty() && newText != fieldValue.text) {
                 // Trigger the scan process with the new text.
                 scanProcess(newText)
                 firstExecute.value = false
@@ -58,6 +68,7 @@ fun ScannerFieldCapiro(
                     firstExecute.value = true
                 }
             }
+            fieldValue = newValue
         },
         modifier = Modifier
             .size(1.dp)
@@ -71,6 +82,11 @@ fun ScannerFieldCapiro(
                 }
             }
     )
+
+    // Clears the field after each scan so the next one starts from empty.
+    LaunchedEffect(fieldValue.text) {
+        if (fieldValue.text.isNotEmpty()) fieldValue = TextFieldValue("")
+    }
 
     // Auto-focuses the text field and hides the keyboard when the composable is first launched.
     LaunchedEffect("") {
