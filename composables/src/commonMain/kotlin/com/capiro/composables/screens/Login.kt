@@ -4,30 +4,40 @@ import TypographyProvider
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.BoxWithConstraints
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.ime
+import androidx.compose.foundation.layout.imePadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.DownloadForOffline
 import androidx.compose.material3.MaterialTheme.typography
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.snapshotFlow
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.painter.ColorPainter
 import androidx.compose.ui.graphics.painter.Painter
+import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.max
 import com.capiro.composables.athomic_composables.buttons.ButtonCapiro
 import com.capiro.composables.athomic_composables.buttons.ButtonIconCapiro
 import com.capiro.composables.athomic_composables.image.ImageCapiro
@@ -54,6 +64,13 @@ import org.jetbrains.compose.resources.stringResource
  * @param onUserTextChange Callback to be invoked when the user text changes.
  * @param onPasswordTextChange Callback to be invoked when the password text changes.
  * @param onLoginClick Callback to be invoked when the login button is clicked.
+ *
+ * Keyboard-aware: the form stays above the on-screen keyboard. The screen sizes itself to the
+ * space left above the IME ([imePadding]), scrolls when that space is shorter than the form needs
+ * ([LOGIN_MIN_HEIGHT]) and, while the keyboard is open, scrolls to the bottom so both fields and
+ * the login button stay visible (only the backup button and logo scroll out). This matters for
+ * edge-to-edge apps, where Android no longer resizes the window for the keyboard. Insets the host
+ * already consumed (e.g. `consumeWindowInsets` on a Scaffold's padding) are not counted twice.
  */
 @Composable
 fun LoginScreenCapiro(
@@ -66,17 +83,49 @@ fun LoginScreenCapiro(
     onPasswordTextChange: (String) -> Unit,
     onLoginClick: () -> Unit
 ) {
-    ContentSection(
-        userState = user,
-        passwordState = password,
-        icon = icon,
-        errorMessage = errorMessage,
-        onStartBackUpProcessEvent = onBackUpClick,
-        onUserTextEvent = onUserTextChange,
-        onUserPasswordEvent = onPasswordTextChange,
-        onLoginButtonClicked = onLoginClick
-    )
+    BoxWithConstraints(
+        modifier = Modifier
+            .fillMaxSize()
+            .background(BeigeCapiro)
+            .imePadding()
+    ) {
+        val scrollState = rememberScrollState()
+        // `WindowInsets.isImeVisible` is Android-only; the IME inset itself is multiplatform.
+        val isKeyboardOpen = WindowInsets.ime.getBottom(LocalDensity.current) > 0
+
+        // The IME inset animates in, so the scroll range grows over several frames: follow it while
+        // the keyboard is open. Only range changes re-pin the scroll, so manual scrolling still works.
+        LaunchedEffect(isKeyboardOpen) {
+            if (isKeyboardOpen) {
+                snapshotFlow { scrollState.maxValue }.collect { scrollState.scrollTo(it) }
+            }
+        }
+
+        Box(
+            modifier = Modifier
+                .fillMaxWidth()
+                .verticalScroll(scrollState)
+                .height(max(maxHeight, LOGIN_MIN_HEIGHT))
+        ) {
+            ContentSection(
+                userState = user,
+                passwordState = password,
+                icon = icon,
+                errorMessage = errorMessage,
+                onStartBackUpProcessEvent = onBackUpClick,
+                onUserTextEvent = onUserTextChange,
+                onUserPasswordEvent = onPasswordTextChange,
+                onLoginButtonClicked = onLoginClick
+            )
+        }
+    }
 }
+
+/**
+ * Height [ContentSection] needs (backup row + logo + two fields + error line + button + paddings)
+ * before it starts clipping; below it the screen scrolls instead.
+ */
+private val LOGIN_MIN_HEIGHT = 520.dp
 
 /**
  * Displays the content section of the login screen including user and password text fields,
