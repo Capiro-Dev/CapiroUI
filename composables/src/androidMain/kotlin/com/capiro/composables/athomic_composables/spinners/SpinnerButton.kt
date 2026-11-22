@@ -1,6 +1,7 @@
 package com.capiro.composables.athomic_composables.spinners
 
 import androidx.annotation.StringRes
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -26,6 +27,7 @@ import com.capiro.composables.EMPTY
 import com.capiro.composables.R
 import com.capiro.composables.theme.GrayDarkCapiro
 import com.capiro.composables.theme.GreenCapiro
+import com.capiro.composables.theme.RedCapiro
 import getTypography
 
 /**
@@ -34,12 +36,14 @@ import getTypography
  * @param itemSelected The currently selected item to display.
  * @param labelResourceId The resource ID for the label text.
  * @param onClick The callback to be invoked when the button is clicked.
+ * @param isError Draws a red border (e.g. a required field left empty on save).
  */
 @Composable
 fun SpinnerButtonCapiro(
     itemSelected: String,
     @StringRes labelResourceId: Int,
     onClick: () -> Unit,
+    isError: Boolean = false,
 ) {
     val isItemSelectedEmpty = itemSelected.isBlank() || itemSelected == EMPTY
     val label = if (isItemSelectedEmpty) "" else stringResource(id = labelResourceId)
@@ -57,7 +61,8 @@ fun SpinnerButtonCapiro(
                 .clickable(onClick = onClick),
             shape = RoundedCornerShape(16.dp),
             colors = CardDefaults.cardColors(containerColor = Color.White),
-            elevation = CardDefaults.elevatedCardElevation(defaultElevation = 8.dp)
+            elevation = CardDefaults.elevatedCardElevation(defaultElevation = 8.dp),
+            border = if (isError) BorderStroke(ERROR_BORDER_WIDTH, RedCapiro) else null,
         ) {
             Column(
                 modifier = Modifier.fillMaxHeight().padding(vertical = 4.dp, horizontal = 16.dp),
@@ -95,3 +100,6 @@ fun SpinnerButtonCapiro(
         }
     }
 }
+
+/** Width of the red border of a field in error (same as InputCardCapiro). */
+private val ERROR_BORDER_WIDTH = 2.dp

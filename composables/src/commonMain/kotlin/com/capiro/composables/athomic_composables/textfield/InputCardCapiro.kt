@@ -1,5 +1,6 @@
 package com.capiro.composables.athomic_composables.textfield
 
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -32,6 +33,7 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import com.capiro.composables.theme.GrayDarkCapiro
 import com.capiro.composables.theme.GreenCapiro
+import com.capiro.composables.theme.RedCapiro
 import getTypography
 
 /**
@@ -44,6 +46,7 @@ import getTypography
  * @param keyboardType [KeyboardType.Number] for integers, [KeyboardType.Decimal] for decimals.
  * @param visualTransformation e.g. a thousands separator; [value] stays the raw text.
  * @param trailingContent optional content at the end of the card (e.g. a "back to the list" icon).
+ * @param isError draws a red border (e.g. a required field left empty on save).
  */
 @Composable
 fun InputCardCapiro(
@@ -57,6 +60,7 @@ fun InputCardCapiro(
     readOnly: Boolean = false,
     visualTransformation: VisualTransformation = VisualTransformation.None,
     trailingContent: (@Composable () -> Unit)? = null,
+    isError: Boolean = false,
 ) {
     var isFocused by remember { mutableStateOf(false) }
     val typography = getTypography()
@@ -68,6 +72,7 @@ fun InputCardCapiro(
         shape = RoundedCornerShape(16.dp),
         colors = CardDefaults.cardColors(containerColor = Color.White),
         elevation = CardDefaults.elevatedCardElevation(defaultElevation = 8.dp),
+        border = if (isError) BorderStroke(2.dp, RedCapiro) else null,
     ) {
         Row(
             modifier = Modifier
