@@ -2,6 +2,7 @@ package com.capiro.composables.dialogs
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -19,6 +20,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
+import androidx.compose.ui.window.DialogProperties
 import com.capiro.composables.athomic_composables.textfield.SearchBarCapiro
 import com.capiro.composables.theme.GrayDarkCapiro
 import com.capiro.composables.theme.GreenCapiro
@@ -35,7 +37,10 @@ import getTypography
  * card can use its own shape and ripple).
  *
  * @param emptyText shown instead of the list when [items] is empty (e.g. "Sin resultados").
- * @param maxHeight caps the dialog; the list scrolls inside it.
+ * @param maxHeight caps the dialog; the list scrolls inside it ([Dp.Unspecified] = no cap).
+ * @param properties e.g. `DialogProperties(usePlatformDefaultWidth = false)` plus a width in
+ *   [modifier] for a dialog wider than the platform default.
+ * @param bottomBar pinned under the list (e.g. an "Aceptar" button); the list scrolls above it.
  */
 @Composable
 fun <T> SearchCardListDialogCapiro(
@@ -49,9 +54,11 @@ fun <T> SearchCardListDialogCapiro(
     emptyText: String? = null,
     maxHeight: Dp = 560.dp,
     itemKey: ((index: Int, item: T) -> Any)? = null,
+    properties: DialogProperties = DialogProperties(),
+    bottomBar: (@Composable () -> Unit)? = null,
     itemContent: @Composable (index: Int, item: T) -> Unit,
 ) {
-    Dialog(onDismissRequest = onDismiss) {
+    Dialog(onDismissRequest = onDismiss, properties = properties) {
         Column(
             modifier = modifier
                 .fillMaxWidth()
@@ -82,12 +89,17 @@ fun <T> SearchCardListDialogCapiro(
                 )
             } else {
                 LazyColumn(
+                    // Takes what is left, so a bottom bar stays visible under a long list.
+                    modifier = Modifier.weight(1f, fill = false),
                     verticalArrangement = Arrangement.spacedBy(8.dp),
                     // Room for the cards' shadows at the edges and the bottom corner.
                     contentPadding = PaddingValues(top = 12.dp, bottom = 16.dp, start = 2.dp, end = 2.dp),
                 ) {
                     itemsIndexed(items, key = itemKey) { index, item -> itemContent(index, item) }
                 }
+            }
+            if (bottomBar != null) {
+                Box(Modifier.fillMaxWidth().padding(top = 8.dp, bottom = 16.dp)) { bottomBar() }
             }
         }
     }
