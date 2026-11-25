@@ -41,6 +41,8 @@ import getTypography
  * @param properties e.g. `DialogProperties(usePlatformDefaultWidth = false)` plus a width in
  *   [modifier] for a dialog wider than the platform default.
  * @param bottomBar pinned under the list (e.g. an "Aceptar" button); the list scrolls above it.
+ * @param header shown between the title and the search bar (e.g. the context of the list and when
+ *   its data was last synced); `null` = nothing.
  */
 @Composable
 fun <T> SearchCardListDialogCapiro(
@@ -56,6 +58,7 @@ fun <T> SearchCardListDialogCapiro(
     itemKey: ((index: Int, item: T) -> Any)? = null,
     properties: DialogProperties = DialogProperties(),
     bottomBar: (@Composable () -> Unit)? = null,
+    header: (@Composable () -> Unit)? = null,
     itemContent: @Composable (index: Int, item: T) -> Unit,
 ) {
     Dialog(onDismissRequest = onDismiss, properties = properties) {
@@ -74,6 +77,9 @@ fun <T> SearchCardListDialogCapiro(
                 color = GreenCapiro,
                 modifier = Modifier.fillMaxWidth().padding(bottom = 12.dp),
             )
+            if (header != null) {
+                Box(Modifier.fillMaxWidth().padding(bottom = 12.dp)) { header() }
+            }
             SearchBarCapiro(
                 searchText = searchText,
                 onSearchTextChange = onSearchTextChange,

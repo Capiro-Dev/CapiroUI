@@ -105,4 +105,4 @@ dependencies {
 // matching that here keeps a mavenLocal publish resolvable under the same coordinates real
 // consumers use, so switching between the two doesn't silently change which artifact resolves.
 group = 'com.github.Capiro-Dev.CapiroUI'
-version = '2.7.0'
+version = '2.8.0'
